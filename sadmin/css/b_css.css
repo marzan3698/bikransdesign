@@ -1,0 +1,24 @@
+
+.bg_login {
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    text-align: center; /* Optional: Center text inside */
+}
+
+.widgets-container {
+    background: #ffffffd9 none repeat scroll 0 0;
+    border: 1px solid #e7eaec;
+    box-sizing: border-box;
+    margin: 0 auto 0;
+    padding: 15px;
+    width: 100%;
+    border-radius: 10px;
+}
+

@@ -1,0 +1,240 @@
+section.chart {
+  position: relative;
+  max-height: 180px;
+  height: 180x;
+  width: 560px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 0px 20px 0px 26vw;
+  overflow: visible;
+}
+
+.bar-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* position:relative on .bar — labels anchor to this */
+.bar {
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bar-text {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  padding: 6px 0;
+  display: inline-block; /* rotate করার জন্য দরকার */
+  transform: rotate(270deg);
+}
+
+/* Base label style — position:absolute relative to .bar */
+.label {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 11px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Bar heights & colors ── */
+.bar-1 {
+  height: 55px;
+  background: #005870;
+}
+.bar-2 {
+  height: 95px;
+  background: #CB8800;
+}
+.bar-3 {
+  height: 135px;
+  background: #00A167;
+}
+.bar-4 {
+  height: 180px;
+  background: #A33B44;
+}
+
+.dot-1 {
+  background: #005870;
+}
+.dot-2 {
+  background: #CB8800;
+}
+.dot-3 {
+  background: #00A167;
+}
+.dot-4 {
+  background: #A33B44;
+}
+
+/* ── Custom top & left for each label ── */
+.label-1 {
+  top: 19px;
+  left: -78px;
+  color: #01afef;
+}
+.label-2 {
+  top: 10px;
+  left: -78px;
+  color: #fe9900;
+}
+.label-3 {
+  top: 12px;
+  left: -78px;
+  color: #12d380;
+}
+.label-4 {
+  top: 17px;
+  left: -78px;
+  color: #33cc33;
+}
+
+/* section 2 */
+section.steps {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 0;
+}
+
+.step-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 40px;
+  border-radius: 0px;
+  font-size: 17px;
+  color: #000;
+  flex-shrink: 0;
+  padding-left: 10px;
+}
+
+.sub-step {
+  width: 20%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  color: white;
+  position: absolute;
+  right: 118px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+/* ── Width using % of section ── */
+.step-2 .sub-step{
+   right: 80px !important;
+}
+.step-3 .sub-step{
+   right: 50px !important;
+}
+.step-1 {
+  width: 70%;
+}
+.step-2 {
+  width: 80%;
+}
+.step-3 {
+  width: 90%;
+}
+
+/* ── Colors ── */
+.color-cyan {
+  background: #00b1eb;
+}
+.color-orange {
+  background: #fd9a00;
+}
+.color-brown {
+  background: #c55b11;
+}
+
+/* ── Sub-step color variants (lighter shades) ── */
+.color-cyan-sub {
+  background: #66d4f5;
+}
+.color-orange-sub {
+  background: #fec666;
+}
+.color-brown-sub {
+  background: #e08a55;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 42px;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.header-step {
+  width: 100%;
+  background: #325e83;
+  text-align: center;
+  padding: 5px 0;
+}
+
+/* table section */
+section.table-wrap {
+  width: 95%;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate; /* allows gap between cells */
+  border-spacing: 2px; /* space between cells */
+  margin-bottom: 20px;
+}
+
+/* ── Header cells ── */
+thead th {
+  background: #2ecc71;
+  color: #fff;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 3px;
+  text-align: center;
+}
+
+/* ── Body cells ── */
+tbody td {
+  background: #58636c;
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 3px;
+  text-align: center;
+}
