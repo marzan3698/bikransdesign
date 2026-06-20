@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if ($agent) {
             $agent_area = $agent->agent_area;
         } else {
-            $agent_area = 'এজেন্ট এরিয়া';
+            $agent_area = '';
         }
 
         echo json_encode([

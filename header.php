@@ -33,7 +33,11 @@ $member2 = QB::table('member')->where('id', $user_id)->first();
     <style>
         * {
             font-family: 'SolaimanLipi', sans-serif !important;
+            color: #000;
         }
+        a, h1, h2, h3, h4, h5, h6, p, span, li, td, th, select, input, button{
+		 font-family: 'SolaimanLipi', sans-serif !important;
+	   }
 
         .switch {
             position: relative;

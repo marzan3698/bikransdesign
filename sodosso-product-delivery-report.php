@@ -103,6 +103,63 @@
                 padding: 10px 34px; 
                 margin-top: 10px !important;
             }
+            .submit-btn2{
+                display: block;
+                margin: auto;
+                padding: 3px 15px;
+                cursor: pointer;
+                background: #00CC99;
+                color: #fff;
+                border: none;
+            }
+            .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    border: 1px solid #0B2234;
+    scrollbar-width: thin;
+    scrollbar-color: #0B2234 transparent;
+  }
+  .table-wrapper::-webkit-scrollbar { height: 6px; }
+  .table-wrapper::-webkit-scrollbar-track { background: transparent; }
+  .table-wrapper::-webkit-scrollbar-thumb { background: #0B2234; border-radius: 6px; }
+
+  .table3 {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 620px; /* forces scroll on small screens */
+    font-size: 14px;
+  }
+  .table3 thead tr { background: #0B2234; }
+  .table3 thead th {
+    border: 1px solid #0B2234;
+    padding: 10px 14px;
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .table3 tbody tr:nth-child(even) { background: #e8f0f5; }
+  .table3 tbody tr:nth-child(odd)  { background: #f7fafb; }
+  .table3 tbody tr:hover { background: #d0e4ef; }
+  .table3 tbody td {
+    border: 1px solid #0B2234;
+    color: #0B2234;
+    text-align: center;
+    padding: 9px 14px;
+    white-space: nowrap;
+  }
+
+  .scroll-hint {
+    display: none;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  @media (max-width: 640px) {
+    .scroll-hint { display: block; }
+  }
         </style>
 
         <div class="pages">
@@ -120,47 +177,111 @@
                         style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
                         <div style="background: #00CC99; padding: 12px; color: #fff; text-align: center; font-size: 22px;">সদস্য প্রোডাক্ট ডেলিভারি রিপোর্ট</div>
                         <?php 
-                            $order = QB::table('order_items')->where('user_id', $_SESSION['user_id'])->where('is_agent', 1)->orderBy('id', 'desc')->get();
-                            $sl = 1
-                        ?>
-                        <table>
-                            <tr>
-                                <td style="background: transparent;border:1px solid #fff">নং</td>
-                                <td style="background: transparent;border:1px solid #fff">সদস্য নাম</td>
-                                <td style="background: transparent;border:1px solid #fff">আইডি</td>
-                                <td style="background: transparent;border:1px solid #fff">প্রোডাক্ট নাম</td>
-                                <td style="background: transparent;border:1px solid #fff">ডেলিভারি তথ্য</td>
-                            </tr>
-                            <?php foreach($order as $row){ ?>
-                                <tr>
-                                    <td style="background: transparent;border:1px solid #fff"><?= $sl++ ?></td>
-                                    <td style="background: transparent;border:1px solid #fff">
-                                        <?php 
-                                            $user = QB::table('member')->where('id', $row->user_id)->first();
-                                            echo $user->name;
-                                        ?>
-                                    </td>
-                                    <td style="background: transparent;border:1px solid #fff"><?= $user->username ?></td>
-                                    <td style="background: transparent;border:1px solid #fff">
-                                        <?php 
-                                            $product = QB::table('product')->where('id', $row->product_id)->first();
-                                            echo $product->name ?? 'N/A';
-                                        ?>
+                            if(isset($_POST['delivery_done'])){
+                                $order_id = $_POST['order_id'];
+                                QB::table('order')->where('id', $order_id)->update(['status' => 1]);
+                                echo '<div style="color: #00CC99; text-align: center;">ডেলিভারি সম্পন্ন হয়েছে</div>';
+                                echo '<script>
+                                setTimeout(function(){
+                                    window.location.href="sodosso-product-delivery-report.php"
+                                }, 1000);
+                                </script>';
+                            }
+                            // ── Pagination config ──────────────────────────────────────────
+                        $perPage     = 10;
+                        $currentPage = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+                        $offset      = ($currentPage - 1) * $perPage;
 
-                                    </td>
-                                    <td style="background: transparent;border:1px solid #fff">
-                                        <?php
-                                            $main_order = QB::table('order')->where('id', $row->order_id)->first();
-                                            if($main_order->status == 1){
-                                                echo '<div style="color:green;">ডেলিভারি সম্পন্ন হয়েছে</div>';
-                                            }elseif($main_order->status == 0){
-                                                echo '<div style="color:red;">ডেলিভারি সম্পন্ন হয়নি</div>';
-                                            }
-                                        ?>
-                                    </td>
+                        // Total rows for this user
+                        $totalRows = QB::table('order_items')
+                                    ->where('agent_id', $_SESSION['user_id'])
+                                    ->whereIn('type', ['agent-repurchase', 'agent-nibondhon']) 
+                                    ->count();
+                        $totalPages = (int)ceil($totalRows / $perPage);
+
+                        // Clamp currentPage
+                        if ($currentPage > $totalPages && $totalPages > 0) {
+                            $currentPage = $totalPages;
+                            $offset = ($currentPage - 1) * $perPage;
+                        }
+                        // ── Safe base URL ──────────────────────────────────────────────
+                        $urlParts    = parse_url($_SERVER['REQUEST_URI']);
+                        $scriptPath  = $urlParts['path'];
+                        $queryParams = [];
+                        if (!empty($urlParts['query'])) {
+                            parse_str($urlParts['query'], $queryParams);
+                        }
+                        unset($queryParams['page']);   // ← remove 'page' before building baseUrl
+
+                        $baseQuery = http_build_query($queryParams);
+                        $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
+                            $order = QB::table('order_items')
+                                        ->where('agent_id', $_SESSION['user_id'])
+                                        ->whereIn('type', ['agent-repurchase', 'agent-nibondhon']) 
+                                        ->orderBy('id', 'desc')
+                                        ->limit($perPage)
+                                        ->offset($offset)
+                                        ->get();
+                         $sl = $offset + 1;    
+                        ?>
+                        <div class="table-wrapper">
+                            <table class="table3" style="border-collapse:collapse; width: 100%; border:1px solid #fff; margin-top: 10px; text-align: center; color: #fff;">
+                                <tr>
+                                    <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">নং</td>
+                                    <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">সদস্য</td>
+                                    <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">তারিখ</td>
+                                    <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">প্রোডাক্ট নাম</td>
+                                    <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">ডেলিভারি তথ্য</td>
+                                    <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">ভাউচার</td>
                                 </tr>
-                            <?php } ?>
-                        </table>
+                                <?php foreach($order as $row){ ?>
+                                <?php 
+                                    $order = QB::table('order')->where('id', $row->order_id)->first();
+                                ?>
+                                    <tr>
+                                        <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;"><?= $sl++ ?></td>
+                                        <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">
+                                            <?php 
+                                                $user = QB::table('member')->where('id', $row->user_id)->first();
+                                                echo $user->name . '<br>';
+                                                echo $user->username . '<br>';
+                                            ?>
+                                        </td>
+                                        <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">
+                                            <?= date('d-m-Y', $order->time) ?><br><?= date('h:i:A', $order->time) ?>
+                                        </td>
+                                        <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">
+                                            <?php 
+                                                $product = QB::table('product')->where('id', $row->product_id)->first();
+                                                echo $product->name ?? 'N/A';
+                                            ?>
+                                        </td>
+                                        <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">
+                                            <?php
+                                                $main_order = QB::table('order')->where('id', $row->order_id)->first();
+                                                if($main_order->status == 1){
+                                                    echo '<div style="color:green;">ডেলিভারি সম্পন্ন হয়েছে</div>';
+                                                }elseif($main_order->status == 0){
+                                            ?>
+                                                <form action="" method="post">
+                                                    <input type="hidden" name="order_id" value="<?= $main_order->id ?>">
+                                                    <button type="submit" name="delivery_done" class="submit-btn2" onclick="return confirm('আপনি কি এই ডেলিভারিটিকে সম্পূর্ণ হিসেবে চিহ্নিত করতে নিশ্চিত?')">ডেলিভারি সম্পন্ন করুন</button>
+                                                </form>
+                                            <?php } ?>
+                                        </td>
+                                        <td style="border: 1px solid #fff;background: #0B2234; color:#fff; text-align: center;">
+                                            <?= $row->order_id ?>&nbsp;
+                                                <img src="https://cdn-icons-png.flaticon.com/128/16794/16794942.png"
+                                                    onclick="window.location.href='agent-order-summery.php?order_id=<?= $row->order_id ?>'"
+                                                    width="15px"
+                                                    style="cursor:pointer;">  
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+
+                            <?php require_once('pagination.php'); ?>
+                        </div>
 
 
                     </nav>

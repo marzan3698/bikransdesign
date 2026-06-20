@@ -139,9 +139,9 @@
                                 </div>
 
                                 <div class="service-item">
-                                    <a href="transfer_balance.php">
+                                    <a href="somosti_aya.php">
                                         <div class="service-icon">
-                                            <img src="images/custom/porishaba/3.svg" alt="Bank">
+                                            <img src="images/custom/porishaba/122.svg" alt="Send" style="width: 50%;">
                                         </div>
                                     </a>
                                 </div>
@@ -153,6 +153,10 @@
                                         </div>
                                     </a>
                                 </div>
+
+                                
+
+                                
 
                                 <div class="service-item">
                                     <a href="team-commission.php">
@@ -204,12 +208,13 @@
                                     </a>
                                 </div>
                                 <div class="service-item">
-                                    <a href="flow-map.php">
+                                    <a href="javascript::void(0)" onclick="window.location.href='flow-map.php'">
                                         <div class="service-icon">
                                             <img src="images/custom/porishaba/11.svg" alt="bKash">
                                         </div>
                                     </a>
                                 </div>
+                                
                                 <div class="service-item">
                                     <a href="tutorial.php">
                                         <div class="service-icon">
@@ -222,6 +227,13 @@
                                     <div class="service-icon">
                                         <img src="images/custom/porishaba/13.svg" alt="bKash">
                                     </div>
+                                </div>
+                                <div class="service-item">
+                                    <a href="transfer_balance.php">
+                                        <div class="service-icon">
+                                            <img src="images/custom/porishaba/123.svg" alt="Bank" style="width:40%">
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="service-item">
                                     <div class="service-icon">

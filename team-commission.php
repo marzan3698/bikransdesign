@@ -63,6 +63,65 @@ $days = [
             border-collapse: collapse;
             border-spacing: 0;
         }
+        /* Pagination Container */
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+/* Pagination Buttons */
+.pagination-wrapper .btn {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Normal Button */
+.pagination-wrapper .btn-info {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.pagination-wrapper .btn-info:hover {
+    background: #12D584;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Active Page */
+.pagination-wrapper .btn-success,
+.pagination-wrapper .active {
+    background: #12D584 !important;
+    color: #fff !important;
+    box-shadow: 0 3px 10px rgba(13, 110, 253, 0.3);
+    cursor: default;
+}
+
+/* First, Last, Prev, Next */
+.pagination-wrapper .btn:first-child,
+.pagination-wrapper .btn:last-child {
+    padding: 0 15px;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .pagination-wrapper .btn {
+        min-width: 35px;
+        height: 35px;
+        font-size: 13px;
+    }
+}
         </style>
         <div class="pages">
 
@@ -99,15 +158,15 @@ $days = [
                                     <th class="black">মোট টিম আয়- 
                                     
                                      <?php
-                        $result = $queryBuilder->table('gen_his')
-    ->where('type', 2)
-    ->where('to_id', $_SESSION['user_id'])
-    ->select($queryBuilder->raw('SUM(amount) as total_amount'))
-    ->first();
+                                        $result = $queryBuilder->table('gen_his')
+                                            ->where('type', 2)
+                                            ->where('to_id', $_SESSION['user_id'])
+                                            ->select($queryBuilder->raw('SUM(amount) as total_amount'))
+                                            ->first();
 
-$totalAmount = $result->total_amount ?? 0;
+                                        $totalAmount = $result->total_amount ?? 0;
 
-echo number_format($totalAmount,2);
+                                        echo number_format($totalAmount,2);
 
                     ?> /
                                     
@@ -116,12 +175,12 @@ echo number_format($totalAmount,2);
                                     echo $balance; 
                                     
                                     if($refer_count>=5){
-                                        
-                                        if($member->profit4==0){
-                                          
-                                        $sql1 = "UPDATE `member` SET `balance` = `balance` + '$balance', `profit4` = '1', `balance_team` = '0' WHERE `member`.`id` = '$member->id';";
-     $mysqli->query($sql1);
-     
+                                                                        
+                                    if($member->profit4==0){
+                                                                        
+                                    $sql1 = "UPDATE `member` SET `balance` = `balance` + '$balance', `profit4` = '1', `balance_team` = '0' WHERE `member`.`id` = '$member->id';";
+                                    $mysqli->query($sql1);
+                                    
                                         }
                                     }
                                     
@@ -145,7 +204,7 @@ echo number_format($totalAmount,2);
                             
                                 <?php
         // Configuration
-        $perPageLimit = 50;
+        $perPageLimit = 10;
         $type = 2;
         $userId = $_SESSION['user_id'] ?? 0;
 
@@ -194,7 +253,7 @@ echo number_format($totalAmount,2);
                         </table>
                         
                          <?php if ($totalRecords > $perPageLimit): ?>
-    <div class="text-center mt-3">
+    <div class="pagination-wrapper">
       <?php
         $pages = ceil($totalRecords / $perPageLimit);
 

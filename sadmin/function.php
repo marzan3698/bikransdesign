@@ -1024,6 +1024,20 @@ function find_sponsor($user_id)
     return $result ? $result->refer_id : null;
 }
 
+function find_sponsor_agent($user_id)
+{
+    global $queryBuilder;
+    $result = $queryBuilder->table('agent')->select('reference_agent_id')->where('user_id', $user_id)->first();
+    return $result ? $result->reference_agent_id : null;
+}
+
+function find_sponsor_agent1($user_id)
+{
+    global $queryBuilder;
+    $result = $queryBuilder->table('agent')->select('user_id')->where('id', $user_id)->first();
+    return $result ? $result->user_id : null;
+}
+
 
 
 function find_sponsor_placement($user_id)
@@ -1069,6 +1083,56 @@ function member_status($user_id)
     $result = $queryBuilder->table('member')->select('is_premium')->where('id', $user_id)->first();
     return $result ? $result->is_premium : null;
 }
+
+function biz_master_count_active(){
+    global $queryBuilder;
+    return $queryBuilder->table('member')->where('biz_alert',1)->count();
+}
+
+
+
+function add_balance_user_biz_alert($refer, $com, $his, $user_id)
+{
+    global $queryBuilder;
+    $time = time();
+    $data = array(
+        'time' => $time,
+        'user_id' => $refer,
+        'cradit' => $com,
+        'type' => 1,
+        'his' => $his,
+        'from_id' => $user_id
+    );
+    try {
+        $query = $queryBuilder->table('user_transection_biz_a')->insert($data);
+        return $query;
+    } catch (Exception $e) {
+        error_log('Error in add_balance: ' . $e->getMessage());
+        return false;
+    }
+}
+
+
+
+function biz_alert_all($amount,$user_id){
+
+global $mysqli;
+
+$result = $mysqli->query("SELECT * FROM member WHERE biz_alert = 1");
+
+while ($row = $result->fetch_assoc()) {
+    
+    echo $row['username'];
+    
+    $sql1 = "UPDATE `member` SET `balance` = `balance` + '$amount' WHERE `member`.`id` = '{$row['id']}';";
+    $mysqli->query($sql1);
+    
+    add_balance_user_biz_alert($row['id'],$amount,659,$user_id);
+}
+
+}
+
+
 
 function biz_alert_active($user_id){
     global $queryBuilder;
@@ -1266,6 +1330,52 @@ function add_balance_user_refer($refer, $com, $gen, $user_id)
         return false;
     }
 }
+
+function add_balance_user_refer_agent($refer, $com, $gen, $user_id)
+{
+    global $queryBuilder;
+    $time = time();
+    $data = array(
+        'time' => $time,
+        'user_id' => $refer,
+        'cradit' => $com,
+        'type' => 1,
+        'gen' => $gen,
+        'his' => 561,
+        'from_id' => $user_id
+    );
+    try {
+        $query = $queryBuilder->table('user_transection')->insert($data);
+        return $query;
+    } catch (Exception $e) {
+        error_log('Error in add_balance: ' . $e->getMessage());
+        return false;
+    }
+}
+
+
+function add_balance_agent_refer_agent($refer, $com, $gen, $user_id)
+{
+    global $queryBuilder;
+    $time = time();
+    $data = array(
+        'time' => $time,
+        'user_id' => $refer,
+        'cradit' => $com,
+        'type' => 1,
+        'gen' => $gen,
+        'his' => 571,
+        'from_id' => $user_id
+    );
+    try {
+        $query = $queryBuilder->table('user_transection')->insert($data);
+        return $query;
+    } catch (Exception $e) {
+        error_log('Error in add_balance: ' . $e->getMessage());
+        return false;
+    }
+}
+
 
 function add_balance_user_gen_type3($refer, $com, $gen, $user_id)
 {

@@ -199,9 +199,18 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
+
+        // এখানে cart এর নতুন নাম
+        const CART_KEY = "cart222111";
+
         function renderCartList() {
-            let cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : {};
+
+            let cart = localStorage.getItem(CART_KEY)
+                ? JSON.parse(localStorage.getItem(CART_KEY))
+                : {};
+
             let $ul = $("#cart-list ul");
+
             $ul.empty();
 
             if ($.isEmptyObject(cart)) {
@@ -210,83 +219,117 @@
             }
 
             $.each(cart, function(id, item) {
-                $ul.append(`<li>
-            <input type="hidden" value="${id}" name="product_id[]" readonly>
-            <input type="hidden" value="${item.qty}" name="quantity[]" readonly>
-            <input type="hidden" value="${item.price}" name="price[]" readonly></li>`);
+
+                $ul.append(`
+                    <li>
+                        <input type="hidden" value="${id}" name="product_id[]" readonly>
+
+                        <input type="hidden" value="${item.qty}" name="quantity[]" readonly>
+
+                        <input type="hidden" value="${item.price}" name="price[]" readonly>
+                    </li>
+                `);
+
             });
         }
+
         renderCartList();
-        // localStorage থেকে কার্ট লোড
-        let cart = localStorage.getItem("cart") ?
-            JSON.parse(localStorage.getItem("cart")) : {};
+
+        // localStorage থেকে cart load
+        let cart = localStorage.getItem(CART_KEY)
+            ? JSON.parse(localStorage.getItem(CART_KEY))
+            : {};
 
         updateSummary();
 
         function saveCart() {
-            localStorage.setItem("cart", JSON.stringify(cart));
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
         }
 
         function updateSummary() {
+
             let totalItems = 0;
             let totalPrice = 0;
 
             $.each(cart, function(id, item) {
+
                 totalItems += item.qty;
                 totalPrice += item.qty * item.price;
+
             });
 
             $("#total-items").text(totalItems);
             $("#total-price").text(totalPrice);
+
             $("#total-qty").val(totalItems);
             $("#total-price-hidden").val(totalPrice);
-            $("#total-point-hidden").val(totalPrice * 0.1); // Assuming 1 point = 10% of price
+
+            $("#total-point-hidden").val(totalPrice * 0.1);
+
         }
 
         // Plus button
         $(document).on("click", ".plus", function() {
+
             let input = $(this).siblings(".qty-input");
+
             let value = parseInt(input.val());
+
             input.val(value + 1);
+
         });
 
         // Minus button
         $(document).on("click", ".minus", function() {
+
             let input = $(this).siblings(".qty-input");
+
             let value = parseInt(input.val());
+
             if (value > 1) {
                 input.val(value - 1);
             }
+
         });
 
         // Add to cart
         $(document).on("click", ".add-cart", function() {
 
             let row = $(this).closest(".product-row");
+
             let id = row.data("id");
+
             let price = parseFloat(row.data("price"));
+
             let qty = parseInt(row.find(".qty-input").val());
 
             if (cart[id]) {
+
                 cart[id].qty += qty;
+
             } else {
+
                 cart[id] = {
                     price: price,
                     qty: qty
                 };
+
             }
 
             saveCart();
+
             updateSummary();
+
             renderCartList();
+
             Swal.fire({
                 showConfirmButton: false,
                 timer: 1000,
                 timerProgressBar: true,
                 text: "প্রোডাক্ট সফলভাবে কার্টে যোগ হয়েছে!",
                 icon: "success",
-
             });
+
         });
 
     });

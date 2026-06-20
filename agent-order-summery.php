@@ -163,6 +163,13 @@ if (!$order) {
                             <span style="margin-left: 20px;">প্রোডাক্ট ভাউচার নং -<?php echo $order->id; ?></span><br>
                             <span style="margin-left: 20px;">তারিখ <?php echo date('d-m-Y', $order->time); ?> সময় <?php echo date('h:A', $order->time); ?></span>
                             <div class="user-info">
+                                <?php $agent = QB::table('member')->where('id', $order->agent_id)->first(); ?>
+                                <h3 class="title">এজেন্ট তথ্য</h3><br>
+                                <span style="margin-left: 20px;">নাম: <?= $agent->name ?></span><br>
+                                <span style="margin-left: 20px;">মোবাইল: <?= $agent->phone ?></span><br>
+                                <span style="margin-left: 20px;">আইডি: <?= $agent->username ?></span><br>
+                            </div>
+                            <div class="user-info">
                                 <?php $user = QB::table('member')->where('id', $order->user_id)->first(); ?>
                                 <h3 class="title">ইউজার তথ্য</h3><br>
                                 <span style="margin-left: 20px;">নাম: <?= $user->name ?></span><br>

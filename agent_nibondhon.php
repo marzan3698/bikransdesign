@@ -131,15 +131,16 @@
                                 if(isset($_POST['submit'])){
 
                                     $user_id = trim($_POST['user_id']);
-                                    $name = trim($_POST['name']);
-                                    $username = trim($_POST['username']);
-                                    $agent_area = trim($_POST['agent_area']);
-                                    $village = trim($_POST['village']);
+                                    $name = trim(preg_replace('/^এজেন্ট নামঃ\s*/u', '', $_POST['name']));
+                                    $username = trim(preg_replace('/^এজেন্ট আইডি: \s*/u', '', $_POST['username']));
+                                    $agent_area = trim(preg_replace('/^এজেন্ট এরিয়া: \s*/u', '', $_POST['agent_area']));
+                                    $village = trim(preg_replace('/^গ্রাম: \s*/u', '', $_POST['village']));
                                     $description = trim($_POST['description']);
                                     $division_id = $_POST['division_id'];
                                     $district_id = $_POST['district_id'];
                                     $upazila_id = $_POST['upazila_id'];
-                                    $number = $_POST['number'] ?? null;
+                                    $number = trim(preg_replace('/^নম্বরঃ\s*/u', '', $_POST['number'])) ?? null;
+                                    $reference_agent_id = $_POST['reference_agent_id'] ?? null;
 
                                     $exitsCheck = QB::table('agent')
                                         ->where('user_id', $user_id)
@@ -170,6 +171,7 @@
                                                 'upojela_id' => $upazila_id,
                                                 'number' => $number,
                                                 'status' => 0,
+                                                'reference_agent_id' => $reference_agent_id,
                                             ]);
 
                                             if($insert){
@@ -207,31 +209,41 @@
                         ?>
                         <form action="" method="post">
                             <input type="hidden" name="user_id" id="user_id">
-                            <input type="hidden" name="number" id="number">
                             <div style="display: flex;gap: 10px;margin-top:10px">
                                 <div style="width: 60%;">
                                     <span id="userResult" style="color: red;"></span>
                                     <input type="text" name="" placeholder="আইডি অথবা নম্বর দিয়ে সার্চ করুন" id="userid" class="cus-in-11" autocomplete="off" value="<?= $exitsAgent->username ?? '' ?>">
-                                    <input type="text" name="name" placeholder="এজেন্ট নামঃ" id="name" class="cus-in-11" autocomplete="off" value="<?= $exitsAgent->name ?? '' ?>">
-                                    <input type="text" name="username" placeholder="আইডি নম্বরঃ" id="username" class="cus-in-11" autocomplete="off" value="<?= $exitsAgent->phone ?? '' ?>">
-                                    <input type="text" name="agent_area" placeholder="এজেন্ট এরিয়া" id="agent_area"  class="cus-in-11" autocomplete="off" readonly value="<?= $exitsCheck->agent_area ?? '' ?>">
+                                    <input type="text" name="name" placeholder="এজেন্ট নামঃ" id="name" class="cus-in-11" autocomplete="off" value="এজেন্ট নামঃ <?= $exitsAgent->name ?? '' ?>">
+                                    <input type="text" name="username" placeholder="এজেন্ট আইডি: " id="username" class="cus-in-11" autocomplete="off" value="এজেন্ট আইডি: <?= $exitsAgent->username ?? '' ?>">
+                                    <input type="text" name="number" placeholder="নম্বরঃ" id="number" class="cus-in-11" autocomplete="off" value="নম্বরঃ <?= $exitsCheck->number ?? '' ?>">
                                 </div>
                                 <div style="width: 40%;">
                                     <div class="img-preview">
                                         <img id="previewImage"
-                                            src="<?= $exitsAgent->image ?? 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small/default-avatar-photo-placeholder-profile-picture-vector.jpg' ?>"
-                                            alt=""
-                                            style="width:100%; height:100%; object-fit:cover;">
+                                        src="<?= $exitsAgent->image ?? 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small/default-avatar-photo-placeholder-profile-picture-vector.jpg' ?>"
+                                        alt=""
+                                        style="width:100%; height:100%; object-fit:cover;">
                                     </div>
                                 </div>
                             </div>
                             <div style="display: flex;gap: 5px;margin-top:5px">
                                 <div style="width: 50%;">
-                                    <input type="text" name="village" placeholder="গ্রামঃ" id="village" class="cus-in-11" autocomplete="off" value="<?= $exitsCheck->village ?? '' ?>">
+                                    <input type="text" name="reference_name" placeholder="রেফারেন্সকারী এজেন্ট আইডি" id="reference_name" class="cus-in-11" autocomplete="off" >
+                                    <input type="hidden" name="reference_agent_id" id="reference_agent_id">
+                                    <span id="referenceResult" style="color: #fff; font-size: 12px;"></span>
+                                </div>
+                                
+                                <div style="width: 50%;">
+                                    <input type="text" name="agent_area" placeholder="এজেন্ট এরিয়া" id="agent_area"  class="cus-in-11" autocomplete="off" readonly value="এজেন্ট এরিয়া: <?= $exitsCheck->agent_area ?? '' ?>">
+                                </div>
+                            </div>
+                            <div style="display: flex;gap: 5px;margin-top:5px">
+                                <div style="width: 50%;">
+                                    <input type="text" name="village" placeholder="গ্রামঃ" id="village" class="cus-in-11" autocomplete="off" value="গ্রাম: <?= $exitsCheck->village ?? '' ?>">
                                 </div>
 
                                 <div style="width: 50%; position: relative;">
-                                    <input type="text" name="" placeholder="এনআইডি দেখুন" id="nid_no" class="cus-in-11" autocomplete="off" value="<?= $exitsAgent->nid_no ?? '' ?>">
+                                    <input type="text" name="" placeholder="এনআইডি দেখুন" id="nid_no" class="cus-in-11" autocomplete="off" value="এনএইডি নম্বর: <?= $exitsAgent->nid_no ?? '' ?>">
 
                                     <!-- Eye Icon -->
                                     <span id="viewNid"
@@ -305,7 +317,7 @@
                                     অতএব, আমাকে আপনাদের প্রতিষ্ঠানে একজন অনুমোদিত ডিলার হিসেবে কাজ করার সুযোগ প্রদানের জন্য আন্তরিকভাবে আবেদন জানাচ্ছি।
                                 </div>
                             </div>
-                            <?php if($exitsAgent){ ?>
+                            <?php if(isset($exitsAgent)){ ?>
                                 <div style="display: flex;gap: 5px;margin-top:5px">
                                     <div style="width: 100%; color: #fff; font-size: 14px; line-height: 20px;">
                                         <button class="submit-btn">আবেদন কমপ্লিট</button>
@@ -349,12 +361,12 @@
                         $("#userResult").hide();
                         $("#user_id").val(response.data.id);
 
-                        $("#name").val(response.data.name).prop("readonly", true);
-                        $("#username").val(response.data.username).prop("readonly", true);
-                        $("#nid_no").val(response.data.nid_no).prop("readonly", true);
-                        $("#agent_area").val(response.agent_area).prop("readonly", true);
-                        $("#village").val(response.data.address).prop("readonly", true);
-                        $("#number").val(response.data.phone).prop("readonly", true);
+                        $("#name").val('এজেন্ট নামঃ ' + response.data.name).prop("readonly", true);
+                        $("#username").val('এজেন্ট আইডি: ' + response.data.username).prop("readonly", true);
+                        $("#nid_no").val('এনএইডি নম্বর: ' + response.data.nid_no).prop("readonly", true);
+                        $("#agent_area").val('এজেন্ট এরিয়া: ' + response.agent_area).prop("readonly", true);
+                        $("#village").val('গ্রাম: ' + response.data.address).prop("readonly", true);
+                        $("#number").val('নম্বরঃ ' + response.data.phone).prop("readonly", true);
 
                         $("#nidImagePreview").attr("src", response.data.p_nid_front);
                         $("#nidImagePreview2").attr("src", response.data.p_nid_back);
@@ -469,3 +481,27 @@
             });
         </script>
     <?php } ?>
+    <script>
+        $("#reference_name").on("keyup input", function () {
+            let username = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/ajax/fetch-refer-agent.php",
+                data: {
+                    username: username
+                },
+                dataType: "json",
+
+                success: function (response) {
+                    if (response.success == 1) {
+                        $("#referenceResult").html('এজেন্ট নামঃ ' + response.data.name + "<br>" + 'এজেন্ট নম্বর: ' + response.data.number).css('color', 'green').show();
+                        $("#reference_agent_id").val(response.data.id);
+                    } else {
+                        $("#referenceResult").html('উক্ত আইডি এজেন্ট নয়').css('color', 'red').show();
+                        $("#reference_agent_id").val('');
+                    }
+                },
+            });
+        });
+    </script>

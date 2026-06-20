@@ -183,7 +183,7 @@ if (!$order) {
 
                                 $check = QB::table('status_info')->where('order_id', $orderId)->first();
                                 if($check && $check->reference_status == 1){
-                                    echo "<div style='color: red; text-align: center; margin-top: 20px;font-size:16px'>✅ অর্ডার সফলভাবে সম্পন্ন হয়েছে ✅ </div>";
+                                    echo "<div style='color: red; text-align: center; margin-top: 20px;font-size:16px'>✅নতুন সদস্য সফলভাবে নিবন্ধন হয়েছে। </div>";
     
                                     echo "<script>
                                         setTimeout(function(){
@@ -191,7 +191,7 @@ if (!$order) {
                                         }, 500);
                                     </script>";
                                 }else{
-                                    echo "<div style='color: red; text-align: center; margin-top: 20px;font-size:16px'>✅ অর্ডার সফলভাবে সম্পন্ন হয়েছে ✅ </div>";
+                                    echo "<div style='color: red; text-align: center; margin-top: 20px;font-size:16px'>✅নতুন সদস্য সফলভাবে নিবন্ধন হয়েছে। </div>";
     
                                     echo "<script>
                                         setTimeout(function(){

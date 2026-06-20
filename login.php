@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
             if ($update_status == 1) {
                 header("Location: home.php");
             } else {
-                header("Location: profile-edit.php");
+                header("Location: home.php");
             }
             exit();
 
@@ -79,10 +79,14 @@ if (isset($_POST['submit'])) {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'SolaimanLipi', sans-serif !important;
+        }
+        a, h1, h2, h3, h4, h5, h6, p, span, li, td, th, select, input, button{
+            font-family: 'SolaimanLipi', sans-serif !important;
         }
 
         body {
-            font-family: 'SolaimanLipi', sans-serif;
+            font-family: 'SolaimanLipi', sans-serif !important;
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -139,7 +143,7 @@ if (isset($_POST['submit'])) {
             background: rgba(230, 230, 230, 0.92);
             color: #333;
             font-size: 13px;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'SolaimanLipi', sans-serif !important;
             outline: none;
         }
 
@@ -227,7 +231,7 @@ if (isset($_POST['submit'])) {
             border-radius: 5px;
             font-size: 15px;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'SolaimanLipi', sans-serif !important;
             cursor: pointer;
             letter-spacing: 0.5px;
             transition: background 0.2s, transform 0.1s;

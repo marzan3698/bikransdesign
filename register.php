@@ -39,6 +39,10 @@
                     cursor: pointer;
                     user-select: none;
                 } 
+                select{
+                    background-color: transparent;
+                    border: none;
+                }
             </style>
             <ul>
                 <li><a href="features.php" class="close-panel"><img src="images/icons/green/settings.png" alt=""
@@ -77,7 +81,96 @@
                     <nav class="main-nav"
                         style="margin-top: 80px !important; width: 95%; margin: auto; border: 1px solid #222">
                         <?php
+                            function uploadPassportPhoto($file, $folder = 'uploads/profile/', $width = 144, $height = 182)
+                            {
+                                if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
+                                    return null;
+                                }
 
+                                $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                                $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+                                if (!in_array($ext, $allowed)) {
+                                    return null;
+                                }
+
+                                if (!is_dir($folder)) {
+                                    mkdir($folder, 0777, true);
+                                }
+
+                                // সোর্স ইমেজ লোড করা
+                                switch ($ext) {
+                                    case 'jpg':
+                                    case 'jpeg':
+                                        $srcImg = imagecreatefromjpeg($file['tmp_name']);
+                                        break;
+                                    case 'png':
+                                        $srcImg = imagecreatefrompng($file['tmp_name']);
+                                        break;
+                                    case 'webp':
+                                        $srcImg = imagecreatefromwebp($file['tmp_name']);
+                                        break;
+                                    default:
+                                        return null;
+                                }
+
+                                if (!$srcImg) {
+                                    return null;
+                                }
+
+                                $srcWidth  = imagesx($srcImg);
+                                $srcHeight = imagesy($srcImg);
+
+                                // টার্গেট aspect ratio অনুযায়ী crop area বের করা (center crop)
+                                $targetRatio = $width / $height;
+                                $srcRatio    = $srcWidth / $srcHeight;
+
+                                if ($srcRatio > $targetRatio) {
+                                    // সোর্স বেশি চওড়া -> width crop হবে
+                                    $cropHeight = $srcHeight;
+                                    $cropWidth  = (int) ($srcHeight * $targetRatio);
+                                    $cropX = (int) (($srcWidth - $cropWidth) / 2);
+                                    $cropY = 0;
+                                } else {
+                                    // সোর্স বেশি লম্বা -> height crop হবে
+                                    $cropWidth  = $srcWidth;
+                                    $cropHeight = (int) ($srcWidth / $targetRatio);
+                                    $cropX = 0;
+                                    $cropY = (int) (($srcHeight - $cropHeight) / 2);
+                                }
+
+                                // নতুন ক্যানভাস তৈরি (পাসপোর্ট সাইজ)
+                                $dstImg = imagecreatetruecolor($width, $height);
+
+                                // PNG হলে transparency handle করা
+                                if ($ext === 'png') {
+                                    imagealphablending($dstImg, false);
+                                    imagesavealpha($dstImg, true);
+                                } else {
+                                    $white = imagecolorallocate($dstImg, 255, 255, 255);
+                                    imagefill($dstImg, 0, 0, $white);
+                                }
+
+                                // crop + resize একসাথে
+                                imagecopyresampled(
+                                    $dstImg, $srcImg,
+                                    0, 0,
+                                    $cropX, $cropY,
+                                    $width, $height,
+                                    $cropWidth, $cropHeight
+                                );
+
+                                $fileName = uniqid() . '.jpg'; // সবসময় jpg এ সেভ করা সহজ
+                                $path = $folder . $fileName;
+
+                                // jpg এ সেভ (quality 90)
+                                imagejpeg($dstImg, $path, 90);
+
+                                imagedestroy($srcImg);
+                                imagedestroy($dstImg);
+
+                                return $path;
+                            }
                             function uploadImage($file, $folder = 'uploads/profile/')
                             {
                                 if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
@@ -123,7 +216,7 @@
                                 $phone    = $_POST['phone'] ?? '';
                                 $username = $_POST['username'] ?? '';
 
-                                $photoPath    = uploadImage($_FILES['photo'] ?? null);
+                                $photoPath    = uploadPassportPhoto($_FILES['photo'] ?? null);
                                 $nidFrontPath = uploadImage($_FILES['image'] ?? null);
                                 $nidBackPath  = uploadImage($_FILES['nid_back'] ?? null);
 
@@ -193,6 +286,13 @@
                             $address = $_POST['address'];
                             $password = $_POST['password'];
                             $confirm_password = $_POST['confirm_password'];
+                            $division_id = $_POST['division_id'];
+                            $district_id = $_POST['district_id'];
+                            $upazila_id = $_POST['upazila_id'];
+                            $union_id = $_POST['union_id'];
+                            $village = $_POST['village'];
+                            $nominee_name = $_POST['nominee_name'];
+                            $nominee_relation = $_POST['nominee_relation'];
                             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
                             // username check 
@@ -209,6 +309,38 @@
                             if (!preg_match('/^[a-zA-Z0-9]+$/', $password)) {
                                 die('পাসওয়ার্ড শুধু ইংরেজি অক্ষর ও সংখ্যা হতে হবে।');
                             }
+
+                            if(!$phone){
+                                die('অনুগ্রহ করে মোবাইল নম্বর পূরণ করুন।');
+                            }
+                            if(!$nid_no){
+                                die('অনুগ্রহ করে NID নম্বর পূরণ করুন।');
+                            }
+                            if(!$division_id){
+                                die('অনুগ্রহ করে বিভাগ সিলেক্ট করুন।');
+                            }
+                            if(!$district_id){
+                                die('অনুগ্রহ করে জেলা সিলেক্ট করুন।');
+                            }
+                            if(!$upazila_id){
+                                die('অনুগ্রহ করে উপজেলা সিলেক্ট করুন।');
+                            }
+                            if(!$union_id){
+                                die('অনুগ্রহ করে ইউনিয়ন সিলেক্ট করুন।');
+                            }
+                            if(!$village){
+                                die('অনুগ্রহ করে গ্রাম পূরণ করুন।');
+                            }
+                            if(!$nominee_name){
+                                die('অনুগ্রহ করে নমিনি নাম পূরণ করুন।');
+                            }
+                            if(!$nominee_relation){
+                                die('অনুগ্রহ করে নমিনি রিলেশনশিপ পূরণ করুন।');
+                            }
+                            if(!$dob){
+                                die('জন্ম তারিখ পূরণ করুন।');
+                            }
+
                             // Check Refer
                             $referUser = QB::table('member')->where('username', $refer)->first();
                             if ($referUser) {
@@ -241,6 +373,13 @@
                                     'p_nid_front' => $_POST['front_path'],
                                     'p_nid_back' => $_POST['back_path'],
                                     'register_userid' => $_SESSION['user_id'],
+                                    'division_id' => $division_id,
+                                    'district_id' => $district_id,
+                                    'upazila_id' => $upazila_id,
+                                    'union_id' => $union_id,
+                                    'nominee_name' => $nominee_name,
+                                    'nominee_relation' => $nominee_relation,
+                                    'village' => $village
                                 ]);
 
                                 if ($insert) {
@@ -259,8 +398,8 @@
                                     
 
 
-                                    echo '<img src="/images/verified.gif" width="120" style="display: block; margin: auto; margin-top: 20px;">';
-                                    echo '<h3 style="color: #12D584; text-align: center;">✅প্রতিনিধি সফলভাবে নিবন্ধন হয়েছে।</h3>';
+                                    // echo '<img src="/images/verified.gif" width="120" style="display: block; margin: auto; margin-top: 20px;">';
+                                    // echo '<h3 style="color: #12D584; text-align: center;">✅প্রতিনিধি সফলভাবে নিবন্ধন হয়েছে।</h3>';
                                         
                                     echo "<script>
                                         setTimeout(function(){
@@ -331,12 +470,58 @@
                                     <input type="text" name="nid_no" value="<?= $nid['nid'] ?? '' ?>" >
                                 </div>
 
-                                <div class="custom-form-group3" style="background-color: white;">
+                                <div class="custom-form-group2 white-bg" style="display: flex;gap:5px">
+                                    <div style="width: 50%;">
+                                        <select name="division_id" class="cus_select" id="division_id" required>
+                                            <option value="">বিভাগঃ </option>
+                                            <?php 
+                                            $divisions = QB::table('divisions')->orderBy('id', 'asc')->get();
+                                            foreach($divisions as $item){ ?>
+                                                <option value="<?= $item->id ?>"><?= $item->bn_name ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div style="width: 50%;">
+                                        <select name="district_id" class="cus_select" id="district_id" required>
+                                            <option value="">জেলাঃ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="custom-form-group2 white-bg" style="display: flex;gap:5px">
+                                    <div style="width: 50%;">
+                                        <select name="upazila_id" class="cus_select" id="upazila_id" required>
+                                            <option value="">উপজেলাঃ</option>
+                                        </select>
+                                    </div>
+                                    <div style="width: 50%;">
+                                        <select name="union_id" class="cus_select" id="union_id" required>
+                                            <option value="">ইউনিয়ন</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="custom-form-group2 white-bg">
+                                    <span class="inline-label">গ্রাম/মহল্লাঃ</span>
+                                    <input type="text" name="village" value="" >
+                                </div>
+
+                                <div class="custom-form-group2 white-bg">
+                                    <span class="inline-label">নমিনী নাম-</span>
+                                    <input type="text" id="nominee_name" name="nominee_name">
+                                </div>
+
+                                <div class="custom-form-group2 white-bg">
+                                    <span class="inline-label">নমিনী সম্পর্ক-</span>
+                                    <input type="text" id="nominee_relation" name="nominee_relation">
+                                </div>
+
+
+                                <div class="custom-form-group3" style="background-color: white; display:none" >
                                     <span class="inline-label" style="display: block;text-align:center">বিস্তারিত
                                         ঠিকানাঃ-</span><br>
                                     <textarea name="address"
                                         style="display: block; width: 100%; background: transparent; border: none;"><?= $nid['address'] ?? '' ?></textarea>
-                                </div>
+                                 </div>
 
 
                                 <div class="custom-form-group image-box">
@@ -469,4 +654,63 @@
             $("#password-check").text("পাসওয়ার্ড মিলেছে।").css("color", "green");
         }
     });
+</script>
+<script>
+$(document).ready(function(){
+
+    // Division → District
+    $('#division_id').change(function(){
+        var division_id = $(this).val();
+
+        $('#district_id').html('<option>Loading...</option>');
+        $('#upazila_id').html('<option value="">উপজেলা</option>');
+
+        if(division_id != ''){
+            $.ajax({
+                url: "get_districts.php",
+                type: "POST",
+                data: { division_id: division_id },
+                success: function(data){
+                    $('#district_id').html(data);
+                }
+            });
+        }
+    });
+
+    // District → Upazila
+    $('#district_id').change(function(){
+        var district_id = $(this).val();
+
+        $('#upazila_id').html('<option>Loading...</option>');
+
+        if(district_id != ''){
+            $.ajax({
+                url: "get_upazilas.php",
+                type: "POST",
+                data: { district_id: district_id },
+                success: function(data){
+                    $('#upazila_id').html(data);
+                }
+            });
+        }
+    });
+
+    $('#upazila_id').change(function(){
+        var upazila_id = $(this).val();
+
+        $('#union_id').html('<option>Loading...</option>');
+
+        if(upazila_id != ''){
+            $.ajax({
+                url: "get_unions.php",
+                type: "POST",
+                data: { upazila_id: upazila_id },
+                success: function(data){
+                    $('#union_id').html(data);
+                }
+            });
+        }
+    });
+
+});
 </script>

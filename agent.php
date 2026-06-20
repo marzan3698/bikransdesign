@@ -63,6 +63,15 @@
         .sub-box a{
             color: #fff;
         }
+        .service-icon2{
+            padding: 10px;
+            background: transparent;
+            color: #fff !important;
+            font-size: 14px;
+        }
+        .service-icon2 span{
+            color: #fff !important;
+        }
     </style>
 
         <div class="pages">
@@ -79,87 +88,293 @@
                     <nav class="main-nav"
                         style="margin-top: 60px !important; width: 95%; margin: auto; border: 1px solid #12D584; min-height:86vh;">
                         <?php 
-                            $agentCheck = QB::table('agent')->where('user_id', $_SESSION['user_id'])->first();
+                            $agentCheck = QB::table('agent')->where('user_id', $_SESSION['user_id'])->where('status', 1)->first();
                         ?>
                         <div class="box">
                             <div class="box-text-wrap">
-                                <div class="box-text" style="color: white;">বিক্র্যান্স এজেন্ট</div>
-                            </div>
-                            <div class="box-img-wrap">
-                                <img src="images/custom/688.png" alt="" class="box-img" style="width: 130px;">
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 5px; width: 97%; margin: auto;">
-                            <?php if($agentCheck){ ?>
-                                <div class="sub-box" style="background: #F26B6C;" onclick="window.location.href='agent_nibondhon.php'">
-                                    এজেন্ট নিবন্ধন সম্পন্ন হয়েছে
+                                <div class="box-text" style="margin: 0px;margin-right:7px;padding:7px;">
+                                    <canvas id="myChart"></canvas>
                                 </div>
-                            <?php }else{ ?>
-                                <div class="sub-box" style="background: #F26B6C;" onclick="window.location.href='agent_nibondhon.php'">
-                                    এজেন্ট নিবন্ধন আবেদন
+                            </div>
+                            <div class="box-img-wrap" style="padding: 8px 3px;">
+                                <div class="item2">
+                                    <span class="dot2" style="background: white;"></span>
+                                    <span style="color: white;">আজকের ইনকাম -56787676</span>
                                 </div>
-                            <?php } ?>
-                            <div class="sub-box" style="background: #00CC99" onclick="window.location.href='agent-balens-abedon.php'">
-                                এজেন্ট ব্যালেন্স আবেদন
-                            </div>
-                            <div class="sub-box" style="background: #7F7F7F;">বর্তমান ব্যালেন্স: <?= $member->agent_balence ?></div>
-                        </div>
 
-                        <div style="display: flex; gap: 5px; width: 97%; margin: auto;margin-top:5px !important">
-                            <div class="sub-box" style="background: #7F7F7F;" onclick="window.location.href='agent-balance-report.php'">এজেন্ট ব্যালেন্স রিপোর্ট</div>
-                            <?php if($agentCheck){ ?>
-                                <div class="sub-box" style="background: #F26B6C;" onclick="window.location.href='agent-product-order.php'">এজেন্ট প্রোডাক্ট অর্ডার</div>
-                            <?php }else{ ?>
-                                <div class="sub-box" style="background: #F26B6C;">এজেন্ট প্রোডাক্ট অর্ডার</div>
-                            <?php } ?>
-                            <div class="sub-box" style="background: #00CC99;" onclick="window.location.href='agent-product-stock.php'">
-                                <?php 
-                                    $stockIn = QB::table('agent_product_stock')
-                                        ->where('user_id', $_SESSION['user_id'])
-                                        ->where('type', 'stock_in')
-                                        ->get();
+                                <div class="item2">
+                                    <span class="dot2" style="background: #00bcd4;"></span>
+                                    <span style="color: #00bcd4;">সহযোগী সদস্য -56787676</span>
+                                </div>
 
-                                    $stockOut = QB::table('agent_product_stock')
-                                        ->where('user_id', $_SESSION['user_id'])
-                                        ->where('type', 'stock_out')
-                                        ->get();
+                                <div class="item2">
+                                    <span class="dot2" style="background: #a6ff00;"></span>
+                                    <span style="color: #a6ff00;">তৃতীয় ব্যালেন্স -56787676</span>
+                                </div>
 
-                                    $totalIn = 0;
-                                    foreach ($stockIn as $row) {
-                                        $totalIn += $row->qty ?? 0;
-                                    }
+                                <div class="item2">
+                                    <span class="dot2" style="background:white;"></span>
+                                    <span style="color: white;">ক্যাশ করবেন -56787676</span>
+                                </div>
 
-                                    $totalOut = 0;
-                                    foreach ($stockOut as $row) {
-                                        $totalOut += $row->qty ?? 0;
-                                    }
+                                <div class="item2">
+                                    <span class="dot2" style="background: #00bcd4;"></span>
+                                    <span style="color: #00bcd4;">বুকিং ব্যালেন্স -56787676</span>
+                                </div>
 
-                                    $stock = $totalIn - $totalOut;
-                                ?>
-                                এজেন্ট প্রোডাক্ট স্টক: <?= $stock ?>
+                                <div class="item2">
+                                    <span class="dot2" style="background: #a6ff00;"></span>
+                                    <span style="color: #a6ff00;">সরাসরি প্রোডাক্ট ক্রয় -12</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="withdrawal-container">
+                            <div class="service-header-wrap">
+                                <div class="menu-toggle-btn">
+                                    <span class="menu-bar""></span>
+                                    <span class=" menu-bar"></span>
+                                    <span class="menu-bar"></span>
+                                </div>
+                                <div class="service-title-text" style="color: #fff;font-size: 25px;">
+                                    বিক্রান্স এজেন্ট প্যানেল
+                                </div>
+                                <div class="notification-icon-btn" style="color:#0B2234;margin-right:6px;">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                        <circle cx="18" cy="6" r="3" fill="#0B2234" stroke="#0B2234" />
+                                    </svg>
+                                </div>
+                            </div>
 
-                        <div style="display: flex; gap: 5px; width: 97%; margin: auto;margin-top:5px !important">
-                            <?php if($agentCheck){ ?>
-                                <div class="sub-box" style="background: #F26B6C;" onclick="window.location.href='agent_pre_register.php'">নতুন সদস্য নিবন্ধন</div>
-                            <?php }else{ ?>
-                                <div class="sub-box" style="background: #F26B6C;">নতুন সদস্য নিবন্ধন</div>
-                            <?php } ?>
-                            <div class="sub-box" style="background: #00CC99;" onclick="window.location.href='sodosso-product-delivery-report.php'">সদস্য প্রোডাক্ট ডেলিভারি রিপোর্ট</div>
-                            <div class="sub-box" style="background: #F26B6C;" onclick="window.location.href='agent-product-stock.php'">এজেন্ট প্রোডাক্ট স্টক রিপোর্ট</div>
+                            <div class="service-flex">
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <?php if($agentCheck){ ?>
+                                            <span> এজেন্ট নিবন্ধন সম্পন্ন হয়েছে</span>
+                                        <?php }else{ ?>
+                                            <span onclick="window.location.href='agent_nibondhon.php'"> এজেন্ট নিবন্ধন আবেদন</span>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                         <?php if($agentCheck){ ?>
+                                            <span onclick="window.location.href='agent-balens-abedon.php'"> এজেন্ট ব্যালেন্স আবেদন</span>
+                                        <?php }else{ ?>
+                                            <span> এজেন্ট ব্যালেন্স আবেদন</span>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>বর্তমান ব্যালেন্স: <?= $member->agent_balence ?></span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='agent-balance-report.php'">এজেন্ট ব্যালেন্স রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                         <?php if($agentCheck){ ?>
+                                            <span onclick="window.location.href='agent-product-order.php'">এজেন্ট প্রোডাক্ট অর্ডার</span>
+                                        <?php }else{ ?>
+                                            <span>এজেন্ট প্রোডাক্ট অর্ডার</span>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='agent-product-order-report.php'">এজেন্ট প্রোডাক্ট অর্ডার রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <?php 
+                                            $stockIn = QB::table('agent_product_stock')
+                                                ->where('user_id', $_SESSION['user_id'])
+                                                ->where('type', 'stock_in')
+                                                ->get();
+
+                                            $stockOut = QB::table('agent_product_stock')
+                                                ->where('user_id', $_SESSION['user_id'])
+                                                ->where('type', 'stock_out')
+                                                ->get();
+
+                                            $totalIn = 0;
+                                            foreach ($stockIn as $row) {
+                                                $totalIn += $row->qty ?? 0;
+                                            }
+
+                                            $totalOut = 0;
+                                            foreach ($stockOut as $row) {
+                                                $totalOut += $row->qty ?? 0;
+                                            }
+
+                                            $stock = $totalIn - $totalOut;
+                                        ?>
+                                        <span onclick="window.location.href='agent-product-stock.php'">এজেন্ট প্রোডাক্ট স্টক: <?= $stock ?></span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='agent-product-stock-report.php'">এজেন্ট প্রোডাক্ট <br> স্টক রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <?php if($agentCheck){ ?>
+                                            <span onclick="window.location.href='agent_pre_register.php'">নতুন সদস্য <br> নিবন্ধন</span>
+                                        <?php }else{ ?>
+                                            <span>নতুন সদস্য নিবন্ধন</span>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='new-member-list-agent-created.php'">নতুন সদস্য <br> নিবন্ধন তালিকা</span>
+                                    </div>
+                                </div>
+
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='sodosso-product-delivery-report.php'">সব প্রোডাক্ট ডেলিভারি রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <?php if($agentCheck){ ?>
+                                            <span onclick="window.location.href='agent-product-repurchase.php'">গ্রাহক প্রোডাক্ট <br> রি-অর্ডার</span>
+                                        <?php }else{ ?>
+                                            <span>গ্রাহক প্রোডাক্ট <br> রি-অর্ডার</span>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='agent-product-repurchase-report.php'">প্রোডাক্ট রি-অর্ডার রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item" onclick="window.location.href='agent-bikroy-commission.php'">
+                                    <div class="service-icon2">
+                                        <span>এজেন্ট বিক্রয় কমিশন-  <?php $total = QB::query("
+                                            SELECT IFNULL(SUM(cradit),0) as total_credit
+                                            FROM user_transection
+                                            WHERE user_id = '{$_SESSION['user_id']}'
+                                            AND his = 561
+                                        ")->first();
+
+                                        echo $total->total_credit; ?></span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span onclick="window.location.href='agent-sales-report.php'">এজেন্ট থেকে <br> বিক্রয় রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>এজেন্ট রয়্যালিটি বোনাস- <?php $total = QB::query("
+                                            SELECT IFNULL(SUM(cradit),0) as total_credit
+                                            FROM user_transection
+                                            WHERE user_id = '{$_SESSION['user_id']}'
+                                            AND his = 571
+                                        ")->first();
+
+                                        echo $total->total_credit; ?></span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span><a href="roylity_bonus.php" style="color: white;">রয়্যালিটি বোনাস রিপোর্ট</a></span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>এজেন্ট মাসিক ইনসেনটিভ টার্গেট-0</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>এজেন্ট মাসিক ইনসেনটিভ-0</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>এজেন্ট মাসিক ইনসেনটিভ রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>ক্যাশ পেমেন্ট <br> রিকুয়েস্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>পেমেন্ট এজেন্ট কমিশন দিন</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>ক্যাশ পেমেন্ট রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>পেমেন্ট এজেন্ট কমিশন-0</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>পেমেন্ট এজেন্ট কমিশন রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>পেমেন্ট এজেন্ট অফিস খরচ-0</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>পেমেন্ট এজেন্ট অফিস খরচ রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>এজেন্ট মোট ইনকাম-0</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>প্রোডাক্ট <br> রিকুয়েস্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>রিকুয়েস্ট প্রোডাক্ট ডেলিভারি রিপোর্ট</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>আসিতেছে</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>আসিতেছে</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon2">
+                                        <span>আসিতেছে</span>
+                                    </div>
+                                </div>
+
+                            </div> 
                         </div>
-
-                        <div style="display: flex; gap: 5px; width: 97%; margin: auto;margin-top:5px !important">
-                            <?php if($agentCheck){ ?>
-                                <div class="sub-box" style="background: #7F7F7F;" onclick="window.location.href='agent-product-repurchase.php'">গ্রাহক প্রোডাক্ট রি-অর্ডার</div>
-                            <?php }else{ ?>
-                                <div class="sub-box" style="background: #7F7F7F;">গ্রাহক প্রোডাক্ট রি-অর্ডার</div>
-                            <?php } ?>
-                            <div class="sub-box" style="background: #F26B6C;" onclick="window.location.href='agent-product-repurchase-report.php'">প্রোডাক্ট রি-অর্ডার রিপোর্ট</div>
-                            <div class="sub-box" style="background: #7F7F7F;">আসছে</div>
-                        </div>
-
                     </nav>
 
 

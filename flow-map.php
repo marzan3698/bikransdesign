@@ -46,7 +46,11 @@
 
     <div class="view view-main">
 
-
+        <style>
+            .title{
+                color: #48DE7F !important;
+            }
+        </style>
 
         <div class="pages">
 
@@ -77,36 +81,36 @@
                             <thead>
                                 <tr>
                                     <th class="table-text"
-                                        style="background:#009999;color:#fff;font-size:14px;cursor:pointer; border-right:#0B2234 solid 1px; color:black">
+                                        style="background:#009999;color:#fff;font-size:14px;cursor:pointer; border-right:#0B2234 solid 1px; color:black;padding: 3px 3px;">
                                          প্রথম প্রজন্ম <br><?= $counts[0] ?>
                                     </th>
-                                    <th class="table-text" style="background:#F26C6D;font-size:14px;cursor:pointer; border-right:#0B2234 solid 1px;">
+                                    <th class="table-text" style="background:#F26C6D;font-size:14px;cursor:pointer; border-right:#0B2234 solid 1px;padding: 3px 3px;">
                                         দ্বিতীয় প্রজন্ম <br><?= $counts[1] ?>
                                     </th>
-                                    <th class="table-text" style="background:#8E8E93;font-size:14px;cursor:pointer; border-right:#0B2234 solid 1px;">
+                                    <th class="table-text" style="background:#8E8E93;font-size:14px;cursor:pointer; border-right:#0B2234 solid 1px;padding: 3px 3px;">
                                         তৃতীয় প্রজন্ম <br><?= $counts[2] ?>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="table-text" style="background:#9966FF;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;">
+                                    <th class="table-text" style="background:#9966FF;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;padding: 3px 3px;">
                                         চতুর্থ প্রজন্ম <br><?= $counts[3] ?>
                                     </th>
-                                    <th class="table-text" style="background:#CC9900;cursor:pointer;font-size:14px;">
+                                    <th class="table-text" style="background:#CC9900;cursor:pointer;font-size:14px; padding: 3px 3px;">
                                         পঞ্চম প্রজন্ম <br><?= $counts[4] ?>
                                     </th>
                                     <th class="table-text"
-                                        style="background:#343399;color:#fff !important;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px; color:black">
+                                        style="background:#343399;color:#fff !important;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px; color:black;padding: 3px 3px;">
                                         ষষ্ঠ প্রজন্ম <br><?= $counts[5] ?>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="table-text" style="background:#01CB99;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;">
+                                    <th class="table-text" style="background:#01CB99;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;padding: 3px 3px;">
                                         সপ্তম প্রজন্ম <br><?= $counts[6] ?>
                                     </th>
-                                    <th class="table-text" style="background:#8F8E93;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;">
+                                    <th class="table-text" style="background:#8F8E93;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;padding: 3px 3px;">
                                         অষ্টম প্রজন্ম <br><?= $counts[7] ?>
                                     </th>
-                                    <th class="table-text" style="background:#F16B6C;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;">
+                                    <th class="table-text" style="background:#F16B6C;cursor:pointer;font-size:14px; border-right:#0B2234 solid 1px;padding: 3px 3px;">
                                         নবম প্রজন্ম <br><?= $counts[8] ?>
                                     </th>
                                 </tr>

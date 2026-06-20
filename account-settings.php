@@ -130,18 +130,43 @@
                                 }
                                 ?>
                             <form action="" method="POST">
-                                <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
-                                    <input style="color: white;" type="text" name="account_number" id="input" placeholder="ব্যাংক একাউন্ট নির্ধারণ করুন" required>
-                                </div>
-                                <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
-                                    <input style="color: white;" type="text" name="account_name" id="input" placeholder="ব্যাংক অক্কোউন্টধারীর নাম নির্ধারণ করুন" >
-                                </div>
+                                <?php if(isset($_GET['bkash'])){ ?>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
+                                        <input style="color: white;" type="text" name="account_number" id="input" placeholder="বিকাশ একাউন্ট নম্বর লিখুন" required>
+                                    </div>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
+                                        <input style="color: white;" type="text" name="account_name" id="input" placeholder="বিকাশ অক্কোউন্টধারীর নাম নির্ধারণ করুন" >
+                                    </div>
+                                <?php } ?>
+                                <?php if(isset($_GET['nagad'])){ ?>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
+                                        <input style="color: white;" type="text" name="account_number" id="input" placeholder="নগদ একাউন্ট নম্বর লিখুন" required>
+                                    </div>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
+                                        <input style="color: white;" type="text" name="account_name" id="input" placeholder="নগদ অক্কোউন্টধারীর নাম নির্ধারণ করুন" >
+                                    </div>
+                                <?php } ?>
+
+                                <?php if(isset($_GET['dbbl'])){ ?>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
+                                        <input style="color: white;" type="text" name="account_number" id="input" placeholder="ব্যাংক একাউন্ট নম্বর লিখুন" required>
+                                    </div>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
+                                        <input style="color: white;" type="text" name="account_name" id="input" placeholder="ব্যাংক অক্কোউন্টধারীর নাম নির্ধারণ করুন" >
+                                    </div>
+                                <?php } ?>
                                 <div class="custom-form-group2" style="background-color: #0B2234;margin-top:20px">
                                     <select name="account_type" id="" style="width: 100%; background: transparent; border: none; color: #fff;" required>
                                         <option value="">ব্যাংক নাম নির্ধারণ করুন</option>
-                                        <option value="bkash">বিকাশ</option>
-                                        <option value="nogod">নগদ</option>
-                                        <option value="bank">ব্যাংক</option>
+                                        <?php if(isset($_GET['bkash'])){ ?>
+                                            <option value="bkash" selected>বিকাশ</option>
+                                        <?php } ?>
+                                        <?php if(isset($_GET['nagad'])){ ?>
+                                            <option value="nogod" selected>নগদ</option>
+                                        <?php } ?>
+                                        <?php if(isset($_GET['dbbl'])){ ?>
+                                            <option value="bank" selected>ব্যাংক</option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <button type="submit" name="submit" class="custom-submit-button6">সাবমিট করুন</button>

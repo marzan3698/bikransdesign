@@ -75,7 +75,7 @@
                             <thead>
                                 <tr>
 
-                                    <th class="black">মোট টিম কর্মী সংখ্যা-900 </th>
+                                    <th class="black">মোট টিম কর্মী সংখ্যা-0.00</th>
                                     <th class="red">সর্ব মোট বঞ্চিত আয়-   <?php echo $member->bonchito_tk; ?></th>
 
                                 </tr>

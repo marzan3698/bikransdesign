@@ -102,6 +102,7 @@
                                     echo "<div style='color: red; text-align: center; margin-top: 20px;'>❌ অনুগ্রহ করে ইউজার আইডি লিখুন </div>";
                                     die();
                                 }else{
+                                    
                                     $userCheck = QB::table('member')->where('username', $username)->first();
                                     if(!$userCheck){
                                         echo "<div style='color: red; text-align: center; margin-top: 20px;'>❌ ইউজার আইডি সঠিক নয় </div>";
@@ -111,12 +112,16 @@
 
                                 
                                 $amount = $_POST['total_price'] ?? 0;
-                                $user_id = $userCheck->id;
+                                
+                               echo $user_id = $userCheck->id;
+                               
+                               //die();
                                 
                               $balance = $member->jfund_balance;
                               
                                     $time = time();
-                                    $data1 = array(
+                                    
+                                    /*$data1 = array(
                                         'time' => $time,
                                         'user_id' => $userCheck->id,
                                         'debit' => $amount,
@@ -126,13 +131,34 @@
                                         'package' => $amount
                                     );
                                     $insert1 = $queryBuilder->table('user_trx_joining')->insert($data1);
-                                    if ($insert1) {
+                                    */
+                                    //if ($insert1) {
                                         
                                         $sql = "UPDATE `member` SET `is_premium` = '1', `update_time` = '1' WHERE `member`.`id` = '$user_id';";
+                                        
+                                        $totalCommission = $_POST['total_qty'] * 10;
+                                        
+                                        $sql12 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
+                                    $mysqli->query($sql12);
+                                    
+                                    add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $user_id);
+                                    $agent_sponsor1 = find_sponsor_agent($_SESSION['user_id']);
+                                    
+                                    $agent_sponsor12 = find_sponsor_agent1($agent_sponsor1);
+                                    
+                                    
+                                    $sql13 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '$agent_sponsor12';";
+                                    $mysqli->query($sql13);
+                                    
+                                    add_balance_agent_refer_agent($agent_sponsor12, $totalCommission, 1, $user_id);
+                                    
+                                     
+                                     
                                         
                                         if ($mysqli->query($sql)) {
 
                                           $sponsor1 = find_sponsor($user_id);
+                                          
                                             $refer_amount = 100*$total_price;
                                             
                                             if (member_status($sponsor1) == 1) {
@@ -140,8 +166,15 @@
                                                 $refer_amount;
                                                 //die();
                                                 add_balance_user_refer($sponsor1, $refer_amount, 1, $userCheck->id);
+                                                $biz_al_amount = 3*$total_price;
                                                 
+                                                $biz_alert_count=biz_master_count_active();
                                                 
+                                                $main_biz = $biz_al_amount/$biz_alert_count;
+                                                
+                                                biz_alert_all($main_biz,$user_id);
+                                                
+                                                //die();
                                                 if(biz_alert_active($sponsor1)==1){
                                                 
                                                 $total_qty=total_order_qty($sponsor1);
@@ -198,12 +231,13 @@
                                             }
                                             give_generation2($user_id, $amount, $total_price);
                                             
+                                            
+                                            
                                         }
                                         // Insert order into database
                                         QB::table('order')->insert([
                                             'user_id' => $userCheck->id,
                                             'agent_id' => $_SESSION['user_id'],
-                                            'type' => 'agent-repurchase',
                                             'time' => time(),
                                             'total_qty' => $_POST['total_qty'] ?? 0,
                                             'total_price' => $_POST['total_price'] ?? 0,
@@ -211,6 +245,9 @@
                                             'name' => $user->name ?? null,
                                             'email' => $user->email ?? null,
                                             'phone' => $user->phone ?? null,
+                                            'type' => 'agent-repurchase',
+                                            'order_type' => 'agent-repurchase',
+                                            'is_agent' => 1,
                                         ]);
                                         $lastOrder = QB::table('order')->orderBy('id', 'desc')->first();
                                         $orderId = 1;
@@ -224,12 +261,14 @@
                                         foreach ($_POST['product_id'] as $index => $productId) {
                                             QB::table('order_items')->insert([
                                                 'user_id' => $userCheck->id,
-                                                'agent_id' => $_SESSION['user_id'],
                                                 'order_id' => $orderId,
                                                 'product_id' => $productId,
                                                 'quantity' => $_POST['quantity'][$index],
                                                 'price' => $_POST['price'][$index],
                                                 'type' => 'agent-repurchase',
+                                                'is_agent' => 1,
+                                                'order_type' => 'agent-repurchase',
+                                                'agent_id' => $_SESSION['user_id'],
                                             ]);
                                             QB::table('agent_product_stock')->insert([
                                                 'user_id' => $_SESSION['user_id'],
@@ -256,7 +295,7 @@
                                                 window.location.href = 'order-summary3.php?order_id={$orderId}';
                                             }, 500);
                                         </script>";
-                                    }
+                                    //}
                             } else {
                                 echo "<div style='color: red; text-align: center; margin-top: 20px;'>❌ অর্ডার করতে কমপক্ষে 1 টি প্রোডাক্ট নির্বাচন করুন।</div>";
                             }

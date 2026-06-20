@@ -84,7 +84,6 @@
 
                                     </a>
                                 </div>
-
                                 <div class="service-item2">
                                     <a href="javascript::void(0)" onclick="window.location.href='nagad.php'">
                                         <div class="service-icon4">
@@ -93,7 +92,6 @@
 
                                     </a>
                                 </div>
-
                                 <div class="service-item2">
                                     <a href="javascript::void(0)" onclick="window.location.href='dutch-bangla.php'">
                                         <div class="service-icon4">
@@ -101,50 +99,37 @@
                                         </div>
                                     </a>
                                 </div>
-
-
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/6.svg" alt="Send">
                                     </div>
-
                                 </div>
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/7.svg" alt="Send">
                                     </div>
-
                                 </div>
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/8.svg" alt="Send">
                                     </div>
-
                                 </div>
-
-
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/9.svg" alt="Send Money">
                                     </div>
 
                                 </div>
-
-
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/10.svg" alt="Send">
                                     </div>
-
                                 </div>
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/11.svg" alt="Send">
                                     </div>
                                 </div>
-
-
-
                                 <div class="service-item2">
                                     <div class="service-icon4">
                                         <img src="images/custom/94.png" alt="Send">
@@ -160,74 +145,6 @@
                                         <img src="images/custom/94.png" alt="Send">
                                     </div>
                                 </div>
-
-
-
-
-                                <!--  <div class="service-item2" style="margin: right 15px; height: 115px; width: 115px;">
-                                    <div class="service-icon4 common-style">
-                                        আসিতেছে
-                                    </div>
-                                </div> -->
-
-
-                                <!--  <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/5.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-
-
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/8.png" alt="24 Hours">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div>
-                                <div class="service-item2">
-                                    <div class="service-icon3">
-                                        <img src="images/custom/icons/7.png" alt="Report">
-                                    </div>
-                                    <div class="service-name3">গ্রাহক সংখ্যা</div>
-                                </div> -->
                             </div>
                         </div>
                     </nav>

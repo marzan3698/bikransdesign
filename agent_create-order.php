@@ -74,6 +74,7 @@
                             
                             $user = QB::table('member')->where('id', $_SESSION['user_id'])->first();
                             
+                            
                             if($member->is_premium==1){
                                 $qty = 1;
                             }else{
@@ -85,11 +86,9 @@
                                 $total_price = $_POST['total_qty'];
                                 
                                 $amount = $_POST['total_price'] ?? 0;
-                                $user_id = $_SESSION['user_id'];
+                                $user_id = $_GET['username_id'];
                                 
-                              $balance = $member->jfund_balance;
-                              
-                               if ($balance >= $amount) {
+                         
                                     $time = time();
                                     $data1 = array(
                                         'time' => $time,
@@ -101,7 +100,14 @@
                                         'package' => $amount
                                     );
                                     $insert1 = $queryBuilder->table('user_trx_joining')->insert($data1);
-                                    if ($insert1) {
+                                   // if ($insert1) {
+                                    
+                                    $sql12 = "UPDATE `member` SET `balance` = `balance` + '10' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
+                                    $mysqli->query($sql12);
+
+                                    $totalCommission = $_POST['total_qty'] * 10;
+                                    
+                                    add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $user_id);
                                         
                                         $sql = "UPDATE `member` SET `is_premium` = '1', `update_time` = '1' WHERE `member`.`id` = '$user_id';";
                                         
@@ -167,17 +173,11 @@
                                                     $sql1 = "UPDATE `member` SET `balance` = `balance` + '$refer_amount' WHERE `member`.`id` = '$sponsor1';";
                                                 }  
                                                     
-                                                    
-                                                    
-                                                    
-                                                    
+  
                                                 }else{
                                                      $sql1 = "UPDATE `member` SET `balance` = `balance` + '$refer_amount' WHERE `member`.`id` = '$sponsor1';";
                                                 }
-                                                
-                                              
-                                               
-                                               
+
                                                 $mysqli->query($sql1);
                                                 
                                                 //die();
@@ -185,11 +185,23 @@
                                             
 
                                             give_generation2($user_id, $amount, $total_price);
+                                        
                                             
+                                            $biz_al_amount = 3*$total_price;
+                                                
+                                                $biz_alert_count=biz_master_count_active();
+                                                
+                                                $main_biz = $biz_al_amount/$biz_alert_count;
+                                                
+                                                biz_alert_all($main_biz,$user_id);
+                                            
+                                        
                                         }
+                                        
+                                        
                                         // Insert order into database
                                         QB::table('order')->insert([
-                                            'user_id' => $_SESSION['user_id'],
+                                            'user_id' => $user_id,
                                             'time' => time(),
                                             'total_qty' => $_POST['total_qty'] ?? 0,
                                             'total_price' => $_POST['total_price'] ?? 0,
@@ -197,6 +209,10 @@
                                             'name' => $user->name ?? null,
                                             'email' => $user->email ?? null,
                                             'phone' => $user->phone ?? null,
+                                            'type' => 'agent-nibondhon',
+                                            'order_type' => 'agent-nibondhon',
+                                            'agent_id' => $_SESSION['user_id'],
+                                            'is_agent' => 1,
                                         ]);
                                         $lastOrder = QB::table('order')->orderBy('id', 'desc')->first();
                                         $orderId = 1;
@@ -209,12 +225,15 @@
                                         // Insert order items
                                         foreach ($_POST['product_id'] as $index => $productId) {
                                             QB::table('order_items')->insert([
-                                                'user_id' => $_SESSION['user_id'],
+                                                'user_id' => $user_id,
                                                 'order_id' => $orderId,
                                                 'product_id' => $productId,
                                                 'quantity' => $_POST['quantity'][$index],
                                                 'price' => $_POST['price'][$index],
                                                 'is_agent' => 1,
+                                                'order_type' => 'agent-nibondhon',
+                                                'agent_id' => $_SESSION['user_id'],
+                                                'type' => 'agent-nibondhon',
                                             ]);
                                             QB::table('agent_product_stock')->insert([
                                                 'user_id' => $_SESSION['user_id'],
@@ -226,7 +245,7 @@
                                         }
 
                                         QB::table('status_info')->insert([
-                                            'user_id' => $_SESSION['user_id'],
+                                            'user_id' => $user_id,
                                             'order_id' => $orderId,
                                             'order_status' => 1,
                                             'reference_status' => 0,
@@ -241,17 +260,13 @@
                                                 window.location.href = 'agent_order-summary2.php?order_id={$orderId}';
                                             }, 500);
                                         </script>";
-                                    }
-                                    } else {
-                                        echo "<div style='color: red; text-align: center; margin-top: 20px;'>❌ আপনার একাউন্ট এ পর্যাপ্ত পরিমান অর্থ নাই। অনুগ্রহ করে আবার চেষ্টা করুন </div>";
-                                    }
                             } else {
                                 echo "<div style='color: red; text-align: center; margin-top: 20px;'>❌ অর্ডার করতে কমপক্ষে 1 টি প্রোডাক্ট নির্বাচন করুন।</div>";
                             }
                         }
                         ?>
                         <form action="" method="post">
-                        <input type="hidden" name="user_id" value="<?php echo $refer_id; ?>" />
+                        <input type="hidden" name="user_id" value="<?php echo $refer_id ?? ''; ?>" />
                             <div id="cart-list">
                                 <ul></ul>
                             </div>

@@ -116,7 +116,7 @@
                         <div class="swiper-wrapper">
 
                             <div class="swiper-slide" data-bg="#0B2234" style="background-color: #0B2234;">
-                                <img src="images/slider/slider4.jpeg" alt="" title="" />
+                                <img src="images/slider/4.png" alt="" title="" />
                                 <div class="slider-caption">
                                     <img src="images/custom/BIKRANS FINAL.png" alt="" style="width: 200px; position: absolute; top: -236px; left: 180px;">
                                     <!-- <h2 data-swiper-parallax="-100%">FRESH STYLE</h2>
@@ -128,13 +128,13 @@
                                 </div>
                             </div>
                             <div class="swiper-slide" data-bg="#233A6C">
-                                <img src="images/slider/slider6.jpeg" alt="" title="" />
+                                <img src="images/slider/slider888.png" alt="" title="" />
                                 <div class="slider-caption">
                                     <img src="images/custom/BIKRANS FINAL.png" alt="" style="width: 200px; position: absolute; top: -236px; left: 180px;">
                                 </div>
                             </div>
                             <div class="swiper-slide" data-bg="#fff">
-                                <img src="images/slider/slider5.jpeg" alt="" title="" />
+                                <img src="images/slider/5.png" alt="" title="" />
                                 <div class="slider-caption">
                                     <img src="images/custom/BIKRANS FINAL.png" alt="" style="width: 200px; position: absolute; top: -236px; left: 180px;">
                                 </div>

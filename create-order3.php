@@ -45,7 +45,15 @@
 <div class="views">
 
     <div class="view view-main">
-
+        <style>
+            .product-image2 img{
+                width: 100px;
+                height: 130px;
+                border: 2px solid #12d584;
+                padding: 8px;
+                margin-right: 10px;
+            }
+        </style>
 
 
         <div class="pages">
@@ -125,16 +133,16 @@
                                                 add_balance_user_refer($sponsor1, $refer_amount, 1, $_SESSION['user_id']);
                                                 
                                                 
-                                                if(biz_alert_active($sponsor1)==1){
+                                                if(biz_alert_active($_SESSION['user_id'])==1){
                                                 
-                                                $total_qty=total_order_qty($sponsor1);
+                                                $total_qty=total_order_qty($_SESSION['user_id']);
                                                 $total_qty = $total_qty-3;
                                                 
-                                                $biz_time=biz_alert_active_time($sponsor1);
+                                                $biz_time=$member2->biz_alert_time;
                                                 
-                                                $daytime = biz_alert_active_time_day($sponsor1);
+                                                $daytime = $member2->biz_day;
                                                 
-                                                $active_time_day=2;
+                                                $active_time_day=30;
                                                 
                                                 $daytime = $daytime+$active_time_day;
                                                 
@@ -146,7 +154,11 @@
                                                  
                                                 if($pre_time>=$day_check){
                                                     
-                                                    $sqlb = "UPDATE `member` SET `biz_day` = `biz_day`+'$active_time_day' WHERE `member`.`id` = '$sponsor1'";
+                                                    echo date('d/m/y',$day_check);
+                                                    
+                                                    //die();
+                                                    
+                                                    $sqlb = "UPDATE `member` SET `biz_day` = `biz_day`+'$active_time_day' WHERE `member`.`id` = '{$_SESSION['user_id']}'";
                                                  $mysqli->query($sqlb);
                                                     
                                                     
@@ -175,10 +187,6 @@
                                                     
                                                     $sql1 = "UPDATE `member` SET `balance` = `balance` + '$refer_amount' WHERE `member`.`id` = '$sponsor1';";
                                                 }  
-                                                    
-                                                    
-                                                    
-                                                    
                                                     
                                                 }else{
                                                      $sql1 = "UPDATE `member` SET `balance` = `balance` + '$refer_amount' WHERE `member`.`id` = '$sponsor1';";
@@ -322,7 +330,7 @@
                             ?>
 
                                 <div class="product-row" data-id="<?= $product->id ?>" data-price="<?= $product->main_price ?>">
-                                    <div class="product-image">
+                                    <div class="product-image2">
                                         <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
                                     </div>
 

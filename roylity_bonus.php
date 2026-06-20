@@ -89,12 +89,12 @@ $days = [
                         <table class="table4">
                             <thead>
                                 <tr>
-                                    <th class="ash"> মোট রেফার সংখ্যা-25 </th>
-                                    <th class="black">মোট রেফার আয়- <?php $total = QB::query("
+                                    <th class="ash"></th>
+                                    <th class="black">মোট আয়- <?php $total = QB::query("
                                             SELECT IFNULL(SUM(cradit),0) as total_credit
                                             FROM user_transection
                                             WHERE user_id = '{$_SESSION['user_id']}'
-                                            AND his = 51
+                                            AND his = 571
                                         ")->first();
 
                                     echo $total->total_credit; ?></th>
@@ -121,7 +121,7 @@ $days = [
 
         // ── Get total rows ─────────────────────────────────────────────
         $countSql  = "SELECT COUNT(*) AS total FROM `user_transection` 
-                      WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` = 51";
+                      WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` = 571";
         $countResult = $mysqli->query($countSql);
         $totalRows   = $countResult ? (int)$countResult->fetch_assoc()['total'] : 0;
         $totalPages  = (int)ceil($totalRows / $perPage);
@@ -145,7 +145,7 @@ $days = [
 
         // ── Fetch paginated rows ───────────────────────────────────────
         $sql = "SELECT * FROM `user_transection` 
-                WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` = 51 
+                WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` = 571 
                 ORDER BY id DESC 
                 LIMIT $perPage OFFSET $offset";
         $result = $mysqli->query($sql);

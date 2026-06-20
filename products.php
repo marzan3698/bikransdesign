@@ -23,7 +23,7 @@ require_once('sadmin/function.php');
     <link type="text/css" rel="stylesheet" href="css/swipebox.css" />
     <link type="text/css" rel="stylesheet" href="css/animations.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/solaimanlipi" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/]" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/solaimanlipi" rel="stylesheet">
     <style>
         * {
@@ -1044,7 +1044,7 @@ require_once('sadmin/function.php');
                             <!-- text section -->
                             <div class="text-section">
                                 <h4 style="color: #fff; border-bottom: 1px solid #fff; padding-bottom: 0px; text-align: center; width: 245px; display: block; margin: auto;margin-bottom:20px">
-                                    যে সকল প্রোডাক্ট অবজারভেশনে রয়েছে
+                                    বিক্রান্স এর প্রোডাক্ট সমূহ
                                 </h4>
                             </div>
                             <!-- Product Section - Start -->
@@ -1053,12 +1053,13 @@ require_once('sadmin/function.php');
                                     <div class="product-grid">
                                         <!-- Product 1: Z-DIA -->
                                         <div class="product-card">
-                                            <img src="" class="product-image">
-                                            <h3 class="product-title">গ্যানোডার্মা লুসিডাম</h3>
-                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্ট নামঃ নিউরো মাশুম</p>
-                                            <p class="price-info" style="font-size: 14.3px;">প্রোডাক্ট মূল্যঃ 00 টাকা</p>
-                                            <p class="price-info">প্রোডাক্ট কোডঃ BK.... 7</p>
-                                            <a href="#" class="details-link">
+                                            <img src="images/custom/product/14.png" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title">ডায়াবেটিস নিরাময়</h3>
+                                            <p class="price-info" style="font-size: 11.5px;">প্রোডাক্ট নাম:&nbsp; জেড ডায়া</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ১১৫০ টাকা</p>
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-02</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=zdia'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
@@ -1066,12 +1067,13 @@ require_once('sadmin/function.php');
 
                                         <!-- Product 2: Sugar Balance -->
                                         <div class="product-card">
-                                            <img src="" class="product-image">
-                                            <h3 class="product-title">প্রাকৃতিক পুষ্টিসমৃদ্ধ</h3>
-                                            <p class="price-info">প্রোডাক্টঃ মাশুম ক্যাপসুল</p>
-                                            <p class="price-info" style="font-size: 14px;">প্রোডাক্ট মূল্যঃ 00 টাকা</p>
-                                            <p class="price-info">প্রোডাক্ট কোডঃ BK.....8</p>
-                                            <a href="#" class="details-link">
+                                            <img src="images/custom/product/Sugar Balance.png" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title">ডায়াবেটিস নিরাময়</h3>
+                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; সুগার ব্যালেন্স</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ১১৫০ টাকা</p>
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-04</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=sugarbalnace'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
@@ -1079,12 +1081,13 @@ require_once('sadmin/function.php');
 
                                         <!-- Product 3: Vita Force -->
                                         <div class="product-card">
-                                            <img src="" class="product-image">
-                                            <h3 class="product-title" style="font-size: 15.8px;">মন্মথাভ্র রস আয়ুর্বেদিক</h3>
-                                            <p class="price-info">প্রোডাক্ট নামঃ জেড-পি-৩৫</p>
-                                            <p class="price-info" style="font-size: 15px;">প্রোডাক্ট মূল্যঃ 00 টাকা</p>
-                                            <p class="price-info" style="font-size: 14px;">প্রোডাক্ট কোডঃ BK.....9</p>
-                                            <a href="#" class="details-link">
+                                            <img src="images/custom/product/Vita force.png" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title" style="font-size: 17px;">ন্যাচারাল সাপোর্ট</h3>
+                                            <p class="price-info" style="font-size: 11.5px;">প্রোডাক্ট নাম: ভিটা ফোর্স</p>
+                                            <p class="price-info" style="font-size: 10.5px;">প্রোডাক্ট মূল্য: ১৪৯০ টাকা</p>
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-03</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=vitaforce'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
@@ -1092,40 +1095,44 @@ require_once('sadmin/function.php');
 
                                         <!-- Product 4: Leucon -->
                                         <div class="product-card">
-                                            <img src="" class="product-image">
-                                            <h3 class="product-title" style="font-size: 13px;">ভিটামিন আয়রন ক্যাসিয়াম</h3>
-                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্টঃ জেড এক্স - ওয়াই</p>
-                                            <p class="price-info" style="font-size: 14px;">প্রোডাক্ট মূল্যঃ 00 টাকা</p>
-                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্ট কোডঃ BK.....10</p>
-                                                <a href="#" class="details-link">
+                                            <img src="images/custom/product/15.png" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title" style="font-size: 17px;">নারীদের সুস্থতায়</h3>
+                                                <p class="price-info" style="font-size: 10.4px;">প্রোডাক্ট নাম: জেড লিউকন</p>
+                                                <p class="price-info" style="font-size: 10.5px;">প্রোডাক্ট মূল্য: ১১৫৫ টাকা</p>
+                                                <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-05</p>
+                                                <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=zlucon'" class="details-link">
                                                     বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                         src="images/icons/arrow.png" alt="">
                                                 </a>
                                         </div>
                                         <!-- 5 -->
                                         <div class="product-card">
-                                            <img src="" class="product-image">
-                                            <h3 class="product-title" style="font-size: 15px;">আয়ুর্বেদিক হেয়ার অয়েল</h3>
-                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্ট মমতাজ হেয়ার অয়েল</p>
-                                            <p class="price-info" style="font-size: 13px; letter-spacing: 1.5px;">প্রোডাক্ট মূল্যঃ 00 টাকা</p>
-                                            <p class="price-info" style="font-size:13px;">প্রোডাক্ট কোডঃ BK.....11</p>
-                                            <a href="#" class="details-link">
+                                            <img src="images/custom/product/banner/zkua.jpeg" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title" style="font-size: 17.5px;">ব্যথার স্থায়ী বিদায়</h3>
+                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্ট নাম: জেড কুয়া</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ৭৭৫ টাকা</p>
+                                            <p class="price-info" style="font-size: 10.5px;">প্রোডাক্ট কোডঃ BKP-01</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=zkua'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
                                         <!-- 6 -->
                                         <div class="product-card">
-                                            <img src="" class="product-image">
-                                            <h3 class="product-title">পাইলস কেয়ার প্লাস</h3>
-                                            <p class="price-info" style="font-size: 16px;">প্রোডাক্টঃ..............</p>
-                                            <p class="price-info" style="font-size: 14px;">প্রোডাক্ট মূল্যঃ 00 টাকা</p>
-                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্ট কোডঃ BK.....12</p>
-                                            <a href="#" class="details-link">
+                                            <img src="images/custom/product/16.png" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title" style="font-size: 17px;">ন্যাচারাল সাপোর্ট</h3>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট নাম: কামিস্কা প্লাস</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ২৪০০ টাকা</p>
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-12</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=kamiska'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
+
                                     </div>
                                 </div>
                             </section>

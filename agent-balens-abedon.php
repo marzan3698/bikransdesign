@@ -177,9 +177,9 @@
                             <div style="display:flex;gap:10px;margin-top:10px">
                                 <div style="width:60%;">
                                     <span id="userResult" style="color:red;font-size:13px;"></span>
-                                    <input type="text" placeholder="আইডি অথবা নম্বর দিয়ে সার্চ করুন" id="userid" class="cus-in-11" autocomplete="off" value="<?= 'আইডি নাম্বার: '.$exitsAgent->username ?? '' ?>">
-                                    <input type="text" name="" placeholder="এজেন্ট নামঃ"  id="name"       class="cus-in-11" autocomplete="off" value="<?= $exitsAgent->name ?? '' ?>">
-                                    <input type="text" name="" placeholder="আইডি নম্বরঃ"  id="username"   class="cus-in-11" autocomplete="off" value="<?= 'মোবাইল নাম্বার: ' . $exitsAgent->username ?? '' ?>">
+                                    <input type="text" placeholder="আইডি অথবা নম্বর দিয়ে সার্চ করুন" id="userid" class="cus-in-11" autocomplete="off" value="<?= 'এজেন্ট আইডি: '.$exitsAgent->username ?? '' ?>">
+                                    <input type="text" name="" placeholder="এজেন্ট নামঃ"  id="name"       class="cus-in-11" autocomplete="off" value="এজেন্ট নামঃ <?= $exitsAgent->name ?? '' ?>">
+                                    <input type="text" name="" placeholder="এজেন্ট আইডি"  id="username"   class="cus-in-11" autocomplete="off" value="<?= 'মোবাইল নাম্বার: ' . $exitsAgent->username ?? '' ?>">
                                     <input type="text" name="" placeholder="এজেন্ট এরিয়া" id="agent_area" class="cus-in-11" autocomplete="off" value="<?= 'এরিয়া: ' . $exitsCheck->agent_area ?? '' ?>">
                                 </div>
                                 <div style="width:40%;">

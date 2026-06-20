@@ -150,7 +150,6 @@ $banglaMonths = [
                                     
                                     <?php
                                 
-                                
                       $orders = QB::table('order')->where('user_id', $_SESSION['user_id'])->get();
                             /*
                                 $total_qty = 0;
@@ -160,32 +159,36 @@ $banglaMonths = [
                                 }
                                 */
 
-                    $total_qty = total_order_qty($_SESSION['user_id']);
-
+                    echo $total_qty = total_order_qty($_SESSION['user_id']);
+                    
+                    //echo '<br/>';
+                   // echo $member->biz_day;
+                    //echo '<br/>';
+                    $month=$member->biz_day/30;
 
 
                                     if ($member->biz_alert4 == 1) {
-                                        $qtyb = 12 * $member->biz_day;
+                                        $qtyb = 3 * $month;
                                         //echo '<br/>';
 
                                         $res_product=($total_qty - $qtyb) - 7;
                                         
                                     }
                                     elseif($member->biz_alert3 == 1) {
-                                        $qtyb = 10 * $member->biz_day;
+                                        $qtyb = 3 * $month;
                                         //echo '<br/>';
 
                                         $res_product=($total_qty - $qtyb) - 7;
                                         
                                     }
                                     elseif($member->biz_alert2 == 1) {
-                                        $qtyb = 7 * $member->biz_day;
+                                        $qtyb = 3 * $month;
                                         //echo '<br/>';
 
                                         $res_product=($total_qty - $qtyb) - 7;
                                         
                                     }elseif($member->biz_alert == 1){
-                                      $qtyb = 5 * $member->biz_day;
+                                      $qtyb = 3 * $month;
                                        // echo '<br/>';
 
                                         $res_product=($total_qty - $qtyb) - 7;  
@@ -289,12 +292,21 @@ $banglaMonths = [
                                         <th class="sky table-text"
                                             style="background-color:#C08B18; cursor: pointer; border-right:#1D202D solid 2px; color:white; font-size:14px; width:25%; border-radius: 15px; vertical-align: middle;">
                                             বিজমাষ্টার- <?php echo $refer_count; ?> <br> <?php if ($refer_count >= 25) {
+                                                                
+                                                                $time = time();
+
+                                                                if ($member->biz_alertm == 1) {
+                                                                } else {
+
+                                                                    $sqlm = "UPDATE `member` SET `biz_alert_timem` = '$time', `biz_alertm` = '1' WHERE `member`.`id` = '$member->id'";
+                                                                    $mysqli->query($sqlm);
+                                                                }
                                                                                                 echo 'একটিভ';
                                                                                             } ?>
                                         </th>
                                         <th class="blue table-text"
                                             style="background-color:#149E6B; cursor: pointer; border-right:#1D202D solid 2px; color:white; font-size:14px; width:25%; border-radius: 15px; vertical-align: middle;">
-                                            রির্জাভ প্রোডক্ট <br> <?php
+                                            রির্জাভ প্রোডক্ট <br/> <?php
 
                                                                     echo $res_product;
                                                                     ?>
@@ -412,7 +424,40 @@ $banglaMonths = [
                             ক্রয় ব্যবস্থাপনা
                         </div>
                     </div>
+                    <?php
+                        // ── Pagination config ──────────────────────────────────────────
+                        $perPage     = 10;
+                        $currentPage = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+                        $offset      = ($currentPage - 1) * $perPage;
 
+                        // Total rows for this user
+                        $totalRows = QB::table('order')->where('user_id', $_SESSION['user_id'])->count();
+                        $totalPages = (int)ceil($totalRows / $perPage);
+
+                        // Clamp currentPage
+                        if ($currentPage > $totalPages && $totalPages > 0) {
+                            $currentPage = $totalPages;
+                            $offset = ($currentPage - 1) * $perPage;
+                        }
+                        // ── Safe base URL ──────────────────────────────────────────────
+                        $urlParts    = parse_url($_SERVER['REQUEST_URI']);
+                        $scriptPath  = $urlParts['path'];
+                        $queryParams = [];
+                        if (!empty($urlParts['query'])) {
+                            parse_str($urlParts['query'], $queryParams);
+                        }
+                        unset($queryParams['page']);   // ← remove 'page' before building baseUrl
+
+                        $baseQuery = http_build_query($queryParams);
+                        $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
+
+                        $orders = QB::table('order')
+                        ->where('user_id', $_SESSION['user_id'])
+                        ->limit($perPage)
+                        ->offset($offset)
+                        ->get();
+                        $sl = $offset + 1;    
+                    ?>
 
                     <section class="table-wrap">
                         <table>
@@ -430,15 +475,16 @@ $banglaMonths = [
                                 foreach ($orders as $item) {
                                 ?>
                                     <tr>
-                                        <td><?= date('d/m/Y', $item->time) ?></td>
-                                        <td><?= $banglaMonths[date('M', $item->time)] ?></td>
-                                        <td><?= $item->total_qty ?></td>
-                                        <td>সম্পর্ন</td>
-                                       <td onclick="window.location.href='order-summary.php?order_id=<?= $item->id ?>'" style="cursor:pointer;">দেখুন</td>
+                                        <td style="vertical-align: middle;">তারিখ: <?= date('d/m/Y', $item->time) ?><br>সময়: <?= date('h:i A', $item->time) ?></td>
+                                        <td style="vertical-align: middle;"><?= $banglaMonths[date('M', $item->time)] ?></td>
+                                        <td style="vertical-align: middle;"><?= $item->total_qty ?></td>
+                                        <td style="vertical-align: middle;">সম্পর্ন</td>
+                                       <td onclick="window.location.href='order-summary.php?order_id=<?= $item->id ?>'" style="cursor:pointer;vertical-align: middle;">দেখুন</td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
+                        <?php require_once('pagination.php'); ?>
                     </section>
                 </div>
             </div>

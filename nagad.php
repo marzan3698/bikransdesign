@@ -92,7 +92,7 @@
                             সঠিক তথ্য যাচাই করা হলে লেনদেন প্রক্রিয়া দ্রুত ও নিরাপদভাবে সম্পন্ন করা সম্ভব হবে। <br>
                             <span style="text-align:right;display:block">- বিক্রান্স বিজনেস কৰ্তৃপক্ষ</span>
 
-                            <a href="javascript::void(0)" onclick="window.location.href='profile.php'" style="color: #12D584;">প্রোফাইল আপডেট করুন</a>
+                            <a href="javascript::void(0)" onclick="window.location.href='account-settings.php?nagad'" style="color: #12D584;">প্রোফাইল আপডেট করুন</a>
                         </div>
                         <?php }else{ ?>
                             <table class="table3" style="margin-bottom: 3px;width:98%;">

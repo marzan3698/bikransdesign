@@ -710,14 +710,12 @@ require_once('sadmin/function.php');
     gap: 5px;
     margin-right: 10px;
 }
-
 .people-card img {
-    width: 100%;
+    width: 100px;
     height: 100px;
     display: block;
-    border: 1px solid #12D584;
-    padding: 3px;
-    object-fit: cover;
+    object-fit: fill;
+    border: 5px solid #66C6B9;
     box-sizing: border-box;
 }
 
@@ -755,13 +753,13 @@ require_once('sadmin/function.php');
                     border-right: none;
                 }
 
-                .people-card img {
+                /* .people-card img {
                     width: 90%;
                     height: 100px;
                     display: block;
                     border: 1px solid #12D584;
                     padding: 3px;
-                }
+                } */
 
                 .people-card-info {
                     padding: 2px;
@@ -1118,46 +1116,41 @@ require_once('sadmin/function.php');
                                     }
                                 }
                             </style>
-                            <div class="marquee">
+                            <!-- <div class="marquee">
                                 <div class="marquee-content">
-                                    <!-- original -->
                                     <img src="images/custom/home2/1.svg">
                                     <img src="images/custom/home2/2.svg">
                                     <img src="images/custom/home2/3.svg">
                                     <img src="images/custom/home2/4.svg">
                                     <img src="images/custom/home2/5.svg">
                                     <img src="images/custom/home2/6.svg">
-                                    <!-- <img src="images/custom/home2/7.svg"> -->
-                                    <!-- <img src="images/custom/home2/8.svg"> -->
                                     <img src="images/custom/home2/9.svg">
 
-                                    <!-- duplicate for seamless loop -->
+
                                     <img src="images/custom/home2/1.svg">
                                     <img src="images/custom/home2/2.svg">
                                     <img src="images/custom/home2/3.svg">
                                     <img src="images/custom/home2/4.svg">
                                     <img src="images/custom/home2/5.svg">
                                     <img src="images/custom/home2/6.svg">
-                                    <!-- <img src="images/custom/home2/7.svg"> -->
-                                    <!-- <img src="images/custom/home2/8.svg"> -->
                                     <img src="images/custom/home2/9.svg">
                                 </div>
-                            </div>
-                            <!-- <div class="slider-container">
+                            </div> -->
+                            <div class="slider-container">
                                 <div class="video-wrapper" id="videoWrapper">
 
                                     <div class="video-slide">
-                                        <video id="firstVideo" src="video/home-video.mp4" muted loop playsinline>
+                                        <video id="firstVideo" src="video/dealer-video.mp4" muted loop playsinline>
                                         </video>
                                     </div>
-                                    <div class="video-slide">
+                                    <!-- <div class="video-slide">
                                         <video src="video/home-video2.mp4" controls playsinline autoplay></video>
                                     </div>
                                     <div class="video-slide">
                                         <video src="video/home-video2.mp4" controls playsinline autoplay></video>
-                                    </div>
+                                    </div> -->
                                 </div>
-                            </div> -->
+                            </div> 
                             <!-- <div class="slider-dots">
                                 <span class="dot active" onclick="goToSlide(0)"></span>
                                 <span class="dot" onclick="goToSlide(1)" style="display: none;"></span>
@@ -1286,7 +1279,7 @@ require_once('sadmin/function.php');
                                     পৃথিবীর ইতিহাসে সফল ব্যবসায়ীরা মূলত তারাই, যারা অন্যের মেধা, দক্ষতা ও শ্রমকে সঠিকভাবে সমন্বয় করে একটি শক্তিশালী টিম গড়ে তুলতে সক্ষম হয়েছেন। কার্যকর টিমওয়ার্কের মাধ্যমে কাজের গতি বৃদ্ধি পায় এবং ব্যবসার পরিধি বিস্তৃত হয়।এই ব্যবসায় টিম গঠনের মাধ্যমেই আর্থিক উন্নয়নকে সহজ ও বাস্তবসম্মত করা সম্ভব। শক্তিশালী টিমওয়ার্কের ফলে নিয়মিত আয়ের একটি স্থিতিশীল ব্যবস্থা তৈরি হয়। এমনকি একজন ব্যক্তি সরাসরি কাজ থেকে অবসর নিলেও আয়ের প্রবাহ পুরোপুরি বন্ধ হয় না, কারণ তার গড়ে তোলা টিম ব্যবসার কার্যক্রম চালিয়ে যেতে থাকে।</p>
                             </div>
                             <!--people slider  -->
-
+                            <h2 style="text-align: center; color: #12D584; margin-bottom: 0px; padding-bottom: 0px; font-size: 20px;">এ সপ্তাহের টপ আর্নার</h2>
                             <div class="people-slider-wrapper">
                                 <div class="people-slider-container">
                                     <div class="people-slider" id="peopleSlider">
@@ -1313,7 +1306,7 @@ require_once('sadmin/function.php');
                                                 }
 
                                                 if ($row['image'] == null || $row['image'] == '') {
-                                                    $row['image'] = 'images/avatar.jpg';
+                                                    $row['image'] = 'images/avatar9966.png';
                                                 }
 
                                                 $cards[] = [
@@ -1333,26 +1326,30 @@ require_once('sadmin/function.php');
                                             <div class="people-card">
                                             '; ?>
                                             
-                                                <div style="width:100%; height:110px; overflow:hidden; border-radius:5px;">
-    <img 
-        src="<?php echo htmlspecialchars($card['image']) ?>" 
-        alt="Person"
-        style="
-            width:100%;
-            height:100%;
-            object-fit:contain;
-            display:block;
-            background:#fff;
-        "
-    />
-</div>
+                                                <!-- <div style="width:100%; height:110px; overflow:hidden; border-radius:5px;">
+                                                <img 
+                                                    src="<?php echo htmlspecialchars($card['image']) ?>" 
+                                                    alt="Person"
+                                                    style="
+                                                        width:100%;
+                                                        height:100%;
+                                                        object-fit:contain;
+                                                        display:block;
+                                                        background:#fff;
+                                                    "
+                                                />
+                                            </div> -->
+                                            <div class="product-card">
+                                            <img src="<?php echo htmlspecialchars($card['image']) ?>" alt="Profile Image"
+                                                class="product-image">
+                                           
+                                        </div>
                                                 <?php 
                                                 
                                                 echo '
                                                 
                                                 <div class="people-card-info">
                                                     <div class="people-card-title">' . htmlspecialchars($card['name']) . '</div>
-                                                    <div class="people-card-subtitle">মোট আয়: ' . htmlspecialchars($card['total_amount']) . '</div>
                                                     <div class="people-card-subtitle">পদবি: ' . htmlspecialchars($card['podobi']) . '</div>
                                                 </div>
                                             </div>';
@@ -1372,87 +1369,90 @@ require_once('sadmin/function.php');
                             <section class="product-section">
                                 <div class="product-container">
                                     <div class="product-grid">
-                                        <!-- Product 1: Z-DIA -->
+                                        <!-- Product 1 -->
                                         <div class="product-card">
-                                            <img src="images/custom/product/14.png" alt="Sugar Balance"
+                                            <img src="images/custom/product/Amoljin.png" alt="Sugar Balance"
                                                 class="product-image">
-                                            <h3 class="product-title">ডায়াবেটিস নিরাময়</h3>
-                                            <p class="price-info" style="font-size: 11.5px;">প্রোডাক্ট নাম:&nbsp; জেড ডায়া</p>
-                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: 1155 টাকা</p>
-                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKJD01</p>
-                                            <a href="product-details2.php" class="details-link" >
+                                            <h3 class="product-title">গ্যাস্টিক নিরাময়</h3>
+                                            <p class="price-info" style="font-size: 11.5px;">প্রোডাক্ট নাম:&nbsp; অম্লজিন</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ৯৫০ টাকা</p>
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-10</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=almojin'" class="details-link" >
+                                                বিস্তারিত 
+                                                <img style="height:14px; width:14px; object-fit:contain" src="images/icons/arrow.png" alt="">
+                                            </a>
+                                        </div>
+
+                                        <!-- Product 2 -->
+                                        <div class="product-card">
+                                            <img src="images/custom/product/ASTEET copy.png" alt="Sugar Balance"
+                                                class="product-image">
+                                            <h3 class="product-title">সুস্থ হজমের নিরাময়</h3>
+                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; আশীত</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ১১৫৫ টাকা</p>                                          
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-11</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=asheet'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
 
-                                        <!-- Product 2: Sugar Balance -->
+                                        <!-- Product 3 -->
                                         <div class="product-card">
-                                            <img src="images/custom/product/Sugar Balance.png" alt="Sugar Balance"
+                                            <img src="images/custom/product/Asubba.png" alt="Sugar Balance"
                                                 class="product-image">
-                                            <h3 class="product-title">ডায়াবেটিস নিরাময়</h3>
-                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; সুগার ব্যালেন্স</p>
-                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: 1155 টাকা</p>
-                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKSB02</p>
-                                            <a href="product-details3.php" class="details-link" >
+                                            <h3 class="product-title">ত্বকের নিরাময়</h3>
+                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; আশ-উশবা</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ১১৫৫ টাকা</p>                                          
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-09</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=asushaba'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
 
-                                        <!-- Product 3: Vita Force -->
+                                        <!-- Product 4 -->
                                         <div class="product-card">
-                                            <img src="images/custom/product/Vita force.png" alt="Sugar Balance"
+                                            <img src="images/custom/product/Brocile.png" alt="Sugar Balance"
                                                 class="product-image">
-                                            <h3 class="product-title" style="font-size: 17px;">ন্যাচারাল সাপোর্ট</h3>
-                                            <p class="price-info" style="font-size: 11.5px;">প্রোডাক্ট নাম: ভিটা ফোর্স</p>
-                                            <p class="price-info" style="font-size: 10.5px;">প্রোডাক্ট মূল্য: 1490 টাকা</p>
-                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKBF03</p>
-                                            <a href="#" class="details-link" >
+                                            <h3 class="product-title">শ্বাসকষ্টের নিরাময়</h3>
+                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; ব্রোসিল মাদার</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ৯৫০ টাকা</p>                                          
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-08</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=brocil'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
 
-                                        <!-- Product 4: Leucon -->
+                                        <!-- Product 5 -->
                                         <div class="product-card">
-                                            <img src="images/custom/product/15.png" alt="Sugar Balance"
+                                            <img src="images/custom/product/Shetshukra.png" alt="Sugar Balance"
                                                 class="product-image">
-                                            <h3 class="product-title" style="font-size: 17px;">নারীদের সুস্থতায়</h3>
-                                                <p class="price-info" style="font-size: 10.4px;">প্রোডাক্ট নাম: জেড লিউকন</p>
-                                                <p class="price-info" style="font-size: 10.5px;">প্রোডাক্ট মূল্য: 1155 টাকা</p>
-                                                <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKLK04</p>
-                                                <a href="#" class="details-link">
-                                                    বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
-                                                        src="images/icons/arrow.png" alt="">
-                                                </a>
-                                        </div>
-                                        <!-- 5 -->
-                                        <div class="product-card">
-                                            <img src="images/custom/product/Spirliuna.png" alt="Sugar Balance"
-                                                class="product-image">
-                                            <h3 class="product-title" style="font-size: 17.5px;">উচ্চ পুষ্টিকর ফুড</h3>
-                                            <p class="price-info" style="font-size: 12px;">প্রোডাক্ট নাম:স্পিরুলিনা</p>
-                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: 1155 টাকা</p>
-                                            <p class="price-info" style="font-size: 10.5px;">প্রোডাক্ট কোডঃ BKSM05</p>
-                                            <a href="#" class="details-link" >
+                                            <h3 class="product-title">নারীর সুস্থতায়</h3>
+                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; শ্বেতশুক্রা</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ১১৫০ টাকা</p>                                          
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-06</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=sretsukra'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
-                                        <!-- 6 -->
+
+                                        <!-- Product 6 -->
                                         <div class="product-card">
-                                            <img src="images/custom/product/16.png" alt="Sugar Balance"
+                                            <img src="images/custom/product/Emored.png" alt="Sugar Balance"
                                                 class="product-image">
-                                            <h3 class="product-title" style="font-size: 17px;">ন্যাচারাল সাপোর্ট</h3>
-                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট নাম: কামিস্কা প্লাস</p>
-                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: 2499 টাকা</p>
-                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKBF06</p>
-                                            <a href="#" class="details-link" >
+                                            <h3 class="product-title">অর্শ (পাইলস)</h3>
+                                            <p class="price-info" style="font-size: 10px;">প্রোডাক্ট নাম:&nbsp; হেমোরিড</p>
+                                            <p class="price-info" style="font-size: 11px;">প্রোডাক্ট মূল্য: ১১৫৫ টাকা</p>                                          
+                                            <p class="price-info" style="font-size: 10.8px;">প্রোডাক্ট কোডঃ BKP-07</p>
+                                            <a href="javascript::void(0)" onclick="window.location.href='product-details-all.php?product=hemorid'" class="details-link" >
                                                 বিস্তারিত <img style="height:14px; width:14px; object-fit:contain"
                                                     src="images/icons/arrow.png" alt="">
                                             </a>
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -1461,7 +1461,7 @@ require_once('sadmin/function.php');
 
                             <!-- text section -->
                             <div class="text-section" style="text-align: center; padding:10px;">
-                                <a href="products.php" class="all-product-link" style="color: #fff;">
+                                <a href="javascript::void(0)" onclick="window.location.href='products.php'" class="all-product-link" style="color: #fff;">
                                     অনান্য প্রোডাক্ট দেখতে ক্লিক করুন
                                 </a>
                             </div>

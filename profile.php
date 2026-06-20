@@ -61,9 +61,17 @@
                                 <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php'">
                                     <span style="color: #12D584;">হোয়াটসঅ্যাপ নম্বর: <?= $member->whatsapp ?></span>
                                 </li>
-                                <li style="padding-bottom: 13px;" onclick="window.location.href='password-change.php'">
-                                    <span style="color: #12D584;">পাসওয়ার্ড <?php echo $member->show_password; ?></span>
-                                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                                <li style="padding-bottom: 13px;">
+                                    <span style="color: #12D584;">পাসওয়ার্ড <div style="display: inline-block;" id="passwordText">••••••••</div>&nbsp; </span>
+                                    <img 
+                                    id="togglePasswordBtn"
+                                    src="https://cdn-icons-png.flaticon.com/128/822/822102.png" 
+                                    width="20px" 
+                                    alt="Show Password"
+                                    style="cursor: pointer;"
+                                    onclick="togglePassword('<?php echo htmlspecialchars($member->show_password); ?>')"
+                                    >
+                                    <label class="switch" onclick="window.location.href='password-change.php'"><input type="checkbox"><span class="slider"></span></label>
                                 </li>
                                 
                                 <li style="padding-bottom: 13px;" >
@@ -120,3 +128,25 @@
 </div>
 
 <?php require_once('footer.php'); ?>
+<script>
+let isPasswordVisible = false;
+
+function togglePassword(actualPassword) {
+    const passwordText = document.getElementById('passwordText');
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+
+    if (isPasswordVisible) {
+        // Hide password
+        passwordText.textContent = '••••••••';
+        toggleBtn.src = 'https://cdn-icons-png.flaticon.com/128/822/822102.png'; // eye icon
+        toggleBtn.alt = 'Show Password';
+    } else {
+        // Show password
+        passwordText.textContent = actualPassword;
+        toggleBtn.src = 'https://cdn-icons-png.flaticon.com/128/709/709612.png'; // eye-slash icon
+        toggleBtn.alt = 'Hide Password';
+    }
+
+    isPasswordVisible = !isPasswordVisible;
+}
+</script>

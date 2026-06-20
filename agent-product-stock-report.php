@@ -103,16 +103,6 @@
                 padding: 10px 34px; 
                 margin-top: 10px !important;
             }
-            .submit-btn2{
-                display: block;
-                margin: auto;
-                padding: 3px 15px;
-                cursor: pointer;
-                background: #00CC99;
-                color: #fff;
-                border: none;
-                font-size: 11px;
-            }
         </style>
 
         <div class="pages">
@@ -126,30 +116,18 @@
                             <div class="navbar_right"><img src="images/icons/green/menu.png" alt="" title="" /></div>
                         </a>
                     </div>
-                    <nav class="main-nav"
-                        style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
-                        <div style="background: #00CC99; padding: 12px; color: #fff; text-align: center; font-size: 22px;">গ্রাহক প্রোডাক্ট রি-অর্ডার</div>
-                        <?php 
-                            if(isset($_POST['delivery_done'])){
-                                $order_id = $_POST['order_id'];
-                                QB::table('order')->where('id', $order_id)->update(['status' => 1]);
-                                echo '<div style="color: #00CC99; text-align: center;">ডেলিভারি সম্পন্ন হয়েছে</div>';
-                                echo '<script>
-                                setTimeout(function(){
-                                    window.location.href="sodosso-product-delivery-report.php"
-                                }, 1000);
-                                </script>';
-                            }
+                    <nav class="main-nav" style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
+                    <div style="background: #00CC99; padding: 12px; color: #fff; text-align: center; font-size: 22px;">এজেন্ট প্রোডাক্ট স্টক রিপোর্ট</div>
 
-                                                    // ── Pagination config ──────────────────────────────────────────
+                    <?php
+                        // ── Pagination config ──────────────────────────────────────────
                         $perPage     = 10;
                         $currentPage = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
                         $offset      = ($currentPage - 1) * $perPage;
 
                         // Total rows for this user
-                        $totalRows = QB::table('order_items')
-                                    ->where('agent_id', $_SESSION['user_id'])
-                                    ->where('type', 'agent-repurchase')
+                        $totalRows = QB::table('agent_product_stock')
+                                    ->where('user_id', $_SESSION['user_id'])
                                     ->count();
                         $totalPages = (int)ceil($totalRows / $perPage);
 
@@ -170,68 +148,65 @@
                         $baseQuery = http_build_query($queryParams);
                         $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
 
-
-                            $order = QB::table('order_items')
-                                ->where('agent_id', $_SESSION['user_id'])
-                                ->where('type', 'agent-repurchase')
-                                ->orderBy('id', 'desc')
+                        // Fetch only the current page's rows
+                        $data = QB::table('agent_product_stock')
+                                ->where('user_id', $_SESSION['user_id'])
+                                ->orderBy('id', 'DESC') // নিশ্চিত ordering
                                 ->limit($perPage)
                                 ->offset($offset)
                                 ->get();
-                            $sl = $offset + 1;    
-                        ?>
-                        <table>
+
+                        $sl = $offset + 1;    
+                    ?>
+
+                    <table style="border-collapse: collapse; width:100%;">
+                        <tr>
+                            <td style="background:transparent;border:1px solid #fff">নং</td>
+                            <td style="background:transparent;border:1px solid #fff">প্রোডাক্ট স্টক তারিখ</td>
+                            <td style="background:transparent;border:1px solid #fff">প্রোডাক্ট নাম</td>
+                            <td style="background:transparent;border:1px solid #fff">প্রোডাক্ট স্টক বিবরণ</td>
+                            <td style="background:transparent;border:1px solid #fff">পরিমান</td>
+                            <td style="background:transparent;border:1px solid #fff">দাম</td>
+                        </tr>
+
+                        <?php if(empty($data)): ?>
                             <tr>
-                                <td style="background: transparent;border:1px solid #fff;font-size:12px">নং</td>
-                                <td style="background: transparent;border:1px solid #fff;font-size:12px">সদস্য নাম</td>
-                                <td style="background: transparent;border:1px solid #fff;font-size:12px">তারিখ</td>
-                                <td style="background: transparent;border:1px solid #fff;font-size:12px">প্রোডাক্ট নাম</td>
-                                <td style="background: transparent;border:1px solid #fff;font-size:12px">ডেলিভারি তথ্য</td>
+                                <td colspan="6" style="background:transparent;border:1px solid #fff; text-align:center; padding:12px;">
+                                    কোনো ডাটা পাওয়া যায়নি
+                                </td>
                             </tr>
-                            <?php foreach($order as $row){ ?>
-                                <tr>
-                                    <td style="background: transparent;border:1px solid #fff;font-size:11px; vertical-align: middle;"><?= $sl++ ?></td>
-                                    <td style="background: transparent;border:1px solid #fff;font-size:11px;vertical-align: middle;
-vertical-align: middle;">
-                                        <?php 
-                                            $user = QB::table('member')->where('id', $row->user_id)->first();
-                                            echo $user->name;
-                                        ?><br />
-                                        <?= $user->username ?>
-                                    </td>
-                            <td style="background: transparent;border:1px solid #fff; vertical-align: middle; font-size:11px;"> 
+                        <?php else: ?>
+                        <?php foreach($data as $row): ?>
                             <?php
-                                $main_order = QB::table('order')->where('id', $row->order_id)->first();
-                                echo date('d-m-Y',$main_order->time);
-                             ?>
-                            </td>
-                                    <td style="background: transparent;border:1px solid #fff;font-size:11px; vertical-align: middle;">
-                                        <?php 
-                                            $product = QB::table('product')->where('id', $row->product_id)->first();
-                                            echo $product->name ?? 'N/A';
-                                        ?>
+                                $product = QB::table('product')->where('id', $row->product_id)->first();
+                                if(!$product) continue;
+                            ?>
+                            <tr>
+                                <td style="background:transparent;border:1px solid #fff"><?= $sl++ ?></td>
+                                <td style="background:transparent;border:1px solid #fff">
+                                    <?= date('d-m-Y', $row->time) ?>
+                                    Time-<?= date('h:i:A', $row->time) ?>
+                                </td>
+                                <td style="background:transparent;border:1px solid #fff">
+                                    <?= htmlspecialchars($product->name ?? 'N/A') ?>
+                                </td>
+                                <td style="background:transparent;border:1px solid #fff">
+                                    <?php
+                                        if($row->type == 'stock_in')       echo 'স্টক ইন';
+                                        elseif($row->type == 'stock_out')  echo 'স্টক আউট';
+                                        else                               echo 'N/A';
+                                    ?>
+                                </td>
+                                <td style="background:transparent;border:1px solid #fff"><?= $row->qty ?></td>
+                                <td style="background:transparent;border:1px solid #fff"><?= $product->main_price ?? '' ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </table>
 
-                                    </td>
-                                    <td style="background: transparent;border:1px solid #fff;font-size:11px; vertical-align: middle;">
-                                        <?php
-                                            if($main_order->status == 1){
-                                                echo '<div style="color:green;">ডেলিভারি সম্পন্ন হয়েছে</div>';
-                                            }elseif($main_order->status == 0){
-                                        ?>
-                                            <form action="" method="post">
-                                                <input type="hidden" name="order_id" value="<?= $main_order->id ?>">
-                                                <button type="submit" name="delivery_done" class="submit-btn2" onclick="return confirm('আপনি কি এই ডেলিভারিটিকে সম্পূর্ণ হিসেবে চিহ্নিত করতে নিশ্চিত?')">ডেলিভারি সম্পন্ন করুন</button>
-                                            </form>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        </table>
+                    <?php require_once('pagination.php'); ?>
 
-                        <?php require_once('pagination.php'); ?>
-
-
-                    </nav>
+                </nav>
 
 
                 </div>

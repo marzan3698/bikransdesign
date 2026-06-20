@@ -89,6 +89,13 @@
     AND his = 51
 ")->first();
 
+$total2 = QB::query("
+    SELECT IFNULL(SUM(cradit),0) as total_credit
+    FROM user_transection_biz_a
+    WHERE user_id = '{$_SESSION['user_id']}'
+    AND his = 659
+")->first();
+
 $result = $queryBuilder->table('gen_his')
     ->where('type', 2)
     ->where('to_id', $_SESSION['user_id'])
@@ -98,7 +105,7 @@ $result = $queryBuilder->table('gen_his')
 $totalAmount = $result->total_amount ?? 0;
 
 
-echo $total->total_credit+$totalAmount; ?></th>
+echo number_format($total->total_credit+$totalAmount+$total2->total_credit,2); ?></th>
 
                                 </tr>
                             </thead>

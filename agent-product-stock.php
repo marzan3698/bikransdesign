@@ -116,38 +116,89 @@
                             <div class="navbar_right"><img src="images/icons/green/menu.png" alt="" title="" /></div>
                         </a>
                     </div>
-                    <nav class="main-nav"
-                        style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
-                        <div style="background: #00CC99; padding: 12px; color: #fff; text-align: center; font-size: 22px;">এজেন্ট প্রোডাক্ট স্টক রিপোর্ট</div>
+                   <nav class="main-nav" style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
+                        <div style="background: #00CC99; padding: 12px; color: #fff; text-align: center; font-size: 22px;">এজেন্ট প্রোডাক্ট স্টক</div>
                         <?php
-                            $data = QB::table('agent_product_stock')->where('user_id', $_SESSION['user_id'])->get();
-                            $sl = 1;
-                        ?>  
-                        <table>
+                            // ── Fetch all products and calculate stock ──────────────────────
+                            $allProducts = QB::table('product')->orderBy('id', 'asc')->get();
+
+                            $validProducts = [];
+                            foreach ($allProducts as $product) {
+                                $stockIn = QB::table('agent_product_stock')
+                                    ->where('user_id', $_SESSION['user_id'])
+                                    ->where('product_id', $product->id)
+                                    ->where('type', 'stock_in')
+                                    ->get();
+
+                                $stockOut = QB::table('agent_product_stock')
+                                    ->where('user_id', $_SESSION['user_id'])
+                                    ->where('product_id', $product->id)
+                                    ->where('type', 'stock_out')
+                                    ->get();
+
+                                $totalIn = 0;
+                                foreach ($stockIn as $row) {
+                                    $totalIn += $row->qty ?? 0;
+                                }
+
+                                $totalOut = 0;
+                                foreach ($stockOut as $row) {
+                                    $totalOut += $row->qty ?? 0;
+                                }
+
+                                $stock = $totalIn - $totalOut;
+
+                                if ($stock > 0) {
+                                    $product->stock = $stock;
+                                    $validProducts[] = $product;
+                                }
+                            }
+
+                            // ── Pagination config ───────────────────────────────────────────
+                            $perPage     = 10;
+                            $totalRows   = count($validProducts);
+                            $totalPages  = (int)ceil($totalRows / $perPage);
+                            $currentPage = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+
+                            // Clamp currentPage
+                            if ($currentPage > $totalPages && $totalPages > 0) {
+                                $currentPage = $totalPages;
+                            }
+
+                            $offset       = ($currentPage - 1) * $perPage;
+                            $pagedProducts = array_slice($validProducts, $offset, $perPage);
+                            $sl           = $offset + 1;
+
+                            // ── Safe base URL ───────────────────────────────────────────────
+                            $urlParts    = parse_url($_SERVER['REQUEST_URI']);
+                            $scriptPath  = $urlParts['path'];
+                            $queryParams = [];
+                            if (!empty($urlParts['query'])) {
+                                parse_str($urlParts['query'], $queryParams);
+                            }
+                            unset($queryParams['page']);
+                            $baseQuery = http_build_query($queryParams);
+                            $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
+                        ?>
+
+                        <table style="border-collapse: collapse; width:100%;">
                             <tr>
-                                <td style="background: transparent;border:1px solid #fff">নং</td>
-                                <td style="background: transparent;border:1px solid #fff">প্রোডাক্ট স্টক তারিখ</td>
-                                <td style="background: transparent;border:1px solid #fff">প্রোডাক্ট স্টক বিবরন</td>
-                                <td style="background: transparent;border:1px solid #fff">পরিমান</td>
-                                <td style="background: transparent;border:1px solid #fff">দাম</td>
+                                <td style="background: transparent; border:1px solid #fff">নং</td>
+                                <td style="background: transparent; border:1px solid #fff">প্রোডাক্ট নাম</td>
+                                <td style="background: transparent; border:1px solid #fff">দাম</td>
+                                <td style="background: transparent; border:1px solid #fff">স্টক পরিমান</td>
                             </tr>
-                            <?php foreach($data as $row){ ?>
+                            <?php foreach ($pagedProducts as $product): ?>
                                 <tr>
-                                    <td style="background: transparent;border:1px solid #fff"><?= $sl++ ?></td>
-                                    <td style="background: transparent;border:1px solid #fff"><?= date('d-m-Y', $row->time) ?> Time-<?= date('h:i:A', $row->time) ?></td>
-                                    <td style="background: transparent;border:1px solid #fff">
-                                        <?php 
-                                            $product = QB::table('product')->where('id', $row->product_id)->first();
-                                            echo $product->name ?? 'N/A';
-                                        ?>
-                                    </td>
-                                    <td style="background: transparent;border:1px solid #fff"><?= $row->qty ?></td>
-                                    <td style="background: transparent;border:1px solid #fff"><?= $product->main_price ?? '' ?></td>
+                                    <td style="background: transparent; border:1px solid #fff"><?= $sl++ ?></td>
+                                    <td style="background: transparent; border:1px solid #fff"><?= $product->name ?? '' ?></td>
+                                    <td style="background: transparent; border:1px solid #fff"><?= $product->main_price ?? '' ?></td>
+                                    <td style="background: transparent; border:1px solid #fff"><?= $product->stock ?></td>
                                 </tr>
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </table>
 
-
+                        <?php require_once('pagination.php'); ?>
                     </nav>
 
 

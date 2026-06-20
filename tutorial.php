@@ -95,48 +95,104 @@
                             <div class="tutorial-box " style="margin-top: 7px;">
                                 <div class="green-border-section">
                                     <div class="responsive-embed">
-                                        <!-- Replace VIDEO_ID with your actual YouTube video ID -->
-                                        <iframe src="https://www.youtube.com/embed/VIDEO_ID"
-                                            title="YouTube video player" frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowfullscreen>
-                                        </iframe>
-                                    </div>
+                                    <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                    <div style="position: relative; width: 100%; max-width: 320px; aspect-ratio: 16 / 9; margin: 0 auto;">
+                                    <iframe
+                                        src="https://www.youtube.com/embed/gblhnMsfSQY?si=tLyGuHRdpEQ4dyPf"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allowfullscreen
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                    ></iframe>
+                                    </div>                                    
+                                </div>
                                 </div>
                                 <div class="bottom-text-area">
-                                    বিক্রান্স বিজনেস জমানোর পদ্ধতি দেখুন
+                                    অর্থ সচেতন হয়ে ওঠুন অর্থ আসবে | bikrans
                                 </div>
                             </div>
                             <div class="tutorial-box " style="margin-top: 7px;">
                                 <div class="green-border-section">
                                     <div class="responsive-embed">
                                         <!-- Replace VIDEO_ID with your actual YouTube video ID -->
-                                        <iframe src="https://www.youtube.com/embed/VIDEO_ID"
-                                            title="YouTube video player" frameborder="0"
+                                        <iframe
+                                            src="https://www.youtube.com/embed/eRNdQHfFnDM?si=5AmQ0vUuhmj1GSla"
+                                            title="YouTube video player"
+                                            frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowfullscreen>
-                                        </iframe>
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                        ></iframe>
                                     </div>
                                 </div>
                                 <div class="bottom-text-area">
-                                    বিক্রান্স বিজনেস প্রোডাক্ট অর্ডার দেখুন
+                                    বিক্র্যান্স পডকাস্ট: ই-কমার্স এবং ডিলারশিপ ব্যবসার ভবিষ্যৎ
                                 </div>
                             </div>
                             <div class="tutorial-box " style="margin-top: 7px;">
                                 <div class="green-border-section">
                                     <div class="responsive-embed">
                                         <!-- Replace VIDEO_ID with your actual YouTube video ID -->
-                                        <iframe src="https://www.youtube.com/embed/VIDEO_ID"
-                                            title="YouTube video player" frameborder="0"
+                                        <iframe
+                                            src="https://www.youtube.com/embed/aVLF2ELqbeM?si=JRsvMz-5l87HkiXW"
+                                            title="YouTube video player"
+                                            frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowfullscreen>
-                                        </iframe>
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                        ></iframe>
                                     </div>
                                 </div>
                                 <div class="bottom-text-area">
-                                    বিক্রান্স বিজনেস কমিশন উত্তোলন দেখুন
+                                    (Bikrans) ডিলারশিপ: অল্প পুঁজিতে ব্যবসার সেরা সুযোগ!
                                 </div>
                             </div>
+
+                            <div class="tutorial-box " style="margin-top: 7px;">
+                                <div class="green-border-section">
+                                    <div class="responsive-embed">
+                                        <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                        <iframe
+                                            src="https://www.youtube.com/embed/eJ2lWklAauE?si=nFXziodQr7ujqJD9"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                        ></iframe>
+                                    </div>
+                                </div>
+                                <div class="bottom-text-area">
+                                    আসুন ব্যবসা শিখি। বাংলাদেশের প্রথম ডি -সেন্ট্রালাইজড বিজনেস BIkrans
+                                </div>
+                            </div>
+
+                            <div class="tutorial-box " style="margin-top: 7px;">
+                                <div class="green-border-section">
+                                    <div class="responsive-embed">
+                                        <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                        <iframe
+                                            src="https://www.youtube.com/embed/Lw-RG9JUvoc?si=cXGYqUhedADEzvNO"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                        ></iframe>
+                                    </div>
+                                </div>
+                                <div class="bottom-text-area">
+                                    বাংলাদেশের প্রথম ডিসেন্ট্রালাইজড ই-কমার্স বিজনেস মডেল | ডিলার হয়ে কীভাবে প্যাসিভ ইনকাম করবেন?
+                                </div>
+                            </div>
+
+              
 
                         </div>
                     </nav>
