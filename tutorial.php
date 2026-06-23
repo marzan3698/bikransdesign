@@ -192,6 +192,26 @@
                                 </div>
                             </div>
 
+                            <div class="tutorial-box " style="margin-top: 7px;">
+                                <div class="green-border-section">
+                                    <div class="responsive-embed">
+                                        <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+                                        <iframe
+                                            src="https://www.youtube.com/embed/pYIYuvrez7c?si=LTXZnTQjLGyBH59U"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                        ></iframe>
+                                    </div>
+                                </div>
+                                <div class="bottom-text-area">
+                                    আয়ের সহজ পথ বিক্রান্স 
+                                </div>
+                            </div>
+
               
 
                         </div>

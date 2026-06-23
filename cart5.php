@@ -346,7 +346,7 @@
                                         margin-top:4px;
                                     ">
                                         মূল্য:
-                                        <strong class="cart-price-total">
+                                        <strong class="cart-price-total" style="color:#fff !important;">
                                             ${total}
                                         </strong>
                                         টাকা

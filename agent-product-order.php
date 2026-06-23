@@ -46,7 +46,25 @@
 
     <div class="view view-main">
 
-
+<style>
+            .product-search-box {
+                margin: 15px 0;
+            }
+            .product-search-box input {
+                width: 88%;
+                padding: 10px 15px;
+                border: 1px solid #ccc;
+                border-radius: 0px;
+                font-size: 15px;
+                outline: none;
+                background: transparent;
+                display: block;
+                margin: auto;
+            }
+            .product-search-box input:focus {
+                border-color: #888;
+            }
+        </style>
 
         <div class="pages">
 
@@ -162,10 +180,10 @@
                             </div>
                             <div class="date-wrapper2" style="gap: 1px;">
                                 <h4 style="background-color:#0B2234;color:#fff">
-                                    বাচাইকৃত প্রোডাক্ট <br> <span id="total-items">0</span>
+                                    বাচাইকৃত প্রোডাক্ট <br> <span id="total-items" style="color: #fff !important;">0</span>
                                 </h4>
                                 <h4 onclick="window.location.href='#'" style="background-color:#0B2234;color:#fff">
-                                    মোট প্রোডাক্ট <br> মূল্য-  <span id="total-price">0</span>
+                                    মোট প্রোডাক্ট <br> মূল্য-  <span id="total-price" style="color: #fff !important;">0</span>
                                 </h4>
                                 <button type="submit" name="submit"
                                     style="background-color:#0B2234;color:#fff; flex: 0 0 auto; padding:5px 14px; font-size:14px; border: 0px; border-radius: 0px;">
@@ -199,35 +217,46 @@
                             </div>
 
 
+                            <!-- 🔍 সার্চ বক্স -->
+                            <div class="product-search-box">
+                                <input type="text" id="productSearch" placeholder="প্রোডাক্ট খুঁজুন...">
+                            </div>
 
-                            <?php
-                            $products = QB::table('product')->get();
-                            foreach ($products as $product) {
-                            ?>
-
-                                <div class="product-row" data-id="<?= $product->id ?>" data-price="<?= $product->main_price ?>">
-                                    <div class="product-image">
-                                        <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
-                                    </div>
-
-                                    <div class="product-info">
-                                        <div class="product-title"><?= $product->name ?></div>
-                                        <div class="product-price">মূল্য-<?= $product->main_price ?> টাকা</div>
-
-                                        <div class="product-action">
-                                            <div class="qty-box">
-                                                <button type="button" class="qty-btn minus">-</button>
-                                                <input type="number" class="qty-input" value="1" min="1">
-                                                <button type="button" class="qty-btn plus">+</button>
+                            <div id="productListWrapper">
+                                <?php
+                                $products = QB::table('product')->get();
+                                foreach ($products as $product) {
+                                ?>
+    
+                                    <div class="product-row" 
+                                        data-id="<?= $product->id ?>" 
+                                        data-price="<?= $product->main_price ?>"
+                                        data-name="<?= strtolower($product->name) ?>">
+                                        <div class="product-image">
+                                            <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
+                                        </div>
+    
+                                        <div class="product-info">
+                                            <div class="product-title"><?= $product->name ?></div>
+                                            <div class="product-price">মূল্য-<?= $product->main_price ?> টাকা</div>
+    
+                                            <div class="product-action">
+                                                <div class="qty-box">
+                                                    <button type="button" class="qty-btn minus">-</button>
+                                                    <input type="number" class="qty-input" value="1" min="1">
+                                                    <button type="button" class="qty-btn plus">+</button>
+                                                </div>
+    
+                                                <button type="button" class="add-cart">কার্টে যোগ করুন</button>
                                             </div>
-
-                                            <button type="button" class="add-cart">কার্টে যোগ করুন</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="divider"></div>
-
-                            <?php } ?>
+                                    <div class="divider"></div>
+    
+                                <?php } ?>
+                            </div>
+                             <!-- কোনো প্রোডাক্ট না পেলে এটা দেখাবে -->
+                            <p id="noProductFound" style="display:none; text-align:center; padding:20px;">কোনো প্রোডাক্ট পাওয়া যায়নি।</p>
                         </form>
 
                     </nav>
@@ -379,4 +408,27 @@
         });
 
     });
+</script>
+<script>
+document.getElementById('productSearch').addEventListener('keyup', function () {
+    const keyword = this.value.trim().toLowerCase();
+    const rows = document.querySelectorAll('.product-row');
+    let found = false;
+
+    rows.forEach(row => {
+        const name = row.getAttribute('data-name');
+        const divider = row.nextElementSibling; // .divider
+
+        if (name.includes(keyword)) {
+            row.style.display = '';
+            if (divider && divider.classList.contains('divider')) divider.style.display = '';
+            found = true;
+        } else {
+            row.style.display = 'none';
+            if (divider && divider.classList.contains('divider')) divider.style.display = 'none';
+        }
+    });
+
+    document.getElementById('noProductFound').style.display = found ? 'none' : 'block';
+});
 </script>

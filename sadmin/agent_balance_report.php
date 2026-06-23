@@ -54,46 +54,46 @@ require_once('header.php');
                            
 
                             <?php
-// Include database connection file if not included
-// require_once('db_connection.php');
+                            // Include database connection file if not included
+                            // require_once('db_connection.php');
 
-// Number of records to show per page
-$limit = 50;
+                            // Number of records to show per page
+                            $limit = 50;
 
-// Get the current page or set default to 1
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-if ($page < 1) $page = 1;
+                            // Get the current page or set default to 1
+                            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                            if ($page < 1) $page = 1;
 
-// Get the selected date range from the form
-$start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
-$end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+                            // Get the selected date range from the form
+                            $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+                            $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 
-// Calculate the starting record for the query
-$offset = ($page - 1) * $limit;
+                            // Calculate the starting record for the query
+                            $offset = ($page - 1) * $limit;
 
-// Build the WHERE clause based on the date filters and type condition
-$where = "agent_transection.type = 0 AND agent_transection.credit > 0";  // Default condition to only get records where type = 0 and credit > 0
+                            // Build the WHERE clause based on the date filters and type condition
+                            $where = "agent_transection.type = 0 AND agent_transection.credit > 0";  // Default condition to only get records where type = 0 and credit > 0
 
-// Add date range filtering if dates are provided
-if (!empty($start_date) && !empty($end_date)) {
-    $start_timestamp = strtotime($start_date);
-    $end_timestamp = strtotime($end_date . ' 23:59:59'); // Include the entire end date
-    $where .= " AND agent_transection.time >= $start_timestamp AND agent_transection.time <= $end_timestamp";
-}
+                            // Add date range filtering if dates are provided
+                            if (!empty($start_date) && !empty($end_date)) {
+                                $start_timestamp = strtotime($start_date);
+                                $end_timestamp = strtotime($end_date . ' 23:59:59'); // Include the entire end date
+                                $where .= " AND agent_transection.time >= $start_timestamp AND agent_transection.time <= $end_timestamp";
+                            }
 
-// Get total records count for pagination
-$total_sql = "SELECT COUNT(*) as total FROM agent_transection WHERE $where";
-$total_result = $mysqli->query($total_sql);
-$total_row = $total_result->fetch_assoc();
-$total_records = $total_row['total'];
-$total_pages = ceil($total_records / $limit);
+                            // Get total records count for pagination
+                            $total_sql = "SELECT COUNT(*) as total FROM agent_transection WHERE $where";
+                            $total_result = $mysqli->query($total_sql);
+                            $total_row = $total_result->fetch_assoc();
+                            $total_records = $total_row['total'];
+                            $total_pages = ceil($total_records / $limit);
 
-// Get the paginated records
-$sql = "SELECT agent_transection.* FROM agent_transection WHERE $where ORDER BY agent_transection.id DESC LIMIT $limit OFFSET $offset";
-$result = $mysqli->query($sql);
+                            // Get the paginated records
+                            $sql = "SELECT agent_transection.* FROM agent_transection WHERE $where ORDER BY agent_transection.id DESC LIMIT $limit OFFSET $offset";
+                            $result = $mysqli->query($sql);
 
-$sl = $offset;
-?>
+                            $sl = $offset;
+                            ?>
 
 <!-- Filter Form -->
 <form method="GET" action="">

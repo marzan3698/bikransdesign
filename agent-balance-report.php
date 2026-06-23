@@ -153,6 +153,7 @@
                             ->where('user_id', $_SESSION['user_id'])
                             ->limit($perPage)
                             ->offset($offset)
+                            ->orderBy('id', 'desc')
                             ->get();
                         $sl = $offset + 1;    
                         ?>

@@ -49,7 +49,7 @@
 
                         <nav class="user-nav" style="margin-bottom: 20px;background:#0B2234;width:110%;margin-left:-10%">
                             <ul>
-                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php'">
+                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php?all'">
                                     <span style="color: #12D584;">নামঃ  <?php echo $member->name; ?></span>
                                 </li>
                                 <li style="padding-bottom: 13px;">
@@ -58,7 +58,7 @@
                                 <li style="padding-bottom: 13px;">
                                     <span style="color: #12D584;">মোবাইলঃ <?php echo $member->phone; ?></span>
                                 </li>
-                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php'">
+                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php?whatsapp'">
                                     <span style="color: #12D584;">হোয়াটসঅ্যাপ নম্বর: <?= $member->whatsapp ?></span>
                                 </li>
                                 <li style="padding-bottom: 13px;">
@@ -78,13 +78,14 @@
                                     <span style="color: #12D584;">জয়েনিং তারিখঃ <?php echo date('d M Y, h:i A', $member->joining_time); ?></span>
                                     <label class="switch"><input type="checkbox"><span class="slider"></span></label>
                                 </li>
-                                 <li style="padding-bottom: 13px;"><span style="color: #12D584;">ছবি তথ্য</span> <label
+                                 <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php?picture'">
+                                    <span style="color: #12D584;">ছবি তথ্য</span> <label
                                         class="switch"><input type="checkbox"><span class="slider"></span></label></li>
-                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php'">
+                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php?nid_no'">
                                     <span style="color: #12D584;">জাতীয় পরিচয় পত্র: <?php echo $member->nid_no ?? 'নাই'; ?></span>
                                     <label class="switch"><input type="checkbox"><span class="slider"></span></label>
                                 </li>
-                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php'">
+                                <li style="padding-bottom: 13px;" onclick="window.location.href='profile-edit.php?nominee_name'">
                                     <span style="color: #12D584;">নমিনি তথ্য: 
                                         <br>নমিনি নাম: <?php echo $member->nominee_name ?? 'নাই'; ?><br>
                                         নমিনি সম্পর্ক: <?php echo $member->nominee_relation ?? 'নাই'; ?>

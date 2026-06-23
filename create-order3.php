@@ -54,6 +54,25 @@
                 margin-right: 10px;
             }
         </style>
+        <style>
+            .product-search-box {
+                margin: 15px 0;
+            }
+            .product-search-box input {
+                width: 88%;
+                padding: 10px 15px;
+                border: 1px solid #ccc;
+                border-radius: 0px;
+                font-size: 15px;
+                outline: none;
+                background: transparent;
+                display: block;
+                margin: auto;
+            }
+            .product-search-box input:focus {
+                border-color: #888;
+            }
+        </style>
 
 
         <div class="pages">
@@ -249,7 +268,7 @@
                                             'delivery_status' => 0,
                                         ]);
 
-                                        echo "<script>localStorage.removeItem('cart');</script>";
+                                        echo "<script>localStorage.removeItem('createOrder3');</script>";
                                         echo "<div style='color: red; text-align: center; margin-top: 20px;'>প্রোডাক্ট ডেলিভারি ঠিকানা আপডেট করুন</div>";
                                         
                                         echo "<script>
@@ -297,7 +316,7 @@
                                 </button>
                             </div>
                             <div class="date-wrapper2" style="gap: 1px;">
-                                <h4 onclick="window.location.href='cart2.php'" style="background-color:#12D584;color:#fff">
+                                <h4 onclick="window.location.href='cart333.php'" style="background-color:#12D584;color:#fff">
                                     কার্টকৃত প্রোডাক্ট দেখুন
                                 </h4>
                             </div>
@@ -324,12 +343,21 @@
 
 
 
+                            <!-- 🔍 সার্চ বক্স -->
+                            <div class="product-search-box">
+                                <input type="text" id="productSearch" placeholder="প্রোডাক্ট খুঁজুন...">
+                            </div>
+
+                            <div id="productListWrapper">
                             <?php
                             $products = QB::table('product')->get();
                             foreach ($products as $product) {
                             ?>
 
-                                <div class="product-row" data-id="<?= $product->id ?>" data-price="<?= $product->main_price ?>">
+                                <div class="product-row" 
+                                    data-id="<?= $product->id ?>" 
+                                    data-price="<?= $product->main_price ?>"
+                                    data-name="<?= strtolower($product->name) ?>">
                                     <div class="product-image2">
                                         <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
                                     </div>
@@ -352,6 +380,10 @@
                                 <div class="divider"></div>
 
                             <?php } ?>
+                            </div>
+
+                            <!-- কোনো প্রোডাক্ট না পেলে এটা দেখাবে -->
+                            <p id="noProductFound" style="display:none; text-align:center; padding:20px;">কোনো প্রোডাক্ট পাওয়া যায়নি।</p>
                         </form>
 
                     </nav>
@@ -368,9 +400,18 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
+
+        // এখানে cart এর নতুন নাম
+        const CART_KEY = "createOrder3";
+
         function renderCartList() {
-            let cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : {};
+
+            let cart = localStorage.getItem(CART_KEY)
+                ? JSON.parse(localStorage.getItem(CART_KEY))
+                : {};
+
             let $ul = $("#cart-list ul");
+
             $ul.empty();
 
             if ($.isEmptyObject(cart)) {
@@ -379,84 +420,141 @@
             }
 
             $.each(cart, function(id, item) {
-                $ul.append(`<li>
-            <input type="hidden" value="${id}" name="product_id[]" readonly>
-            <input type="hidden" value="${item.qty}" name="quantity[]" readonly>
-            <input type="hidden" value="${item.price}" name="price[]" readonly></li>`);
+
+                $ul.append(`
+                    <li>
+                        <input type="hidden" value="${id}" name="product_id[]" readonly>
+
+                        <input type="hidden" value="${item.qty}" name="quantity[]" readonly>
+
+                        <input type="hidden" value="${item.price}" name="price[]" readonly>
+                    </li>
+                `);
+
             });
         }
+
         renderCartList();
-        // localStorage থেকে কার্ট লোড
-        let cart = localStorage.getItem("cart") ?
-            JSON.parse(localStorage.getItem("cart")) : {};
+
+        // localStorage থেকে cart load
+        let cart = localStorage.getItem(CART_KEY)
+            ? JSON.parse(localStorage.getItem(CART_KEY))
+            : {};
 
         updateSummary();
 
         function saveCart() {
-            localStorage.setItem("cart", JSON.stringify(cart));
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
         }
 
         function updateSummary() {
+
             let totalItems = 0;
             let totalPrice = 0;
 
             $.each(cart, function(id, item) {
+
                 totalItems += item.qty;
                 totalPrice += item.qty * item.price;
+
             });
 
             $("#total-items").text(totalItems);
             $("#total-price").text(totalPrice);
+
             $("#total-qty").val(totalItems);
             $("#total-price-hidden").val(totalPrice);
-            $("#total-point-hidden").val(totalPrice * 0.1); // Assuming 1 point = 10% of price
+
+            $("#total-point-hidden").val(totalPrice * 0.1);
+
         }
 
         // Plus button
         $(document).on("click", ".plus", function() {
+
             let input = $(this).siblings(".qty-input");
+
             let value = parseInt(input.val());
+
             input.val(value + 1);
+
         });
 
         // Minus button
         $(document).on("click", ".minus", function() {
+
             let input = $(this).siblings(".qty-input");
+
             let value = parseInt(input.val());
+
             if (value > 1) {
                 input.val(value - 1);
             }
+
         });
 
         // Add to cart
         $(document).on("click", ".add-cart", function() {
 
             let row = $(this).closest(".product-row");
+
             let id = row.data("id");
+
             let price = parseFloat(row.data("price"));
+
             let qty = parseInt(row.find(".qty-input").val());
 
             if (cart[id]) {
+
                 cart[id].qty += qty;
+
             } else {
+
                 cart[id] = {
                     price: price,
                     qty: qty
                 };
+
             }
 
             saveCart();
+
             updateSummary();
+
             renderCartList();
+
             Swal.fire({
                 showConfirmButton: false,
                 timer: 1000,
                 timerProgressBar: true,
                 text: "প্রোডাক্ট সফলভাবে কার্টে যোগ হয়েছে!",
                 icon: "success",
-
             });
+
         });
 
     });
+</script>
+<script>
+document.getElementById('productSearch').addEventListener('keyup', function () {
+    const keyword = this.value.trim().toLowerCase();
+    const rows = document.querySelectorAll('.product-row');
+    let found = false;
+
+    rows.forEach(row => {
+        const name = row.getAttribute('data-name');
+        const divider = row.nextElementSibling; // .divider
+
+        if (name.includes(keyword)) {
+            row.style.display = '';
+            if (divider && divider.classList.contains('divider')) divider.style.display = '';
+            found = true;
+        } else {
+            row.style.display = 'none';
+            if (divider && divider.classList.contains('divider')) divider.style.display = 'none';
+        }
+    });
+
+    document.getElementById('noProductFound').style.display = found ? 'none' : 'block';
+});
 </script>

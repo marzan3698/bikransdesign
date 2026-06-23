@@ -43,6 +43,9 @@
                     background-color: transparent;
                     border: none;
                 }
+                .inline-label{
+                    color: #0B2234 !important;
+                }
             </style>
             <ul>
                 <li><a href="features.php" class="close-panel"><img src="images/icons/green/settings.png" alt=""

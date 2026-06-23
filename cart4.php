@@ -17,6 +17,7 @@
             <div class="user_avatar">
                 <img src="images/avatar.jpg" alt="" title="" />
             </div>
+            
 
             <div class="user_details">
                 <p>Welcome <span>John Doe</span></p>
@@ -119,7 +120,6 @@
 
                     <nav class="main-nav"
                         style="margin-top:80px !important; width:95%; margin:auto; border:1px solid #222;">
-
                         <div class="box" style="border:2px solid #12D584;">
 
                             <div class="box-text-wrap">
@@ -346,7 +346,7 @@
                                         margin-top:4px;
                                     ">
                                         মূল্য:
-                                        <strong class="cart-price-total">
+                                        <strong class="cart-price-total" style="color:#fff !important;">
                                             ${total}
                                         </strong>
                                         টাকা

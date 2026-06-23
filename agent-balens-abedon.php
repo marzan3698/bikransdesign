@@ -109,7 +109,7 @@
                             $account_no   = trim($_POST['account_no']);
                             $date         = trim($_POST['date']);
                             $bank_name         = trim($_POST['bank_name']);
-                            $mobile_bank_type         = trim($_POST['mobile_bank_type']);
+                            $mobile_bank_type         = trim($_POST['mobile_bank_type'] ?? '');
                             $account_owner_name = $_POST['account_owner_name'];
 
                             // Basic validation
@@ -130,33 +130,45 @@
                                 $errors[] = 'ভাউচার ছবি আপলোড করুন।';
                             }
 
-                            if (empty($errors)) {
-                                $insert = QB::table('agent_balance_reqest')->insert([
-                                    'time'         => time(),
-                                    'user_id'      => $user_id,
-                                    'amount'       => $amount,
-                                    'payment_type' => $payment_type,
-                                    'account_no'   => $account_no,
-                                    'voucher_image'=> $voucher_image,
-                                    'status'       => 0,
-                                    'date'         => $date,
-                                    'bank_name'         => $bank_name,
-                                    'mobile_bank_type'   => $mobile_bank_type,
-                                    'time2'         => $_POST['time2'],
-                                    'account_owner_name' => $account_owner_name,
-                                ]);
+                            $checkPendingRequest = QB::table('agent_balance_reqest')
+                            ->where('user_id', $_SESSION['user_id'])
+                            ->where('status', 0)
+                            ->orderBy('id', 'desc')
+                            ->first();
 
-                                if ($insert) {
-                                    echo '<div class="alert-success">এজেন্ট ব্যালেন্স আবেদন সফলভাবে সম্পন্ন হয়েছে।</div>';
-                                    echo '<script>setTimeout(function(){ window.location.href="agent-balens-abedon.php"; }, 1500);</script>';
+                            if($checkPendingRequest){
+                                echo '<div style="color:red; font-size:18px; text-align:center">আপনার আগে পেন্ডিং ব্যালেন্স রিকোয়েস্ট রয়েছে। পুনরায় চেষ্টা করুন।</div>';
+                                echo '<script>setTimeout(function(){ window.location.href="agent-balens-abedon.php"; }, 2000);</script>';
+                            }else{
+                                if (empty($errors)) {
+                                    $insert = QB::table('agent_balance_reqest')->insert([
+                                        'time'         => time(),
+                                        'user_id'      => $user_id,
+                                        'amount'       => $amount,
+                                        'payment_type' => $payment_type,
+                                        'account_no'   => $account_no,
+                                        'voucher_image'=> $voucher_image,
+                                        'status'       => 0,
+                                        'date'         => $date,
+                                        'bank_name'         => $bank_name,
+                                        'mobile_bank_type'   => $mobile_bank_type,
+                                        'time2'         => $_POST['time2'],
+                                        'account_owner_name' => $account_owner_name,
+                                    ]);
+    
+                                    if ($insert) {
+                                        echo '<div class="alert-success">এজেন্ট ব্যালেন্স আবেদন সফলভাবে সম্পন্ন হয়েছে।</div>';
+                                        echo '<script>setTimeout(function(){ window.location.href="agent-balens-abedon.php"; }, 1500);</script>';
+                                    } else {
+                                        echo '<div class="alert-error">ডেটাবেজ সমস্যা হয়েছে, আবার চেষ্টা করুন।</div>';
+                                    }
                                 } else {
-                                    echo '<div class="alert-error">ডেটাবেজ সমস্যা হয়েছে, আবার চেষ্টা করুন।</div>';
-                                }
-                            } else {
-                                foreach ($errors as $err) {
-                                    echo '<div class="alert-error">' . htmlspecialchars($err) . '</div>';
+                                    foreach ($errors as $err) {
+                                        echo '<div class="alert-error">' . htmlspecialchars($err) . '</div>';
+                                    }
                                 }
                             }
+
                         }
                         ?>
                         <?php

@@ -113,7 +113,7 @@ $banglaMonths = [
 
                         $baseQuery = http_build_query($queryParams);
                         $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
-                        $orders = QB::table('agent_order')->where('user_id', $_SESSION['user_id'])->limit($perPage)->offset($offset)->get();
+                        $orders = QB::table('agent_order')->where('user_id', $_SESSION['user_id'])->limit($perPage)->offset($offset)->orderBy('id', 'desc')->get();
 
                         $sl = $offset + 1;    
                     ?>

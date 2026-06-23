@@ -201,7 +201,7 @@
         // =========================
         // LOCAL STORAGE KEY
         // =========================
-        const CART_KEY = "cart666";
+        const CART_KEY = "createOrder3";
 
         // =========================
         // LOAD CART

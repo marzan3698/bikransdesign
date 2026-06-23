@@ -98,7 +98,7 @@
         display: block;
     }
 
-   
+
 
     .file-input-wrapper {
         margin-bottom: 10px;
@@ -218,22 +218,26 @@
                         if (isset($_POST['profile_update'])) {
                             $user_id = $_SESSION['user_id'];
 
-                            $nid_no = $_POST['nid_no'];
-                            $exits = QB::table('member')
-                                ->where('nid_no', $nid_no)
-                                ->where('id', '!=', $user_id)
-                                ->first();
-
-                            if ($exits) {
-                                echo '<span style="color:red;text-align:center">এই জাতীয় পরিচয় পত্র নম্বরটি ইতিমধ্যে ব্যবহৃত হয়েছে।</span>';
-                                exit;
+                            $nid_no = $_POST['nid_no'] ?? '';
+                            if($nid_no){
+                                $exits = QB::table('member')
+                                    ->where('nid_no', $nid_no)
+                                    ->where('id', '!=', $user_id)
+                                    ->first();
+    
+                                if ($exits) {
+                                    echo '<span style="color:red;text-align:center">এই জাতীয় পরিচয় পত্র নম্বরটি ইতিমধ্যে ব্যবহৃত হয়েছে।</span>';
+                                    exit;
+                                }
                             }
 
-                            $whatsapp = $_POST['whatsapp'];
-                            $exits = QB::table('member')->where('whatsapp', $whatsapp)->whereNot('id',  $user_id)->first();
-                            if ($exits) {
-                                echo '<span style="color:red;text-align:center">এই হোয়াটসঅ্যাপ নম্বরটি ইতিমধ্যে ব্যবহৃত হয়েছে।</span>';
-                                exit;
+                            $whatsapp = $_POST['whatsapp'] ?? '';
+                            if($whatsapp){
+                                $exits = QB::table('member')->where('whatsapp', $whatsapp)->whereNot('id',  $user_id)->first();
+                                if ($exits) {
+                                    echo '<span style="color:red;text-align:center">এই হোয়াটসঅ্যাপ নম্বরটি ইতিমধ্যে ব্যবহৃত হয়েছে।</span>';
+                                    exit;
+                                }
                             }
 
                             // পুরনো ডেটা নিন
@@ -241,7 +245,7 @@
 
                             $nidFrontPath = isset($_FILES['image'])    ? uploadImage($_FILES['image'])    : null;
                             $nidBackPath  = isset($_FILES['nid_back']) ? uploadImage($_FILES['nid_back']) : null;
-                            $photoPath = $_POST['photo_cropped'];
+                            $photoPath = $_POST['photo_cropped'] ?? '';
                             // ভ্যালিডেশন: ছবি, NID ফ্রন্ট, NID ব্যাক — নতুন বা পুরনো থাকতে হবে
                             $hasPhoto    = $photoPath || $old->image;
                             $hasNidFront = $nidFrontPath || $old->p_nid_front;
@@ -258,10 +262,10 @@
                             }
 
                             $data = [
-                                'whatsapp'         => $_POST['whatsapp'],
-                                'nominee_name'     => $_POST['nominee_name'],
-                                'nominee_relation' => $_POST['nominee_relation'],
-                                'nid_no'           => $_POST['nid_no'],
+                                'whatsapp'         => $_POST['whatsapp'] ?? $old->whatsapp,
+                                'nominee_name'     => $_POST['nominee_name'] ?? $old->nominee_name,
+                                'nominee_relation' => $_POST['nominee_relation'] ?? $old->nominee_relation,
+                                'nid_no'           => $_POST['nid_no'] ?? $old->nid_no,
                                 'update_status'    => 1,
                             ];
 
@@ -278,30 +282,30 @@
 
                         <span id="refer_id_status" class="text-danger" style="font-weight: bold;text-align: center; margin-bottom: 10px; display: block;"></span>
 
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <?php if (isset($_GET['all'])) { ?>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="custom-form-group2" style="background-color: #0B2234;">
+                                    <span class="inline-label" style="color:#12D584;">হোয়াটসঅ্যাপ নম্বরঃ-</span>
+                                    <input style="color: white;" type="text" class="form_input" id="whatsapp" name="whatsapp" value="<?= $member->whatsapp ?>" required>
+                                </div>
 
-                            <div class="custom-form-group2" style="background-color: #0B2234;">
-                                <span class="inline-label" style="color:#12D584;">হোয়াটসঅ্যাপ নম্বরঃ-</span>
-                                <input style="color: white;" type="text" class="form_input" id="whatsapp" name="whatsapp" value="<?= $member->whatsapp ?>" required>
-                            </div>
+                                <div class="custom-form-group2" style="background-color: #0B2234;">
+                                    <span class="inline-label" style="color:#12D584;">জাতীয় পরিচয় পত্র নম্বরঃ-</span>
+                                    <input style="color: white;" type="text" class="form_input" id="nid_no" name="nid_no" required value="<?= $member->nid_no ?>">
+                                </div>
 
-                            <div class="custom-form-group2" style="background-color: #0B2234;">
-                                <span class="inline-label" style="color:#12D584;">জাতীয় পরিচয় পত্র নম্বরঃ-</span>
-                                <input style="color: white;" type="text" class="form_input" id="nid_no" name="nid_no" required value="<?= $member->nid_no ?>">
-                            </div>
+                                <div class="custom-form-group2" style="background-color: #0B2234;">
+                                    <span class="inline-label" style="color:#12D584;">নমিনী নাম-</span>
+                                    <input style="color: white;" type="text" class="form_input" id="nominee_name" name="nominee_name" value="<?= $member->nominee_name ?>">
+                                </div>
 
-                            <div class="custom-form-group2" style="background-color: #0B2234;">
-                                <span class="inline-label" style="color:#12D584;">নমিনী নাম-</span>
-                                <input style="color: white;" type="text" class="form_input" id="nominee_name" name="nominee_name" value="<?= $member->nominee_name ?>">
-                            </div>
+                                <div class="custom-form-group2" style="background-color: #0B2234;">
+                                    <span class="inline-label" style="color:#12D584;">নমিনী সম্পর্ক-</span>
+                                    <input style="color: white;" type="text" class="form_input" id="nominee_relation" name="nominee_relation" value="<?= $member->nominee_relation ?>">
+                                </div>
 
-                            <div class="custom-form-group2" style="background-color: #0B2234;">
-                                <span class="inline-label" style="color:#12D584;">নমিনী সম্পর্ক-</span>
-                                <input style="color: white;" type="text" class="form_input" id="nominee_relation" name="nominee_relation" value="<?= $member->nominee_relation ?>">
-                            </div>
-
-                            <!-- প্রোফাইল ছবি -->
-                              <div class="preview-result" id="resultPreview">
+                                <!-- প্রোফাইল ছবি -->
+                                <div class="preview-result" id="resultPreview">
                                     <div class="image-box square preview-result">
                                         <label class="image-label" style="background-color: #0B2234;">
                                             <img id="resultImg" src="" style="width: 144px; height:182px;display:none" />
@@ -331,11 +335,7 @@
 
                                 <div class="message" id="messageBox"></div>
 
-                               
-                     
-
-                            <!-- NID ফ্রন্ট: আগে না থাকলে দেখাবে -->
-                            <?php if ($member->p_nid_front == null) { ?>
+                                <!-- NID ফ্রন্ট: আগে না থাকলে দেখাবে -->
                                 <div class="image-box">
                                     <label class="image-label">
                                         <img class="previewImage" />
@@ -343,10 +343,8 @@
                                         <input type="file" name="image" accept="image/*" onchange="previewPhoto(this)">
                                     </label>
                                 </div>
-                            <?php } ?>
 
-                            <!-- NID ব্যাক: আগে না থাকলে দেখাবে -->
-                            <?php if ($member->p_nid_back == null) { ?>
+                                <!-- NID ব্যাক: আগে না থাকলে দেখাবে -->
                                 <div class="image-box">
                                     <label class="image-label">
                                         <img class="previewImage" />
@@ -354,11 +352,95 @@
                                         <input type="file" name="nid_back" accept="image/*" onchange="previewPhoto(this)">
                                     </label>
                                 </div>
-                            <?php } ?>
 
-                            <button style="margin-top: -12px !important;" type="submit" name="profile_update" class="custom-submit-button4">আপডেট করুন</button>
+                                <button style="margin-top: -12px !important;" type="submit" name="profile_update" class="custom-submit-button4">আপডেট করুন</button>
 
-                        </form>
+                            </form>
+                        <?php }else{ ?>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <?php if(isset($_GET['whatsapp'])){ ?>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;">
+                                        <span class="inline-label" style="color:#12D584;">হোয়াটসঅ্যাপ নম্বরঃ-</span>
+                                        <input style="color: white;" type="text" class="form_input" id="whatsapp" name="whatsapp" value="<?= $member->whatsapp ?>" required>
+                                    </div>
+                                <?php } ?>
+                                
+                                <?php if(isset($_GET['nominee_name'])){ ?>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;">
+                                        <span class="inline-label" style="color:#12D584;">নমিনী নাম-</span>
+                                        <input style="color: white;" type="text" class="form_input" id="nominee_name" name="nominee_name" value="<?= $member->nominee_name ?>">
+                                    </div>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;">
+                                        <span class="inline-label" style="color:#12D584;">নমিনী সম্পর্ক-</span>
+                                        <input style="color: white;" type="text" class="form_input" id="nominee_relation" name="nominee_relation" value="<?= $member->nominee_relation ?>">
+                                    </div>
+                                <?php } ?>
+
+
+                                <?php if(isset($_GET['picture'])){ ?>
+                                    <!-- প্রোফাইল ছবি -->
+                                    <div class="preview-result" id="resultPreview">
+                                        <div class="image-box square preview-result">
+                                            <label class="image-label" style="background-color: #0B2234;">
+                                                <img id="resultImg" src="" style="width: 144px; height:182px;display:none" />
+                                                <span class="placeholderText" id="placeholderText" style="color:#12D584;">ছবি আপলোড করুন</span>
+                                                <input type="file" id="imageInput" name="photo_unused" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                                            </label>
+                                            <input type="hidden" name="photo_cropped" id="photo_cropped">
+                                        </div>
+                                    </div>
+
+                                    <div class="img-container" id="imgContainer">
+                                        <img id="imagePreview" src="" alt="Preview">
+                                    </div>
+
+                                    <div class="controls" id="cropControls" style="display:none;">
+                                        <button id="zoomInBtn">জুম্ করুন</button>
+                                        <button id="zoomOutBtn">জুম্ আউট করুন</button>
+                                        <button id="rotateLeftBtn">বামদিকে ঘোরান</button>
+                                        <button id="rotateRightBtn">ডানদিকে ঘোরান</button>
+                                        <button id="resetBtn">রিসেট</button>
+                                        <button id="cropBtn">ক্রপ করুন</button>
+                                    </div>
+
+                                    <div class="progress" id="progressWrap">
+                                        <div class="progress-bar" id="progressBar"></div>
+                                    </div>
+
+                                    <div class="message" id="messageBox"></div>
+                                <?php } ?>
+
+
+                                <?php if(isset($_GET['nid_no'])){ ?>
+                                    <div class="custom-form-group2" style="background-color: #0B2234;">
+                                        <span class="inline-label" style="color:#12D584;">জাতীয় পরিচয় পত্র নম্বরঃ-</span>
+                                        <input style="color: white;" type="text" class="form_input" id="nid_no" name="nid_no" required value="<?= $member->nid_no ?>">
+                                    </div>
+                                    <!-- NID ফ্রন্ট: আগে না থাকলে দেখাবে -->
+                                    <div class="image-box">
+                                        <label class="image-label">
+                                            <img class="previewImage" />
+                                            <span class="placeholderText" style="color: #12D584;">জাতীয় পরিচয় পত্রের ফন্ট সাইড ছবি <br> তুলুন অথবা আপলোড করুন</span>
+                                            <input type="file" name="image" accept="image/*" onchange="previewPhoto(this)">
+                                        </label>
+                                    </div>
+    
+                                    <!-- NID ব্যাক: আগে না থাকলে দেখাবে -->
+                                    <div class="image-box">
+                                        <label class="image-label">
+                                            <img class="previewImage" />
+                                            <span class="placeholderText" style="color: #12D584;">জাতীয় পরিচয় পত্রের ব্যাক সাইড ছবি <br> তুলুন অথবা আপলোড করুন</span>
+                                            <input type="file" name="nid_back" accept="image/*" onchange="previewPhoto(this)">
+                                        </label>
+                                    </div>
+
+                                <?php } ?>
+
+
+                                <button style="margin-top: -12px !important;" type="submit" name="profile_update" class="custom-submit-button4">আপডেট করুন</button>
+
+                            </form>
+                        <?php } ?>
                     </nav>
 
 
@@ -434,177 +516,177 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 <script>
-const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+    const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
-const imageInput   = document.getElementById('imageInput');
-const imgContainer = document.getElementById('imgContainer');
-const imagePreview = document.getElementById('imagePreview');
-const cropControls = document.getElementById('cropControls');
-const cropBtn      = document.getElementById('cropBtn');
-const messageBox   = document.getElementById('messageBox');
-const resultPreview= document.getElementById('resultPreview');
-const resultImg    = document.getElementById('resultImg');
-const progressWrap = document.getElementById('progressWrap');
-const progressBar  = document.getElementById('progressBar');
-const placeholderText = document.getElementById('placeholderText');
-const photo_cropped = document.getElementById('photo_cropped');
+    const imageInput = document.getElementById('imageInput');
+    const imgContainer = document.getElementById('imgContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const cropControls = document.getElementById('cropControls');
+    const cropBtn = document.getElementById('cropBtn');
+    const messageBox = document.getElementById('messageBox');
+    const resultPreview = document.getElementById('resultPreview');
+    const resultImg = document.getElementById('resultImg');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressBar = document.getElementById('progressBar');
+    const placeholderText = document.getElementById('placeholderText');
+    const photo_cropped = document.getElementById('photo_cropped');
 
-let cropper = null;
+    let cropper = null;
 
-function showMessage(text, type) {
-    messageBox.textContent = text;
-    messageBox.className = 'message ' + type;
-}
-
-function resetUI() {
-    messageBox.className = 'message';
-    resultPreview.style.display = 'none';
-    progressWrap.style.display = 'none';
-    progressBar.style.width = '0%';
-}
-
-imageInput.addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    resetUI();
-
-    if (!file) return;
-
-    // Validate type
-    if (!ALLOWED_TYPES.includes(file.type)) {
-        showMessage('Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.', 'error');
-        imageInput.value = '';
-        return;
+    function showMessage(text, type) {
+        messageBox.textContent = text;
+        messageBox.className = 'message ' + type;
     }
 
-    // Validate size
-    if (file.size > MAX_SIZE) {
-        showMessage('File is too large. Maximum size is 5MB.', 'error');
-        imageInput.value = '';
-        return;
+    function resetUI() {
+        messageBox.className = 'message';
+        resultPreview.style.display = 'none';
+        progressWrap.style.display = 'none';
+        progressBar.style.width = '0%';
     }
 
-    const reader = new FileReader();
-    reader.onload = function (event) {
-        imagePreview.src = event.target.result;
-        imgContainer.style.display = 'block';
-        cropControls.style.display = 'flex';
+    imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        resetUI();
 
-        if (cropper) cropper.destroy();
+        if (!file) return;
 
-        cropper = new Cropper(imagePreview, {
-            aspectRatio: NaN, // free aspect ratio
-            viewMode: 1,
-            dragMode: 'move',
-            autoCropArea: 0.8,
-            responsive: true,
-            background: false,
-        });
-    };
-    reader.readAsDataURL(file);
-});
+        // Validate type
+        if (!ALLOWED_TYPES.includes(file.type)) {
+            showMessage('Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.', 'error');
+            imageInput.value = '';
+            return;
+        }
 
-document.getElementById('zoomInBtn').addEventListener('click', () => cropper && cropper.zoom(0.1));
-document.getElementById('zoomOutBtn').addEventListener('click', () => cropper && cropper.zoom(-0.1));
-document.getElementById('rotateLeftBtn').addEventListener('click', () => cropper && cropper.rotate(-45));
-document.getElementById('rotateRightBtn').addEventListener('click', () => cropper && cropper.rotate(45));
-document.getElementById('resetBtn').addEventListener('click', () => cropper && cropper.reset());
+        // Validate size
+        if (file.size > MAX_SIZE) {
+            showMessage('File is too large. Maximum size is 5MB.', 'error');
+            imageInput.value = '';
+            return;
+        }
 
-cropBtn.addEventListener('click', function () {
-    if (!cropper) {
-        showMessage('Please select an image first.', 'error');
-        return;
-    }
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            imagePreview.src = event.target.result;
+            imgContainer.style.display = 'block';
+            cropControls.style.display = 'flex';
 
-    resetUI();
-    cropBtn.disabled = true;
-    cropBtn.textContent = 'Processing...';
+            if (cropper) cropper.destroy();
 
-    const canvas = cropper.getCroppedCanvas({
-        maxWidth: 4096,
-        maxHeight: 4096,
-        imageSmoothingQuality: 'high',
+            cropper = new Cropper(imagePreview, {
+                aspectRatio: NaN, // free aspect ratio
+                viewMode: 1,
+                dragMode: 'move',
+                autoCropArea: 0.8,
+                responsive: true,
+                background: false,
+            });
+        };
+        reader.readAsDataURL(file);
     });
 
-    if (!canvas) {
-        showMessage('Could not crop image. Try again.', 'error');
-        cropBtn.disabled = false;
-        cropBtn.textContent = 'Crop & Upload';
-        return;
-    }
+    document.getElementById('zoomInBtn').addEventListener('click', () => cropper && cropper.zoom(0.1));
+    document.getElementById('zoomOutBtn').addEventListener('click', () => cropper && cropper.zoom(-0.1));
+    document.getElementById('rotateLeftBtn').addEventListener('click', () => cropper && cropper.rotate(-45));
+    document.getElementById('rotateRightBtn').addEventListener('click', () => cropper && cropper.rotate(45));
+    document.getElementById('resetBtn').addEventListener('click', () => cropper && cropper.reset());
 
-    // Determine output type from original file
-    const originalFile = imageInput.files[0];
-    let outputType = originalFile.type;
-    if (!ALLOWED_TYPES.includes(outputType)) outputType = 'image/jpeg';
+    cropBtn.addEventListener('click', function() {
+        if (!cropper) {
+            showMessage('Please select an image first.', 'error');
+            return;
+        }
 
-    canvas.toBlob(function (blob) {
-        if (!blob) {
-            showMessage('Failed to generate image blob.', 'error');
+        resetUI();
+        cropBtn.disabled = true;
+        cropBtn.textContent = 'Processing...';
+
+        const canvas = cropper.getCroppedCanvas({
+            maxWidth: 4096,
+            maxHeight: 4096,
+            imageSmoothingQuality: 'high',
+        });
+
+        if (!canvas) {
+            showMessage('Could not crop image. Try again.', 'error');
             cropBtn.disabled = false;
             cropBtn.textContent = 'Crop & Upload';
             return;
         }
 
-        const formData = new FormData();
-        const ext = outputType.split('/')[1];
-        formData.append('croppedImage', blob, 'cropped.' + ext);
-        formData.append('mimeType', outputType);
+        // Determine output type from original file
+        const originalFile = imageInput.files[0];
+        let outputType = originalFile.type;
+        if (!ALLOWED_TYPES.includes(outputType)) outputType = 'image/jpeg';
 
-        placeholderText.style.display = 'none';
-        resultImg.style.display = 'block';
+        canvas.toBlob(function(blob) {
+            if (!blob) {
+                showMessage('Failed to generate image blob.', 'error');
+                cropBtn.disabled = false;
+                cropBtn.textContent = 'Crop & Upload';
+                return;
+            }
 
-        uploadImage(formData);
-    }, outputType, 0.9);
-});
+            const formData = new FormData();
+            const ext = outputType.split('/')[1];
+            formData.append('croppedImage', blob, 'cropped.' + ext);
+            formData.append('mimeType', outputType);
 
-function uploadImage(formData) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'profile-image-upload.php', true);
+            placeholderText.style.display = 'none';
+            resultImg.style.display = 'block';
 
-    progressWrap.style.display = 'block';
+            uploadImage(formData);
+        }, outputType, 0.9);
+    });
 
-    xhr.upload.onprogress = function (e) {
-        if (e.lengthComputable) {
-            const percent = (e.loaded / e.total) * 100;
-            progressBar.style.width = percent + '%';
-        }
-    };
+    function uploadImage(formData) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'profile-image-upload.php', true);
 
-    xhr.onload = function () {
-        cropBtn.disabled = false;
-        cropBtn.textContent = 'Crop & Upload';
-        progressWrap.style.display = 'none';
+        progressWrap.style.display = 'block';
 
-        
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                const percent = (e.loaded / e.total) * 100;
+                progressBar.style.width = percent + '%';
+            }
+        };
 
-        let response;
-        try {
-            response = JSON.parse(xhr.responseText);
-        } catch (err) {
-            showMessage('Server returned an invalid response.', 'error');
-            return;
-        }
+        xhr.onload = function() {
+            cropBtn.disabled = false;
+            cropBtn.textContent = 'Crop & Upload';
+            progressWrap.style.display = 'none';
 
-        
 
-        if (xhr.status === 200 && response.status === 'success') {
-            showMessage(response.message, 'success');
-            resultImg.src = response.path;
-            photo_cropped.value = response.path;
-            resultPreview.style.display = 'block';
-        } else {
-            showMessage(response.message || 'Upload failed.', 'error');
-        }
-    };
 
-    xhr.onerror = function () {
-        cropBtn.disabled = false;
-        cropBtn.textContent = 'Crop & Upload';
-        progressWrap.style.display = 'none';
-        showMessage('Network error. Please try again.', 'error');
-    };
+            let response;
+            try {
+                response = JSON.parse(xhr.responseText);
+            } catch (err) {
+                showMessage('Server returned an invalid response.', 'error');
+                return;
+            }
 
-    xhr.send(formData);
-}
+
+
+            if (xhr.status === 200 && response.status === 'success') {
+                showMessage(response.message, 'success');
+                resultImg.src = response.path;
+                photo_cropped.value = response.path;
+                resultPreview.style.display = 'block';
+            } else {
+                showMessage(response.message || 'Upload failed.', 'error');
+            }
+        };
+
+        xhr.onerror = function() {
+            cropBtn.disabled = false;
+            cropBtn.textContent = 'Crop & Upload';
+            progressWrap.style.display = 'none';
+            showMessage('Network error. Please try again.', 'error');
+        };
+
+        xhr.send(formData);
+    }
 </script>

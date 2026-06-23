@@ -46,7 +46,25 @@
 
     <div class="view view-main">
 
-
+    <style>
+        .product-search-box {
+                margin: 15px 0;
+            }
+            .product-search-box input {
+                width: 88%;
+                padding: 10px 15px;
+                border: 1px solid #ccc;
+                border-radius: 0px;
+                font-size: 15px;
+                outline: none;
+                background: transparent;
+                display: block;
+                margin: auto;
+            }
+            .product-search-box input:focus {
+                border-color: #888;
+            }
+    </style>
 
         <div class="pages">
 
@@ -168,35 +186,44 @@
                             </div>
 
 
+                            <!-- 🔍 সার্চ বক্স -->
+                            <div class="product-search-box">
+                                <input type="text" id="productSearch" placeholder="প্রোডাক্ট খুঁজুন...">
+                            </div>
+                            <div id="productListWrapper">
+                                <?php
+                                $products = QB::table('product')->whereIn('id', [15,14,13,12,11,10, 16, 17,18, 19])->get();
+                                foreach ($products as $product) {
+                                ?>
+    
+                                    <div class="product-row" 
+         data-id="<?= $product->id ?>" 
+         data-price="<?= $product->main_price ?>"
+         data-name="<?= strtolower($product->name) ?>">
+        <div class="product-image">
+            <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
+        </div>
 
-                            <?php
-                            $products = QB::table('product')->whereIn('id', [15,14,13,12,11,10, 16, 17,18, 19])->get();
-                            foreach ($products as $product) {
-                            ?>
+        <div class="product-info">
+            <div class="product-title"><?= $product->name ?></div>
+            <div class="product-price">মূল্য-<?= $product->main_price ?> টাকা</div>
 
-                                <div class="product-row" data-id="<?= $product->id ?>" data-price="<?= $product->main_price ?>">
-                                    <div class="product-image">
-                                        <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
-                                    </div>
+            <div class="product-action">
+                <div class="qty-box">
+                    <button type="button" class="qty-btn minus">-</button>
+                    <input type="number" class="qty-input" value="1" min="1">
+                    <button type="button" class="qty-btn plus">+</button>
+                </div>
 
-                                    <div class="product-info">
-                                        <div class="product-title"><?= $product->name ?></div>
-                                        <div class="product-price">মূল্য-<?= $product->main_price ?> টাকা</div>
-
-                                        <div class="product-action">
-                                            <div class="qty-box">
-                                                <button type="button" class="qty-btn minus">-</button>
-                                                <input type="number" class="qty-input" value="1" min="1">
-                                                <button type="button" class="qty-btn plus">+</button>
-                                            </div>
-
-                                            <button type="button" class="add-cart">কার্টে যোগ করুন</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="divider"></div>
-
-                            <?php } ?>
+                <button type="button" class="add-cart">কার্টে যোগ করুন</button>
+            </div>
+        </div>
+    </div>
+    <div class="divider"></div>
+    
+                                <?php } ?>
+                            </div>
+                            <p id="noProductFound" style="display:none; text-align:center; padding:20px;">কোনো প্রোডাক্ট পাওয়া যায়নি।</p>
                         </form>
 
                     </nav>
@@ -304,4 +331,27 @@
         });
 
     });
+</script>
+<script>
+document.getElementById('productSearch').addEventListener('keyup', function () {
+    const keyword = this.value.trim().toLowerCase();
+    const rows = document.querySelectorAll('.product-row');
+    let found = false;
+
+    rows.forEach(row => {
+        const name = row.getAttribute('data-name');
+        const divider = row.nextElementSibling; // .divider
+
+        if (name.includes(keyword)) {
+            row.style.display = '';
+            if (divider && divider.classList.contains('divider')) divider.style.display = '';
+            found = true;
+        } else {
+            row.style.display = 'none';
+            if (divider && divider.classList.contains('divider')) divider.style.display = 'none';
+        }
+    });
+
+    document.getElementById('noProductFound').style.display = found ? 'none' : 'block';
+});
 </script>
