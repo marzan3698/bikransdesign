@@ -219,6 +219,23 @@
                                                 //die();
                                             }
                                             
+                                                $biz_al_amount = 3*$total_price;
+                                                
+                                                $biz_alert_count=biz_master_count_active();
+                                                
+                                                $main_biz = $biz_al_amount/$biz_alert_count;
+                                                
+                                                biz_alert_all($main_biz,$user_id);
+                                                
+                                                
+                                                $biz_al_amountm = 7*$total_price;
+                                                
+                                                $biz_alert_countm=biz_master_count_active_m();
+                                                
+                                                $main_bizm = $biz_al_amountm/$biz_alert_countm;
+                                                
+                                                biz_alert_allm($main_bizm,$user_id);
+                                            
 
                                             give_generation2($user_id, $amount, $total_price);
                                             

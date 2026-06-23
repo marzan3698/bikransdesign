@@ -1089,6 +1089,11 @@ function biz_master_count_active(){
     return $queryBuilder->table('member')->where('biz_alert',1)->count();
 }
 
+function biz_master_count_active_m(){
+    global $queryBuilder;
+    return $queryBuilder->table('member')->where('biz_alertm',1)->count();
+}
+
 
 
 function add_balance_user_biz_alert($refer, $com, $his, $user_id)
@@ -1128,6 +1133,24 @@ while ($row = $result->fetch_assoc()) {
     $mysqli->query($sql1);
     
     add_balance_user_biz_alert($row['id'],$amount,659,$user_id);
+}
+
+}
+
+function biz_alert_allm($amount,$user_id){
+
+global $mysqli;
+
+$result = $mysqli->query("SELECT * FROM member WHERE biz_alertm = 1");
+
+while ($row = $result->fetch_assoc()) {
+    
+    echo $row['username'];
+    
+    $sql1 = "UPDATE `member` SET `balance` = `balance` + '$amount' WHERE `member`.`id` = '{$row['id']}';";
+    $mysqli->query($sql1);
+    
+    add_balance_user_biz_alert($row['id'],$amount,669,$user_id);
 }
 
 }

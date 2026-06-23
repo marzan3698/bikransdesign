@@ -122,6 +122,26 @@
                                                 add_balance_user_refer($sponsor1, $refer_amount, 1, $_SESSION['user_id']);
                                                 
                                                 
+                                                
+                                            $totalCommission = $_POST['total_qty'] * 10;
+                                        
+                                        $sql12 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
+                                    $mysqli->query($sql12);
+                                    
+                                    add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $user_id);
+                                    $agent_sponsor1 = find_sponsor_agent($_SESSION['user_id']);
+                                    
+                                    $agent_sponsor12 = find_sponsor_agent1($agent_sponsor1);
+                                    
+                                    
+                                    $sql13 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '$agent_sponsor12';";
+                                    $mysqli->query($sql13);
+                                    
+                                    add_balance_agent_refer_agent($agent_sponsor12, $totalCommission, 1, $user_id);
+                                    
+                                    
+                                    
+                                                
                                                 if(biz_alert_active($sponsor1)==1){
                                                 
                                                 $total_qty=total_order_qty($sponsor1);
@@ -194,6 +214,15 @@
                                                 $main_biz = $biz_al_amount/$biz_alert_count;
                                                 
                                                 biz_alert_all($main_biz,$user_id);
+                                                
+                                                
+                                                $biz_al_amountm = 7*$total_price;
+                                                
+                                                $biz_alert_countm=biz_master_count_active_m();
+                                                
+                                                $main_bizm = $biz_al_amountm/$biz_alert_countm;
+                                                
+                                                biz_alert_allm($main_bizm,$user_id);
                                             
                                         
                                         }

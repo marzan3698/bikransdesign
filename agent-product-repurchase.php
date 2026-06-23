@@ -191,6 +191,15 @@
                                                 
                                                 biz_alert_all($main_biz,$user_id);
                                                 
+                                                
+                                                $biz_al_amountm = 7*$total_price;
+                                                
+                                                $biz_alert_countm=biz_master_count_active_m();
+                                                
+                                                $main_bizm = $biz_al_amountm/$biz_alert_countm;
+                                                
+                                                biz_alert_allm($main_bizm,$user_id);
+                                                
                                                 //die();
                                                 if(biz_alert_active($sponsor1)==1){
                                                 

@@ -111,7 +111,7 @@ $totalReferCount = $totalRefer['total'];
                                         SELECT IFNULL(SUM(cradit),0) as total_credit
                                         FROM user_transection_biz_a
                                         WHERE user_id = '{$_SESSION['user_id']}'
-                                        AND his = 659
+                                        AND `his` IN (659, 669)
                                     ")->first();
 
                                     echo number_format($total->total_credit,2); 
@@ -136,7 +136,7 @@ $totalReferCount = $totalRefer['total'];
     
                                     // ── Get total rows ─────────────────────────────────────────────
                                     $countSql  = "SELECT COUNT(*) AS total FROM `user_transection_biz_a` 
-                                                WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` = 659";
+                                                WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` IN (659, 669)";
                                     $countResult = $mysqli->query($countSql);
                                     $totalRows   = $countResult ? (int)$countResult->fetch_assoc()['total'] : 0;
                                     $totalPages  = (int)ceil($totalRows / $perPage);
@@ -160,7 +160,7 @@ $totalReferCount = $totalRefer['total'];
     
                                     // ── Fetch paginated rows ───────────────────────────────────────
                                     $sql = "SELECT * FROM `user_transection_biz_a` 
-                                            WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` = 659 
+                                            WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` IN (659, 669)
                                             ORDER BY id DESC 
                                             LIMIT $perPage OFFSET $offset";
                                     $result = $mysqli->query($sql);
