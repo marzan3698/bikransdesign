@@ -125,10 +125,10 @@
                                                 
                                             $totalCommission = $_POST['total_qty'] * 10;
                                         
-                                        $sql12 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
-                                    $mysqli->query($sql12);
+                                      //  $sql12 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
+                                    // $mysqli->query($sql12);
                                     
-                                    add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $user_id);
+                                    //add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $user_id);
                                     $agent_sponsor1 = find_sponsor_agent($_SESSION['user_id']);
                                     
                                     $agent_sponsor12 = find_sponsor_agent1($agent_sponsor1);
