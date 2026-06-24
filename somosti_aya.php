@@ -104,9 +104,18 @@ $totalReferCount = $totalRefer['total'];
                             </div>
                         </div>
                         <div style="display: flex; gap: 0; background: #223765; width: 97%; margin: auto;">
-                            <div style="padding: 5px;width: 25%;color:#fff;text-align:center;border-right:1px solid #fff">রেফারেন্স- <?= $totalReferCount ?? 0; ?></div>
-                            <div style="padding: 5px;width: 25%;color:#fff;text-align:center;border-right:1px solid #fff">বীজ এলার্ট</div>
-                            <div style="padding: 5px;width: 50%;color:#fff;text-align:center;">সমষ্টি আয় জমা- 
+                            <div style="padding: 10px 5px;width: 25%;color:#fff;text-align:center;border-right:1px solid #fff">রেফারেন্স- <?= $totalReferCount ?? 0; ?></div>
+                            <div style="padding: 10px 5px;width: 25%;color:#fff;text-align:center;border-right:1px solid #fff">
+                                <?php 
+                                    if($totalReferCount > 5 && $totalReferCount < 25){
+                                        echo 'বীজ এলার্ট';
+                                    }elseif($totalReferCount > 24){
+                                        echo 'বীজ মাস্টার';
+                                    }
+                                ?>
+                                
+                            </div>
+                            <div style="padding: 10px 5px;width: 50%;color:#fff;text-align:center;">সমষ্টি আয় জমা- 
                                 <?php $total = QB::query("
                                         SELECT IFNULL(SUM(cradit),0) as total_credit
                                         FROM user_transection_biz_a
