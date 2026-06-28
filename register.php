@@ -440,14 +440,11 @@
                                 </div>
                                 <span id="phone_validation" class="text-danger" style="font-weight: bold;text-align: center; margin-bottom: 10px; display: block;"></span>
 
-
-                                    <div class="custom-form-group2 white-bg">
-                                        <span class="inline-label">ইউজার আইডি-</span>
-                                        <input type="text" id="username" name="username" value="<?= $username ?? '' ?>" readonly required>
-                                    </div>
+                                <div class="custom-form-group2 white-bg">
+                                    <span class="inline-label">ইউজার আইডি-</span>
+                                    <input type="text" id="username" name="username" value="<?= $username ?? '' ?>" readonly required>
+                                </div>
                            
-
-
                                 <div class="custom-form-group2 white-bg">
                                     <span class="inline-label">নামঃ-</span>
                                     <input type="text" name="name" value="<?= $nid['b_name'] ?? '' ?>" required>

@@ -4910,3 +4910,30 @@ function add_notification($user_id, $event, $description) {
         'is_seen' => 0,
     ]);
 }
+
+function agent_product_stock($product_id){
+    $stockIn = QB::table('agent_product_stock')
+        ->where('user_id', $_SESSION['user_id'])
+        ->where('product_id', $product_id)
+        ->where('type', 'stock_in')
+        ->get();
+
+    $stockOut = QB::table('agent_product_stock')
+        ->where('user_id', $_SESSION['user_id'])
+        ->where('product_id', $product_id)
+        ->where('type', 'stock_out')
+        ->get();
+
+    $totalIn = 0;
+    foreach ($stockIn as $row) {
+        $totalIn += $row->qty ?? 0;
+    }
+
+    $totalOut = 0;
+    foreach ($stockOut as $row) {
+        $totalOut += $row->qty ?? 0;
+    }
+
+    $stock = $totalIn - $totalOut;
+    return $stock;
+}

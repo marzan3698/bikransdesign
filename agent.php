@@ -193,30 +193,14 @@
                                 </div>
                                 <div class="service-item">
                                     <div class="service-icon2">
-                                        <?php 
-                                            $stockIn = QB::table('agent_product_stock')
-                                                ->where('user_id', $_SESSION['user_id'])
-                                                ->where('type', 'stock_in')
-                                                ->get();
-
-                                            $stockOut = QB::table('agent_product_stock')
-                                                ->where('user_id', $_SESSION['user_id'])
-                                                ->where('type', 'stock_out')
-                                                ->get();
-
-                                            $totalIn = 0;
-                                            foreach ($stockIn as $row) {
-                                                $totalIn += $row->qty ?? 0;
+                                        <?php
+                                            $allProducts = QB::table('product')->orderBy('id', 'asc')->get();
+                                            $totalStock = 0;
+                                            foreach ($allProducts as $product) {
+                                                $totalStock += agent_product_stock($product->id);
                                             }
-
-                                            $totalOut = 0;
-                                            foreach ($stockOut as $row) {
-                                                $totalOut += $row->qty ?? 0;
-                                            }
-
-                                            $stock = $totalIn - $totalOut;
                                         ?>
-                                        <span onclick="window.location.href='agent-product-stock.php'">এজেন্ট প্রোডাক্ট স্টক: <?= $stock ?></span>
+                                        <span onclick="window.location.href='agent-product-stock.php'">এজেন্ট প্রোডাক্ট স্টক: <?= $totalStock ?></span>
                                     </div>
                                 </div>
                                 <div class="service-item">

@@ -1,3 +1,5 @@
 /.vscode
 /ssl-order
 /sslconfig.php
+/sslcz_ipn_raw.log
+/sslcz_ipn.log

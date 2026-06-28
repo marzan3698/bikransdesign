@@ -28,6 +28,7 @@ if($current_page != 'account-settings.php'
 && $current_page != 'buy_product.php'
 && $current_page != 'refer-commission.php'
 && $current_page != 'team-commission.php'
+&& $current_page != 'final-order.php'
 ) {
 ?>
 <script type="text/javascript" src="js/framework7.js"></script>

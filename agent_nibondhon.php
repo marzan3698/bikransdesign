@@ -139,6 +139,7 @@
                                     $division_id = $_POST['division_id'];
                                     $district_id = $_POST['district_id'];
                                     $upazila_id = $_POST['upazila_id'];
+                                    $union_id = $_POST['union_id'];
                                     $number = trim(preg_replace('/^নম্বরঃ\s*/u', '', $_POST['number'])) ?? null;
                                     $reference_agent_id = $_POST['reference_agent_id'] ?? null;
 
@@ -169,6 +170,7 @@
                                                 'division_id' => $division_id,
                                                 'district_id' => $district_id,
                                                 'upojela_id' => $upazila_id,
+                                                'union_id' => $union_id,
                                                 'number' => $number,
                                                 'status' => 0,
                                                 'reference_agent_id' => $reference_agent_id,
@@ -271,7 +273,7 @@
                                 </div>
                             </div>
                             <div style="display: flex;gap: 5px;margin-top:5px">
-                                <div style="width: 33.33%;">
+                                <div style="width: 50%;">
                                     <select name="division_id" class="cus-select-111" id="division_id" required>
                                         <option value="">বিভাগঃ </option>
                                         <?php 
@@ -282,14 +284,21 @@
                                     </select>
                                     
                                 </div>
-                                <div style="width: 33.33%;">
+                                <div style="width: 50%;">
                                     <select name="district_id" class="cus-select-111" id="district_id" required>
                                         <option value="">জেলাঃ</option>
                                     </select>
                                 </div>
-                                <div style="width: 33.33%;">
+                            </div>
+                            <div style="display: flex;gap: 5px;margin-top:5px">
+                                <div style="width: 50%;">
                                     <select name="upazila_id" class="cus-select-111" id="upazila_id" required>
                                         <option value="">উপজেলাঃ</option>
+                                    </select>
+                                </div>
+                                <div style="width: 50%;">
+                                    <select name="union_id" class="cus-select-111" id="union_id" required>
+                                        <option value="">ইউনিয়ন</option>
                                     </select>
                                 </div>
                             </div>
@@ -365,7 +374,7 @@
                         $("#username").val('এজেন্ট আইডি: ' + response.data.username).prop("readonly", true);
                         $("#nid_no").val('এনএইডি নম্বর: ' + response.data.nid_no).prop("readonly", true);
                         $("#agent_area").val('এজেন্ট এরিয়া: ' + response.agent_area).prop("readonly", true);
-                        $("#village").val('গ্রাম: ' + response.data.address).prop("readonly", true);
+                        $("#village").val('গ্রাম: ' + response.data.address);
                         $("#number").val('নম্বরঃ ' + response.data.phone).prop("readonly", true);
 
                         $("#nidImagePreview").attr("src", response.data.p_nid_front);
@@ -381,7 +390,7 @@
                         $("#username").val('').prop("readonly", false);
                         $("#nid_no").val('').prop("readonly", false);
                         $("#agent_area").val('').prop("readonly", false);
-                        $("#village").val('').prop("readonly", false);
+                        // $("#village").val('').prop("readonly", false);
 
                         $("#nidImagePreview").attr("src", "");
                         $("#nidImagePreview2").attr("src", "");
@@ -435,6 +444,22 @@
                     });
                 }
             });
+            $('#upazila_id').change(function(){
+                var upazila_id = $(this).val();
+
+                $('#union_id').html('<option>Loading...</option>');
+
+                if(upazila_id != ''){
+                    $.ajax({
+                        url: "get_unions.php",
+                        type: "POST",
+                        data: { upazila_id: upazila_id },
+                        success: function(data){
+                            $('#union_id').html(data);
+                        }
+                    });
+                }
+            });
 
         });
     </script>
@@ -466,18 +491,26 @@
     <?php if($exitsCheck){ ?>
         <script>
             $(document).ready(function(){
-                var div_id = "<?= $exitsCheck->division_id ?>";
-                var dis_id = "<?= $exitsCheck->district_id ?>";
-                var upo_id = "<?= $exitsCheck->upojela_id ?>";
+                var div_id   = "<?= $exitsCheck->division_id ?>";
+                var dis_id   = "<?= $exitsCheck->district_id ?>";
+                var upo_id   = "<?= $exitsCheck->upojela_id ?>";
+                var union_id = "<?= $exitsCheck->union_id ?>";
+
                 setTimeout(() => {
                     $("#division_id").val(div_id).trigger('change');
                 }, 500);
+
                 setTimeout(() => {
                     $("#district_id").val(dis_id).trigger('change');
                 }, 1000);
+
                 setTimeout(() => {
                     $("#upazila_id").val(upo_id).trigger('change');
                 }, 1500);
+
+                setTimeout(() => {
+                    $("#union_id").val(union_id).trigger('change');
+                }, 2000);
             });
         </script>
     <?php } ?>

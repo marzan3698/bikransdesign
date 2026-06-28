@@ -221,52 +221,55 @@ if (!$order) {
                                     </div>
                                 </div>
                             </div>
-                            <?php 
-                                $orderItems = QB::table('order_items')->where('order_id', $_GET['order_id'])->get();
-                                $sl = 1;
-                            ?>
-                            <div class="user-info">
-                                <h3 class="title" style="margin-bottom: 10px;">অর্ডার তথ্য</h3><br>
-                                <table class="table table-bordered text-center" style="border-collapse: collapse;">
-                                    <thead>
-                                        <tr>
-                                            <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">প্রোডাক্ট নাম</th>
-                                            <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">পরিমান</th>
-                                            <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">ক্রয় মূল্যে </th>
-                                            <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">বিক্রয় মূল্যে </th>
-            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $totalMainPrice = 0;
-                                        $totalPrice = 0;
-                                        foreach ($orderItems as $index => $item): 
-                                        ?>
+                                <?php 
+                                    $orderItems = QB::table('order_items')->where('order_id', $_GET['order_id'])->get();
+                                    $sl = 1;
+                                ?>
+                                <div class="user-info">
+                                    <h3 class="title" style="margin-bottom: 10px;">অর্ডার তথ্য</h3><br>
+                                    <table class="table table-bordered text-center" style="border-collapse: collapse;">
+                                        <thead>
                                             <tr>
-                                                <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234;text-align:left">
-                                                    <?php
-                                                    $product = QB::table('product')->where('id', $item->product_id)->first();
-                                                    $totalMainPrice += $item->price * $item->quantity;
-                                                    $totalPrice += $item->price * $item->quantity;
-                                                    echo bn_number($sl++) . '. ';
-                                                    echo $product ? $product->name : 'Unknown Product';
-                                                    ?>
-                                                </td>
-                                                <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234"><?php echo $item->quantity; ?>টি</td>
-                                                <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234"><?php echo number_format($item->price * $item->quantity); ?> টাকা</td>
-                                                <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234"><?php echo number_format($item->price * $item->quantity); ?> টাকা</td>
+                                                <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">প্রোডাক্ট নাম</th>
+                                                <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">পরিমান</th>
+                                                <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">ক্রয় মূল্যে </th>
+                                                <th style="background: #7F7F7F; color:#fff; border:1px solid #0B2234">বিক্রয় মূল্যে </th>
+                
                                             </tr>
-                                        <?php endforeach; ?>
-                                        <tr>
-                                            <th style="text-align: right; background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;">মোট</th>
-                                            <th style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;"><?php echo number_format($order->total_qty); ?> টি </th>
-                                            <th style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;"><?= $totalMainPrice ?> টাকা</th>
-                                            <th style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;"><?php echo $totalPrice; ?> টাকা</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $totalMainPrice = 0;
+                                            $totalPrice = 0;
+                                            foreach ($orderItems as $index => $item): 
+                                            ?>
+                                                <tr>
+                                                    <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234;text-align:left">
+                                                        <?php
+                                                        $product = QB::table('product')->where('id', $item->product_id)->first();
+                                                        $totalMainPrice += $product->main_price * $item->quantity;
+                                                        $totalPrice += $product->price * $item->quantity;
+                                                        echo bn_number($sl++) . '. ';
+                                                        echo $product ? $product->name : 'Unknown Product';
+                                                        ?>
+                                                    </td>
+                                                    <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234"><?php echo $item->quantity; ?>টি</td>
+                                                    <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234"><?php echo number_format($product->main_price * $item->quantity); ?> টাকা</td>
+                                                    <td style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234"><?php echo number_format($product->price * $item->quantity); ?> টাকা</td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                            <tr>
+                                                <th style="text-align: right; background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;">মোট</th>
+                                                <th style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;"><?php echo number_format($order->total_qty); ?> টি </th>
+                                                <th style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;"><?= $totalMainPrice ?> টাকা</th>
+                                                <th style="background: #99E5E5;color: #0B2234;border:1px solid #0B2234; font-weight: bold;"><?php echo $totalPrice; ?> টাকা</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="submit" name="update" class="submitBtn">
+                                        অর্ডার সাবমিট করুন
+                                    </button>
+                                </div>
                         </div>
                       <div style="display:flex; gap:1px; width:90%;margin:auto">
     
