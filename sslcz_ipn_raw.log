@@ -7463,3 +7463,38 @@
     [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
 )
 
+2026-06-27T11:52:25+00:00 Array
+(
+    [amount] => 10.00
+    [bank_tran_id] => 
+    [base_fair] => 0.00
+    [card_brand] => 
+    [card_issuer] => 
+    [card_issuer_country] => 
+    [card_issuer_country_code] => 
+    [card_no] => 
+    [card_sub_brand] => 
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 10.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Customer did not choose to pay any channel
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => UNATTEMPTED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-27 17:37:14
+    [tran_id] => TRX_1782560234_a4f92a
+    [val_id] => 
+    [value_a] => 1
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => b28e32faeec7d7483c744ed64204ae2a28373b76ffb102e7bbf7e6bd0f0ada38
+    [verify_sign] => 00b341c76735cd01afee66b2b93a25d1
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+

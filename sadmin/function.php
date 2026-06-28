@@ -1123,7 +1123,7 @@ function biz_alert_all($amount,$user_id){
 
 global $mysqli;
 
-$result = $mysqli->query("SELECT * FROM member WHERE biz_alert = 1");
+$result = $mysqli->query("SELECT * FROM member WHERE biz_alert = 1 and biz_alertm = 0");
 
 while ($row = $result->fetch_assoc()) {
     
