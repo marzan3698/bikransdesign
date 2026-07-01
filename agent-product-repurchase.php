@@ -100,6 +100,9 @@
                             </div>
                         </div>
                         <?php
+                        
+                        
+                        
                         if (isset($_POST['submit'])) {
                             
                             $user = QB::table('member')->where('id', $_SESSION['user_id'])->first();
@@ -113,6 +116,8 @@
                             if ($_POST['total_qty'] >= $qty) {
                                 
                                 $total_price = $_POST['total_qty'];
+                                
+                                
 
                                 $username = $_POST['username'];
                                 if(!$username){
@@ -183,7 +188,20 @@
                                                 $refer_amount;
                                                 //die();
                                                 add_balance_user_refer($sponsor1, $refer_amount, 1, $userCheck->id);
-                                                $biz_al_amount = 3*$total_price;
+                                                
+                                                foreach ($_POST['product_id'] as $index => $productId) {
+                                                    
+                                                    if (in_array($productId, [1, 2, 3, 6, 7, 27, 28, 29, 30, 31, 32, 45])) {
+                                                            $biz_al_amount = 15 * $total_price;
+                                                            $biz_al_amountm = 25 * $total_price;
+                                                        } else {
+                                                            $biz_al_amount = 3 * $total_price;
+                                                            $biz_al_amountm = 7 * $total_price;
+                                                        }
+                                                    
+                                                }
+                                                
+                                                
                                                 
                                                 $biz_alert_count=biz_master_count_active();
                                                 
@@ -191,8 +209,6 @@
                                                 
                                                 biz_alert_all($main_biz,$user_id);
                                                 
-                                                
-                                                $biz_al_amountm = 7*$total_price;
                                                 
                                                 $biz_alert_countm=biz_master_count_active_m();
                                                 

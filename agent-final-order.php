@@ -387,7 +387,7 @@
                                                 'user_id' => $_SESSION['user_id'],
                                                 'product_id' => $productId,
                                                 'qty' => $_POST['quantity'][$index],
-                                                'type' => 'stock_in',
+                                                'type' => 'stock_out',
                                                 'time' => time(),
                                             ]);
                                         }

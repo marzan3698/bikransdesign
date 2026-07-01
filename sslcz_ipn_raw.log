@@ -7498,3 +7498,338 @@
     [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
 )
 
+2026-06-28T06:59:51+00:00 Array
+(
+    [amount] => 1230.77
+    [bank_tran_id] => BGT69764260628B88294
+    [base_fair] => 1200.00
+    [currency] => BDT
+    [currency_amount] => 1200.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [error] => Cancelled by User
+    [status] => CANCELLED
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-28 12:57:53
+    [tran_id] => TRX_1782629873_1b3bc2
+    [value_a] => 1777
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => dd725d317870d13be563f5a106c1c5daaf33912f18abe024bf1926d6cde0d421
+    [verify_sign] => 798215a8c2107716def25afb66bb3a7e
+    [verify_key] => amount,bank_tran_id,base_fair,currency,currency_amount,currency_rate,currency_type,error,status,store_id,tran_date,tran_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-28T07:11:10+00:00 Array
+(
+    [amount] => 1200.00
+    [bank_tran_id] => BGT69764260628B88294
+    [base_fair] => 1200.00
+    [card_brand] => MOBILEBANKING
+    [card_issuer] => BKash Mobile Banking
+    [card_issuer_country] => Bangladesh
+    [card_issuer_country_code] => BD
+    [card_no] => 
+    [card_sub_brand] => MB
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 1200.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Payment Timeout
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => EXPIRED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-28 12:57:53
+    [tran_id] => TRX_1782629873_1b3bc2
+    [val_id] => 
+    [value_a] => 1777
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => 6d5abb83d67a56d11afcc00af9fafc37fd251384e8c4281034c511c8b6507de9
+    [verify_sign] => b7603aa3a8f30889fd9a17bf8af789fd
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-29T05:13:43+00:00 Array
+(
+    [amount] => 1000.00
+    [bank_tran_id] => BGT34991260629V66592
+    [base_fair] => 1000.00
+    [card_brand] => MOBILEBANKING
+    [card_issuer] => BKash Mobile Banking
+    [card_issuer_country] => Bangladesh
+    [card_issuer_country_code] => BD
+    [card_no] => 
+    [card_sub_brand] => MB
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 1000.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Payment Timeout
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => EXPIRED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-29 11:01:11
+    [tran_id] => TRX_1782709247_fecdcd
+    [val_id] => 
+    [value_a] => 1469
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => 52384bdf297beef546ca652e193af436caa69a4fd8343468cf183965230c1840
+    [verify_sign] => 42d9733c4143b245ab801a51b81c41d6
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T06:52:39+00:00 Array
+(
+    [amount] => 5609.00
+    [bank_tran_id] => 
+    [base_fair] => 0.00
+    [card_brand] => 
+    [card_issuer] => 
+    [card_issuer_country] => 
+    [card_issuer_country_code] => 
+    [card_no] => 
+    [card_sub_brand] => 
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 5609.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Customer did not choose to pay any channel
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => UNATTEMPTED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 12:37:29
+    [tran_id] => TRX_1782801449_92f5b1
+    [val_id] => 
+    [value_a] => 101
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => dfd1b25b18c6e5b400ce678c13f575a06fff51a1379b2a6885b004909e7da08e
+    [verify_sign] => 3bfbedc9b1262a5b12bdd2c836594838
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T10:43:19+00:00 Array
+(
+    [amount] => 1200.00
+    [bank_tran_id] => BGT92457260630O147941
+    [base_fair] => 1200.00
+    [card_brand] => MOBILEBANKING
+    [card_issuer] => BKash Mobile Banking
+    [card_issuer_country] => Bangladesh
+    [card_issuer_country_code] => BD
+    [card_no] => KXDFU7UJHJF7
+    [card_sub_brand] => MB
+    [card_type] => BKASH-BKash
+    [currency] => BDT
+    [currency_amount] => 1200.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [error] => 
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => VALID
+    [store_amount] => 1200.00
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 16:42:21
+    [tran_id] => TRX_1782816141_d62df9
+    [val_id] => 260630164319743593918d81a07
+    [value_a] => 1756
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => 49eda8cbb526b5aaf194da14ea961828fa01ca312ab5b9f5c7dc03d382f6b2e8
+    [verify_sign] => 1aa355dc39e8f0d47e48a51a70e85170
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T11:03:26+00:00 Array
+(
+    [amount] => 755.00
+    [bank_tran_id] => 
+    [base_fair] => 0.00
+    [card_brand] => 
+    [card_issuer] => 
+    [card_issuer_country] => 
+    [card_issuer_country_code] => 
+    [card_no] => 
+    [card_sub_brand] => 
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 755.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Customer did not choose to pay any channel
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => UNATTEMPTED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 16:48:17
+    [tran_id] => TRX_1782816497_115bcb
+    [val_id] => 
+    [value_a] => 99
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => df85a1b3f6b412736c296c0827b8fa7c641db0531125f7f2e729fbdf440f4728
+    [verify_sign] => c83200f689f8c822977c4d9116fea4d1
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T16:09:32+00:00 Array
+(
+    [amount] => 1900.00
+    [bank_tran_id] => BGT21670260630R238591
+    [base_fair] => 1900.00
+    [card_brand] => MOBILEBANKING
+    [card_issuer] => BKash Mobile Banking
+    [card_issuer_country] => Bangladesh
+    [card_issuer_country_code] => BD
+    [card_no] => KXDFU6V0CJ86
+    [card_sub_brand] => MB
+    [card_type] => BKASH-BKash
+    [currency] => BDT
+    [currency_amount] => 1900.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [error] => 
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => VALID
+    [store_amount] => 1900.00
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 22:08:55
+    [tran_id] => TRX_1782835734_6eadba
+    [val_id] => 260630220932831149916956d8c
+    [value_a] => 1756
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => 38dee56d592e1c1c38273915eeb7af3b3a91d63e9f1f56712d8498b7e148b6f7
+    [verify_sign] => 527622d43dc972b2f4b7b4f5ae1527c4
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T16:13:54+00:00 Array
+(
+    [amount] => 1800.00
+    [bank_tran_id] => BGT75186260630H239805
+    [base_fair] => 1800.00
+    [card_brand] => MOBILEBANKING
+    [card_issuer] => BKash Mobile Banking
+    [card_issuer_country] => Bangladesh
+    [card_issuer_country_code] => BD
+    [card_no] => KXDFU7V0L3K7
+    [card_sub_brand] => MB
+    [card_type] => BKASH-BKash
+    [currency] => BDT
+    [currency_amount] => 1800.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [error] => 
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => VALID
+    [store_amount] => 1800.00
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 22:13:15
+    [tran_id] => TRX_1782835995_b5984f
+    [val_id] => 2606302213540186126337703b2
+    [value_a] => 1756
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => 756cc254e3270b5c2b02a17c74a8c5967406f62cd03c16a0cf956bcd9b8c5680
+    [verify_sign] => ac0c14e8e6e32d3120bfcf81905b152c
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T16:28:23+00:00 Array
+(
+    [amount] => 1800.00
+    [bank_tran_id] => 
+    [base_fair] => 0.00
+    [card_brand] => 
+    [card_issuer] => 
+    [card_issuer_country] => 
+    [card_issuer_country_code] => 
+    [card_no] => 
+    [card_sub_brand] => 
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 1800.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Customer did not choose to pay any channel
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => UNATTEMPTED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 22:13:14
+    [tran_id] => TRX_1782835993_9a06c3
+    [val_id] => 
+    [value_a] => 1756
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => ebd449630937de2cb3d6ffc1e45804450f14ab47e8348084bc1d6f0c53de2f95
+    [verify_sign] => cb23d7eb937e2bfcc96e0bc9e705f248
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
+2026-06-30T16:28:24+00:00 Array
+(
+    [amount] => 1800.00
+    [bank_tran_id] => 
+    [base_fair] => 0.00
+    [card_brand] => 
+    [card_issuer] => 
+    [card_issuer_country] => 
+    [card_issuer_country_code] => 
+    [card_no] => 
+    [card_sub_brand] => 
+    [card_type] => 
+    [currency] => BDT
+    [currency_amount] => 1800.00
+    [currency_rate] => 1.0000
+    [currency_type] => BDT
+    [cus_phone] => 01700000000
+    [error] => Customer did not choose to pay any channel
+    [risk_level] => 0
+    [risk_title] => Safe
+    [status] => UNATTEMPTED
+    [store_amount] => 
+    [store_id] => uparzone0live
+    [tran_date] => 2026-06-30 22:13:14
+    [tran_id] => TRX_1782835994_aae27d
+    [val_id] => 
+    [value_a] => 1756
+    [value_b] => 
+    [value_c] => 
+    [value_d] => 
+    [verify_sign_sha2] => 02e986e71d2fd93ff9ec6e28f78205ef3e15ccbe7e10958b1a96a33afd308fc0
+    [verify_sign] => 6747068ba1113102b46c7c1efdbfbb51
+    [verify_key] => amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,cus_phone,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d
+)
+
