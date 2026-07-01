@@ -29,6 +29,8 @@ if($current_page != 'account-settings.php'
 && $current_page != 'refer-commission.php'
 && $current_page != 'team-commission.php'
 && $current_page != 'final-order.php'
+&& $current_page != 'agent-final-order.php'
+&& $current_page != 'somosti_aya.php'
 ) {
 ?>
 <script type="text/javascript" src="js/framework7.js"></script>

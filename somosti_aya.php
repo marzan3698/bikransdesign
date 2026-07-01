@@ -107,7 +107,7 @@ $totalReferCount = $totalRefer['total'];
                             <div style="padding: 10px 5px;width: 25%;color:#fff;text-align:center;border-right:1px solid #fff">রেফারেন্স- <?= $totalReferCount ?? 0; ?></div>
                             <div style="padding: 10px 5px;width: 25%;color:#fff;text-align:center;border-right:1px solid #fff">
                                 <?php 
-                                    if($totalReferCount > 5 && $totalReferCount < 25){
+                                    if($totalReferCount >= 5 && $totalReferCount < 25){
                                         echo 'বীজ এলার্ট';
                                     }elseif($totalReferCount > 24){
                                         echo 'বীজ মাস্টার';
@@ -130,6 +130,7 @@ $totalReferCount = $totalRefer['total'];
                             <table class="table4">
                                 <thead>
                                     <tr>
+                                        <th class="ash" style="font-size: 12px;border: 1px solid #0B2234;border-right: 0px">নং</th>
                                         <th class="ash" style="font-size: 12px;border: 1px solid #0B2234;border-right: 0px">তারিখ</th>
                                         <th class="ash" style="font-size: 12px;border: 1px solid #0B2234;border-right: 0px">বার</th>
                                         <th class="ash" style="font-size: 12px;border: 1px solid #0B2234;border-right: 0px">নাম</th>
@@ -172,6 +173,7 @@ $totalReferCount = $totalRefer['total'];
                                             WHERE `user_id` = '{$_SESSION['user_id']}' AND `his` IN (659, 669)
                                             ORDER BY id DESC 
                                             LIMIT $perPage OFFSET $offset";
+                                    $sl = 1 + $offset;
                                     $result = $mysqli->query($sql);
     
                                     while ($row = $result->fetch_assoc()) {
@@ -179,6 +181,9 @@ $totalReferCount = $totalRefer['total'];
                                         $bangla_day = $days[$day];
                                 ?>
                                     <tr style="color: black;">
+                                        <td style="color: black; vertical-align: middle; white-space: nowrap;">
+                                            <?= $sl++ ?>
+                                        </td>
                                         <td style="color: black; vertical-align: middle; white-space: nowrap;">
                                             <?php echo date('F j, Y g:i a', $row['time']); ?>
                                         </td>

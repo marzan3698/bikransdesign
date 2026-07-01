@@ -1,5 +1,6 @@
 <!-- <?php
 require_once('sadmin/config.php');
+require_once('sadmin/function.php');
 
 $withdrawList = "SELECT m.name, m.image, w.user_id, SUM(w.amount) AS total_amount
                 FROM withdraw_request w

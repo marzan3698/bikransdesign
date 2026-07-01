@@ -145,7 +145,7 @@
                             <h4 onclick="window.location.href='#'" style="background-color:#0B2234;color:#fff">
                                 মোট প্রোডাক্ট <br> মূল্য-  <span id="total-price">0</span>
                             </h4>
-                            <h4 onclick="window.location.href='cart333.php'" style="background-color:#0B2234;color:#fff">
+                            <h4 onclick="window.location.href='cart6.php'" style="background-color:#0B2234;color:#fff">
                                 কার্টকৃত <br> প্রোডাক্ট
                             </h4>
                         </div>
@@ -177,7 +177,6 @@
                                 die('ইউজার আইডি ইতিমধ্যে ব্যবহৃত হচ্ছে, দয়া করে আবার চেষ্টা করুন।');
                             }
 
-                 
                             if(!$phone){
                                 die('অনুগ্রহ করে মোবাইল নম্বর পূরণ করুন।');
                             }
@@ -213,9 +212,7 @@
                                 die('ফোন নম্বর আগে ব্যবহার হয়েছে। দয়া করে নতুন একটা ফোন নম্বর ব্যবহার করুন।');
                             } else {
                                 
-                                $balance = $member->jfund_balance;
-                                
-                                if ($balance >= $amount) {
+          
                                     
                                 $insert = QB::table('member')->insert([
                                     'joining_time' => time(),
@@ -248,8 +245,8 @@
                                     if ($insert1) {
                                         
                                         $sql = "UPDATE `member` SET `is_premium` = '1', `update_time` = '1' WHERE `member`.`id` = '$insertedUserId';";
-                                        $sql2 = "UPDATE `member` SET `jfund_balance` = `jfund_balance` - '$amount' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
-                                        $mysqli->query($sql2);
+                                        // $sql2 = "UPDATE `member` SET `jfund_balance` = `jfund_balance` - '$amount' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
+                                        // $mysqli->query($sql2);
                                         
                                         if ($mysqli->query($sql)) {
                                             
@@ -359,7 +356,11 @@
                                             'district' => $district_id,
                                             'upazilla' => $upazila_id,
                                             'union' => $union_id,
-                                            'address' => $village
+                                            'address' => $village,
+                                            'type' => 'agent-nibondhon',
+                                            'order_type' => 'agent-nibondhon',
+                                            'agent_id' => $_SESSION['user_id'],
+                                            'is_agent' => 1,
                                         ]);
                                         $lastOrder = QB::table('order')->orderBy('id', 'desc')->first();
                                         $orderId = 1;
@@ -377,8 +378,12 @@
                                                 'product_id' => $productId,
                                                 'quantity' => $_POST['quantity'][$index],
                                                 'price' => $_POST['price'][$index],
+                                                'is_agent' => 1,
+                                                'order_type' => 'agent-nibondhon',
+                                                'agent_id' => $_SESSION['user_id'],
+                                                'type' => 'agent-nibondhon',
                                             ]);
-                                            QB::table('product_stock')->insert([
+                                            QB::table('agent_product_stock')->insert([
                                                 'user_id' => $_SESSION['user_id'],
                                                 'product_id' => $productId,
                                                 'qty' => $_POST['quantity'][$index],
@@ -387,7 +392,7 @@
                                             ]);
                                         }
 
-                                        echo "<script>localStorage.removeItem('createOrder3');</script>";
+                                        echo "<script>localStorage.removeItem('cart666');</script>";
                                         
                                         echo "<script>
                                             setTimeout(function(){
@@ -395,11 +400,7 @@
                                             }, 500);
                                         </script>";
                                     }
-
                                 }
-                                } else {
-                                        echo "<div style='color: red; text-align: center; margin-top: 20px;'>❌ আপনার একাউন্ট এ পর্যাপ্ত পরিমান অর্থ নাই। অনুগ্রহ করে আবার চেষ্টা করুন </div>";
-                                    }
                                 
                             }
                         }
@@ -428,44 +429,63 @@
 
                             </div>
 
-                            <!-- 🔍 সার্চ বক্স -->
-                            <div class="product-search-box">
-                                <input type="text" id="productSearch" placeholder="প্রোডাক্ট খুঁজুন...">
-                            </div>
+                            <?php
+                            $products = QB::table('product')->orderBy('id', 'desc')->get();
+                            foreach ($products as $product) {
+                                    $stockIn = QB::table('agent_product_stock')
+                                        ->where('user_id', $_SESSION['user_id'])
+                                        ->where('product_id', $product->id)
+                                        ->where('type', 'stock_in')
+                                        ->get();
 
-                            <div id="productListWrapper">
-                                <?php
-                                $products = QB::table('product')->get();
-                                foreach ($products as $index => $product) {
-                                    $isHidden = $index >= 3 ? 'data-hidden="true" style="display:none;"' : '';
-                                ?>
-                                    <div class="product-row" 
-                                        data-id="<?= $product->id ?>" 
-                                        data-price="<?= $product->main_price ?>"
-                                        data-name="<?= strtolower($product->name) ?>"
-                                        <?= $isHidden ?>>
-                                        <div class="product-image2">
-                                            <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
-                                        </div>
+                                    $stockOut = QB::table('agent_product_stock')
+                                        ->where('user_id', $_SESSION['user_id'])
+                                        ->where('product_id', $product->id)
+                                        ->where('type', 'stock_out')
+                                        ->get();
 
-                                        <div class="product-info">
-                                            <div class="product-title"><?= $product->name ?></div>
-                                            <div class="product-price">মূল্য-<?= $product->main_price ?> টাকা</div>
+                                    $totalIn = 0;
+                                    foreach ($stockIn as $row) {
+                                        $totalIn += $row->qty ?? 0;
+                                    }
 
-                                            <div class="product-action">
-                                                <div class="qty-box">
-                                                    <button type="button" class="qty-btn minus">-</button>
-                                                    <input type="number" class="qty-input" value="1" min="1">
-                                                    <button type="button" class="qty-btn plus">+</button>
-                                                </div>
-                                                <button type="button" class="add-cart">কার্টে যোগ করুন</button>
+                                    $totalOut = 0;
+                                    foreach ($stockOut as $row) {
+                                        $totalOut += $row->qty ?? 0;
+                                    }
+
+                                    $stock = $totalIn - $totalOut;
+                                    // স্টক ০ বা কম হলে skip করবে
+                                    if ($stock <= 0) {
+                                        continue;
+                                    }
+
+                            ?>
+
+                                <div class="product-row" data-id="<?= $product->id ?>" data-price="<?= $product->main_price ?>">
+                                    <div class="product-image">
+                                        <img src="https://nadmin.bikrans.com/<?= $product->images ?>" alt="">
+                                    </div>
+
+                                    <div class="product-info">
+                                        <div class="product-title"><?= $product->name ?></div>
+                                        <div class="product-price">মূল্য-<?= $product->main_price ?> টাকা</div>
+                                        <div>স্টক: <?= $stock ?></div>
+
+                                        <div class="product-action">
+                                            <div class="qty-box">
+                                                <button type="button" class="qty-btn minus">-</button>
+                                                <input type="number" class="qty-input" value="1" min="1" max="<?= $stock ?>">
+                                                <button type="button" class="qty-btn plus">+</button>
                                             </div>
+
+                                            <button type="button" class="add-cart">কার্টে যোগ করুন</button>
                                         </div>
                                     </div>
-                                    <div class="divider" <?= $isHidden ?>></div>
-                                <?php } ?>
-                            </div>
-                            <p id="noProductFound" style="display:none; text-align:center; padding:20px;">কোনো প্রোডাক্ট পাওয়া যায়নি।</p>
+                                </div>
+                                <div class="divider"></div>
+
+                            <?php } ?>
 
                             <h3 style="padding: 8px;font-weight:bold">সদস্য জয়েনিং তথ্য</h3>
                                 <div class="custom-form-group2 white-bg">
@@ -509,7 +529,7 @@
                                     <input type="password" name="password" id="password" required>
                                     <span class="toggle-password" onclick="togglePassword('password', this)">👁</span>
                                 </div>
-                                <div id="password-check"></div>
+                               
                             </div>
 
                             <div class="custom-form-group2 white-bg password-wrapper">
@@ -517,8 +537,9 @@
                                 <div class="password-field">
                                     <input type="password" name="confirm_password" id="confirm_password" required>
                                     <span class="toggle-password" onclick="togglePassword('confirm_password', this)">👁</span>
-                                </div> 
-                            </div>-->
+                                </div>
+                            </div> -->
+                             <div style="padding: 8px;font-weight:bold" id="password-check"></div>
 
                             <h3 style="padding: 8px;font-weight:bold">প্রোডাক্ট ডেলিভারি তথ্য</h3>
 
@@ -592,17 +613,15 @@
 <script>
     $(document).ready(function() {
 
-        // এখানে cart এর নতুন নাম
-        const CART_KEY = "createOrder3";
+        // cart এর নতুন নাম
+        const cartKey = "cart666";
 
         function renderCartList() {
-
-            let cart = localStorage.getItem(CART_KEY)
-                ? JSON.parse(localStorage.getItem(CART_KEY))
+            let cart = localStorage.getItem(cartKey)
+                ? JSON.parse(localStorage.getItem(cartKey))
                 : {};
 
             let $ul = $("#cart-list ul");
-
             $ul.empty();
 
             if ($.isEmptyObject(cart)) {
@@ -611,123 +630,104 @@
             }
 
             $.each(cart, function(id, item) {
-
                 $ul.append(`
                     <li>
                         <input type="hidden" value="${id}" name="product_id[]" readonly>
-
                         <input type="hidden" value="${item.qty}" name="quantity[]" readonly>
-
                         <input type="hidden" value="${item.price}" name="price[]" readonly>
                     </li>
                 `);
-
             });
         }
 
         renderCartList();
 
         // localStorage থেকে cart load
-        let cart = localStorage.getItem(CART_KEY)
-            ? JSON.parse(localStorage.getItem(CART_KEY))
+        let cart = localStorage.getItem(cartKey)
+            ? JSON.parse(localStorage.getItem(cartKey))
             : {};
 
         updateSummary();
 
         function saveCart() {
-            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            localStorage.setItem(cartKey, JSON.stringify(cart));
         }
 
         function updateSummary() {
-
             let totalItems = 0;
             let totalPrice = 0;
 
             $.each(cart, function(id, item) {
-
                 totalItems += item.qty;
                 totalPrice += item.qty * item.price;
-
             });
 
             $("#total-items").text(totalItems);
             $("#total-price").text(totalPrice);
-
             $("#total-qty").val(totalItems);
             $("#total-price-hidden").val(totalPrice);
-
             $("#total-point-hidden").val(totalPrice * 0.1);
-
         }
 
         // Plus button
         $(document).on("click", ".plus", function() {
-
             let input = $(this).siblings(".qty-input");
-
             let value = parseInt(input.val());
+            let max = parseInt(input.attr("max"));
 
-            input.val(value + 1);
-
+            if (value < max) {
+                input.val(value + 1);
+            } else {
+                Swal.fire({
+                    showConfirmButton: false,
+                    timer: 1200,
+                    timerProgressBar: true,
+                    text: "সর্বোচ্চ স্টক সীমায় পৌঁছে গেছে!",
+                    icon: "warning",
+                });
+            }
         });
 
         // Minus button
         $(document).on("click", ".minus", function() {
-
             let input = $(this).siblings(".qty-input");
-
             let value = parseInt(input.val());
 
             if (value > 1) {
                 input.val(value - 1);
             }
-
         });
-        // Add to cart
-        // পেজে PHP থেকে balance পাস করুন
-        const memberBalance = <?php echo $member->jfund_balance; ?>;
 
         // Add to cart
         $(document).on("click", ".add-cart", function() {
 
             let row = $(this).closest(".product-row");
+
             let id = row.data("id");
             let price = parseFloat(row.data("price"));
             let qty = parseInt(row.find(".qty-input").val());
+            let max = parseInt(row.find(".qty-input").attr("max"));
 
-            // নতুন আইটেম যোগ হলে মোট কত হবে সেটা আগে হিসাব করো
-            let tempCart = $.extend(true, {}, cart);
+            let currentQty = cart[id] ? cart[id].qty : 0;
 
-            if (tempCart[id]) {
-                tempCart[id].qty += qty;
-            } else {
-                tempCart[id] = { price: price, qty: qty };
-            }
-
-            // tempCart এর মোট মূল্য হিসাব
-            let newTotal = 0;
-            $.each(tempCart, function(pid, item) {
-                newTotal += item.qty * item.price;
-            });
-
-            // ব্যালেন্স চেক
-            if (newTotal > memberBalance) {
+            if (currentQty + qty > max) {
                 Swal.fire({
                     showConfirmButton: false,
-                    timer: 2000,
+                    timer: 1500,
                     timerProgressBar: true,
-                    title: "অপর্যাপ্ত ব্যালেন্স!",
-                    text: `আপনার ব্যালেন্স ${memberBalance} টাকা। মোট মূল্য ${newTotal} টাকা হচ্ছে, যা আপনার ব্যালেন্সের বেশি।`,
+                    text: "স্টকের বেশি পরিমাণ কার্টে যোগ করা যাবে না!",
                     icon: "error",
                 });
-                return; // কার্টে যোগ করবে না
+                return;
             }
 
-            // ব্যালেন্স ঠিক থাকলে কার্টে যোগ করো
             if (cart[id]) {
                 cart[id].qty += qty;
             } else {
-                cart[id] = { price: price, qty: qty };
+                cart[id] = {
+                    price: price,
+                    qty: qty
+                };
             }
 
             saveCart();
@@ -741,50 +741,32 @@
                 text: "প্রোডাক্ট সফলভাবে কার্টে যোগ হয়েছে!",
                 icon: "success",
             });
-
         });
-
     });
 </script>
-<script>
-    document.getElementById('productSearch').addEventListener('keyup', function () {
-    const keyword = this.value.trim().toLowerCase();
-    const rows = document.querySelectorAll('.product-row');
-    let found = false;
 
-    if (keyword === '') {
-        // সার্চ খালি হলে আবার প্রথম ৩টা দেখাবে, বাকি লুকাবে
-        rows.forEach((row, index) => {
-            const divider = row.nextElementSibling;
-            if (index < 3) {
+<script>
+document.getElementById('productSearch').addEventListener('keyup', function () {
+        const keyword = this.value.trim().toLowerCase();
+        const rows = document.querySelectorAll('.product-row');
+        let found = false;
+
+        rows.forEach(row => {
+            const name = row.getAttribute('data-name');
+            const divider = row.nextElementSibling; // .divider
+
+            if (name.includes(keyword)) {
                 row.style.display = '';
                 if (divider && divider.classList.contains('divider')) divider.style.display = '';
+                found = true;
             } else {
                 row.style.display = 'none';
                 if (divider && divider.classList.contains('divider')) divider.style.display = 'none';
             }
         });
-        document.getElementById('noProductFound').style.display = 'none';
-        return;
-    }
 
-    // সার্চ করলে সব প্রোডাক্ট থেকে খুঁজবে
-    rows.forEach(row => {
-        const name = row.getAttribute('data-name');
-        const divider = row.nextElementSibling;
-
-        if (name.includes(keyword)) {
-            row.style.display = '';
-            if (divider && divider.classList.contains('divider')) divider.style.display = '';
-            found = true;
-        } else {
-            row.style.display = 'none';
-            if (divider && divider.classList.contains('divider')) divider.style.display = 'none';
-        }
+        document.getElementById('noProductFound').style.display = found ? 'none' : 'block';
     });
-
-    document.getElementById('noProductFound').style.display = found ? 'none' : 'block';
-});
 </script>
 <script>
     function togglePassword(id, el) {
@@ -824,6 +806,7 @@
             }
         });
     });
+
     $("#phone").on("keyup", function() {
         var phone = $(this).val();
 

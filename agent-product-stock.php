@@ -47,9 +47,10 @@
     <div class="view view-main">
         <link href="https://fonts.cdnfonts.com/css/solaimanlipi" rel="stylesheet">
         <style>
-            *{
+            * {
                 font-family: 'SolaimanLipi', sans-serif !important;
             }
+
             .cus-in-11 {
                 width: 100%;
                 padding: 10px;
@@ -96,11 +97,12 @@
                 text-align: center;
                 position: relative;
             }
-            .submit-btn{
-                margin-bottom: 35px !important; 
-                display: block; 
-                margin: auto; 
-                padding: 10px 34px; 
+
+            .submit-btn {
+                margin-bottom: 35px !important;
+                display: block;
+                margin: auto;
+                padding: 10px 34px;
                 margin-top: 10px !important;
             }
         </style>
@@ -116,69 +118,69 @@
                             <div class="navbar_right"><img src="images/icons/green/menu.png" alt="" title="" /></div>
                         </a>
                     </div>
-                   <nav class="main-nav" style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
+                    <nav class="main-nav" style="margin-top: 60px !important; width: 95%; margin: auto; min-height:86vh;">
                         <div style="background: #00CC99; padding: 12px; color: #fff; text-align: center; font-size: 22px;">এজেন্ট প্রোডাক্ট স্টক</div>
                         <?php
-                            // ── Fetch all products and calculate stock ──────────────────────
-                            $allProducts = QB::table('product')->orderBy('id', 'asc')->get();
+                        // ── Fetch all products and calculate stock ──────────────────────
+                        $allProducts = QB::table('product')->orderBy('id', 'asc')->get();
 
-                            $validProducts = [];
-                            foreach ($allProducts as $product) {
-                                $stockIn = QB::table('agent_product_stock')
-                                    ->where('user_id', $_SESSION['user_id'])
-                                    ->where('product_id', $product->id)
-                                    ->where('type', 'stock_in')
-                                    ->get();
+                        $validProducts = [];
+                        foreach ($allProducts as $product) {
+                            $stockIn = QB::table('agent_product_stock')
+                                ->where('user_id', $_SESSION['user_id'])
+                                ->where('product_id', $product->id)
+                                ->where('type', 'stock_in')
+                                ->get();
 
-                                $stockOut = QB::table('agent_product_stock')
-                                    ->where('user_id', $_SESSION['user_id'])
-                                    ->where('product_id', $product->id)
-                                    ->where('type', 'stock_out')
-                                    ->get();
+                            $stockOut = QB::table('agent_product_stock')
+                                ->where('user_id', $_SESSION['user_id'])
+                                ->where('product_id', $product->id)
+                                ->where('type', 'stock_out')
+                                ->get();
 
-                                $totalIn = 0;
-                                foreach ($stockIn as $row) {
-                                    $totalIn += $row->qty ?? 0;
-                                }
-
-                                $totalOut = 0;
-                                foreach ($stockOut as $row) {
-                                    $totalOut += $row->qty ?? 0;
-                                }
-
-                                $stock = $totalIn - $totalOut;
-
-                                if ($stock > 0) {
-                                    $product->stock = $stock;
-                                    $validProducts[] = $product;
-                                }
+                            $totalIn = 0;
+                            foreach ($stockIn as $row) {
+                                $totalIn += $row->qty ?? 0;
                             }
 
-                            // ── Pagination config ───────────────────────────────────────────
-                            $perPage     = 10;
-                            $totalRows   = count($validProducts);
-                            $totalPages  = (int)ceil($totalRows / $perPage);
-                            $currentPage = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
-
-                            // Clamp currentPage
-                            if ($currentPage > $totalPages && $totalPages > 0) {
-                                $currentPage = $totalPages;
+                            $totalOut = 0;
+                            foreach ($stockOut as $row) {
+                                $totalOut += $row->qty ?? 0;
                             }
 
-                            $offset       = ($currentPage - 1) * $perPage;
-                            $pagedProducts = array_slice($validProducts, $offset, $perPage);
-                            $sl           = $offset + 1;
+                            $stock = $totalIn - $totalOut;
 
-                            // ── Safe base URL ───────────────────────────────────────────────
-                            $urlParts    = parse_url($_SERVER['REQUEST_URI']);
-                            $scriptPath  = $urlParts['path'];
-                            $queryParams = [];
-                            if (!empty($urlParts['query'])) {
-                                parse_str($urlParts['query'], $queryParams);
+                            if ($stock > 0) {
+                                $product->stock = $stock;
+                                $validProducts[] = $product;
                             }
-                            unset($queryParams['page']);
-                            $baseQuery = http_build_query($queryParams);
-                            $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
+                        }
+
+                        // ── Pagination config ───────────────────────────────────────────
+                        $perPage     = 10;
+                        $totalRows   = count($validProducts);
+                        $totalPages  = (int)ceil($totalRows / $perPage);
+                        $currentPage = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+
+                        // Clamp currentPage
+                        if ($currentPage > $totalPages && $totalPages > 0) {
+                            $currentPage = $totalPages;
+                        }
+
+                        $offset       = ($currentPage - 1) * $perPage;
+                        $pagedProducts = array_slice($validProducts, $offset, $perPage);
+                        $sl           = $offset + 1;
+
+                        // ── Safe base URL ───────────────────────────────────────────────
+                        $urlParts    = parse_url($_SERVER['REQUEST_URI']);
+                        $scriptPath  = $urlParts['path'];
+                        $queryParams = [];
+                        if (!empty($urlParts['query'])) {
+                            parse_str($urlParts['query'], $queryParams);
+                        }
+                        unset($queryParams['page']);
+                        $baseQuery = http_build_query($queryParams);
+                        $baseUrl   = $scriptPath . '?' . ($baseQuery ? $baseQuery . '&' : '');
                         ?>
 
                         <table style="border-collapse: collapse; width:100%;">

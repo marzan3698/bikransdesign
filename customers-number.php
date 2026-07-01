@@ -72,7 +72,7 @@
                         </div>
                         <?php 
                         require_once('counting-level.php');
-                        $totalCount = $counts[0] + $counts[1] + $counts[2] + $counts[3] + $counts[4];
+                        $totalCount = $counts[0] + $counts[1] + $counts[2] + $counts[3] + $counts[4] + $counts[5] + $counts[6] + $counts[7] + $counts[8];
                         ?>
                         <table class="table3" style="margin-bottom: 3px;;">
                             <thead>
@@ -94,28 +94,53 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="color: black;">প্রথম বীজস্তর</td>
+                                    <!-- <td style="color: black;">প্রথম বীজস্তর</td> -->
+                                    <td style="color: black;">প্রথম প্রজন্ম</td>
                                     <td style="color: black;"><?= $counts[0] ?></td>
                                     <td style="color: black;">তথ্য</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: black;">দ্বিতীয় বৃদ্ধিস্তর</td>
+                                    <!-- <td style="color: black;">দ্বিতীয় বৃদ্ধিস্তর</td> -->
+                                    <td style="color: black;">দ্বিতীয় প্রজন্ম</td>
                                     <td style="color: black;"><?= $counts[1] ?></td>
                                     <td style="color: black;">তথ্য</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: black;">তৃতীয় ফলনস্তর</td>
+                                    <!-- <td style="color: black;">তৃতীয় ফলনস্তর</td> -->
+                                    <td style="color: black;">তৃতীয় প্রজন্ম</td>
                                     <td style="color: black;"><?= $counts[2] ?></td>
                                     <td style="color: black;">তথ্য</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: black;">চতুর্থ প্রবাহস্তর</td>
+                                    <!-- <td style="color: black;">চতুর্থ প্রবাহস্তর</td> -->
+                                    <td style="color: black;">চতুর্থ প্রজন্ম</td>
                                     <td style="color: black;"><?= $counts[3] ?></td>
                                     <td style="color: black;">তথ্য</td>
                                 </tr>
                                 <tr>
-                                    <td style="color: black;">পঞ্চম সাফল্যস্তর</td>
+                                    <!-- <td style="color: black;">পঞ্চম সাফল্যস্তর</td> -->
+                                    <td style="color: black;">পঞ্চম প্রজন্ম</td>
                                     <td style="color: black;"><?= $counts[4] ?></td>
+                                    <td style="color: black;">তথ্য</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: black;">ষষ্ঠ প্রজন্ম</td>
+                                    <td style="color: black;"><?= $counts[5] ?></td>
+                                    <td style="color: black;">তথ্য</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: black;">সপ্তম প্রজন্ম</td>
+                                    <td style="color: black;"><?= $counts[6] ?></td>
+                                    <td style="color: black;">তথ্য</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: black;">অষ্টম প্রজন্ম</td>
+                                    <td style="color: black;"><?= $counts[7] ?></td>
+                                    <td style="color: black;">তথ্য</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: black;">নবম প্রজন্ম</td>
+                                    <td style="color: black;"><?= $counts[8] ?></td>
                                     <td style="color: black;">তথ্য</td>
                                 </tr>
                             </tbody>

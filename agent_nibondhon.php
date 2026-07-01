@@ -145,6 +145,7 @@
 
                                     $exitsCheck = QB::table('agent')
                                         ->where('user_id', $user_id)
+                                        ->where('status', 1)
                                         ->first();
 
                                     if($exitsCheck){

@@ -212,6 +212,13 @@ if (!$order) {
                                             }
                                         ?>
                                     </div>
+
+                                    <div style="display: flex; align-items: center; padding-left: 8px;">
+                                        <span>ইউনিয়ন</span>&nbsp;
+                                        <?php 
+                                            echo $order->union;
+                                        ?>
+                                    </div>
                                     
 
 
@@ -266,9 +273,6 @@ if (!$order) {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button type="submit" name="update" class="submitBtn">
-                                        অর্ডার সাবমিট করুন
-                                    </button>
                                 </div>
                         </div>
                       <div style="display:flex; gap:1px; width:90%;margin:auto">

@@ -171,7 +171,7 @@
                         <!-- Pagination Links -->
                         <div class="pagination">
                             <?php if ($page > 1) { ?>
-                                <a href="?page=<?php echo $page - 1; ?>">Previous</a>
+                                <a href="talika.php?page=<?php echo $page - 1; ?>">Previous</a>
                             <?php } else { ?>
                                 <span class="disabled">Previous</span>
                             <?php } ?>
@@ -180,12 +180,12 @@
                                 <?php if ($i == $page) { ?>
                                     <span class="active"><?php echo $i; ?></span>
                                 <?php } else { ?>
-                                    <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                    <a href="talika.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
                                 <?php } ?>
                             <?php } ?>
 
                             <?php if ($page < $totalPages) { ?>
-                                <a href="?page=<?php echo $page + 1; ?>">Next</a>
+                                <a href="talika.php?page=<?php echo $page + 1; ?>">Next</a>
                             <?php } else { ?>
                                 <span class="disabled">Next</span>
                             <?php } ?>

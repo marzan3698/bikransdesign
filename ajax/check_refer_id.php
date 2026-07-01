@@ -9,20 +9,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $stmt = $mysqli->prepare("SELECT name FROM member WHERE username = ? LIMIT 1");
+    $stmt = $mysqli->prepare("SELECT name, phone FROM member WHERE username = ? LIMIT 1");
     $stmt->bind_param("s", $refer_id);
     $stmt->execute();
-    $stmt->bind_result($name);
+
+    // Bind both columns
+    $stmt->bind_result($name, $phone);
 
     if ($stmt->fetch()) {
         echo json_encode([
             'exists' => true,
-            'name' => $name
+            'name'   => $name,
+            'phone'  => $phone
         ]);
     } else {
         echo json_encode([
             'exists' => false,
-            'name' => null
+            'name'   => null,
+            'phone'  => null
         ]);
     }
 

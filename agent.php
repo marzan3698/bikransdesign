@@ -197,7 +197,11 @@
                                             $allProducts = QB::table('product')->orderBy('id', 'asc')->get();
                                             $totalStock = 0;
                                             foreach ($allProducts as $product) {
-                                                $totalStock += agent_product_stock($product->id);
+                                                $stock = agent_product_stock($product->id);
+
+                                                if ($stock > 0) {
+                                                    $totalStock += $stock;
+                                                }
                                             }
                                         ?>
                                         <span onclick="window.location.href='agent-product-stock.php'">এজেন্ট প্রোডাক্ট স্টক: <?= $totalStock ?></span>
@@ -211,7 +215,7 @@
                                 <div class="service-item">
                                     <div class="service-icon2">
                                         <?php if($agentCheck){ ?>
-                                            <span onclick="window.location.href='agent_pre_register.php'">নতুন সদস্য <br> নিবন্ধন</span>
+                                            <span onclick="window.location.href='agent-final-order.php'">নতুন সদস্য <br> নিবন্ধন</span>
                                         <?php }else{ ?>
                                             <span>নতুন সদস্য নিবন্ধন</span>
                                         <?php } ?>

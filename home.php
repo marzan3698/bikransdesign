@@ -153,7 +153,7 @@
                                     onclick="window.location.href='talika.php'"><img src="images/custom/home/Talika.svg"
                                         alt="" title="" /></a></li>
                             <li><a style="font-size: 16px !important" href="javascript:void(0)"
-                                    onclick="window.location.href='pre_register.php'"><img
+                                    onclick="window.location.href='final-order.php'"><img
                                         src="images/custom/home/Nibondhon.svg" alt="" title="" /></a>
                             </li>
 

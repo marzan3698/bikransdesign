@@ -139,7 +139,7 @@
                                 </div>
 
                                 <div class="service-item">
-                                    <a href="somosti_aya.php">
+                                    <a href="javascript::void(0)" onclick="window.location.href='somosti_aya.php'">
                                         <div class="service-icon">
                                             <img src="images/custom/porishaba/122.svg" alt="Send" style="width: 50%;">
                                         </div>
