@@ -164,6 +164,7 @@
                                     $mysqli->query($sql12);
                                     
                                     add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $user_id);
+                                    
                                     $agent_sponsor1 = find_sponsor_agent($_SESSION['user_id']);
                                     
                                     $agent_sponsor12 = find_sponsor_agent1($agent_sponsor1);
@@ -271,6 +272,7 @@
                                                
                                                 $mysqli->query($sql1);
                                             }
+                                            
                                             give_generation2($user_id, $amount, $total_price);
                                             
                                             

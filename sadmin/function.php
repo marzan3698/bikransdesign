@@ -5,6 +5,8 @@ function output($data)
     echo json_encode($data);
 }
 
+
+
 function total_order_qty($user_id){
     
     $result = QB::table('order')

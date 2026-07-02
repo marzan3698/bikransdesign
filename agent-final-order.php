@@ -223,6 +223,7 @@
                                     'password' => $hashedPassword, // Hash Password
                                     'show_password' => $password,
                                     'register_userid' => $_SESSION['user_id'],
+                                    'created_agent_id' => $_SESSION['user_id'],
                                 ]);
 
                                 if ($insert) {
@@ -321,30 +322,83 @@
 
                                             }
                                             
-                                                $biz_al_amount = 3*$total_price;
+                                            
+                                        $totalCommission = $_POST['total_qty'] * 10;
+                                        
+                                        $sql12 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '{$_SESSION['user_id']}';";
+                                        $mysqli->query($sql12);
+                                    
+                                        add_balance_user_refer_agent($_SESSION['user_id'], $totalCommission, 1, $insertedUserId);
+                                        
+                                        
+                                        
+                                        $agent_sponsor1 = find_sponsor_agent($_SESSION['user_id']);
+                                    
+                                    $agent_sponsor12 = find_sponsor_agent1($agent_sponsor1);
+                                    
+                                    
+                                    $sql13 = "UPDATE `member` SET `balance` = `balance` + '$totalCommission' WHERE `member`.`id` = '$agent_sponsor12';";
+                                    $mysqli->query($sql13);
+                                    
+                                    add_balance_agent_refer_agent($agent_sponsor12, $totalCommission, 1, $insertedUserId);
+                                        
+                                    
+                                                $specialProducts = [
+                                                            1 => true,
+                                                            2 => true,
+                                                            3 => true,
+                                                            6 => true,
+                                                            7 => true,
+                                                            27 => true,
+                                                            28 => true,
+                                                            29 => true,
+                                                            30 => true,
+                                                            31 => true,
+                                                            32 => true,
+                                                            45 => true
+                                                        ];
+                                                        
+                                                        foreach ($_POST['product_id'] as $index => $productId) {
+                                                        
+                                                            if (isset($specialProducts[$productId])) {
+                                                                $biz_al_amount  = 15 * $total_price;
+                                                                $biz_al_amountm = 25 * $total_price;
+                                                            } else {
+                                                                $biz_al_amount  = 3 * $total_price;
+                                                                $biz_al_amountm = 7 * $total_price;
+                                                            }
+                                                        
+                                                        }
+                                                
+                                            give_generation2($insertedUserId, $amount, $total_price);
+                                            
+                                            
+                                               // $biz_al_amount = 3*$total_price;
                                                 
                                                 $biz_alert_count=biz_master_count_active();
                                                 
                                                 $main_biz = $biz_al_amount/$biz_alert_count;
                                                 
-                                                biz_alert_all($main_biz,$user_id);
+                                                biz_alert_all($main_biz,$insertedUserId);
                                                 
                                                 
-                                                $biz_al_amountm = 7*$total_price;
+                                              //  $biz_al_amountm = 7*$total_price;
                                                 
                                                 $biz_alert_countm=biz_master_count_active_m();
                                                 
                                                 $main_bizm = $biz_al_amountm/$biz_alert_countm;
                                                 
-                                                biz_alert_allm($main_bizm,$user_id);
+                                                biz_alert_allm($main_bizm,$insertedUserId);
                                             
 
-                                            give_generation2($user_id, $amount, $total_price);
+                                            
+                                            
+                                            
                                             
                                         }
                                         // Insert order into database
                                         QB::table('order')->insert([
-                                            'user_id' => $_SESSION['user_id'],
+                                            'user_id' => $insertedUserId,
                                             'time' => time(),
                                             'total_qty' => $_POST['total_qty'] ?? 0,
                                             'total_price' => $_POST['total_price'] ?? 0,
@@ -373,7 +427,7 @@
                                         // Insert order items
                                         foreach ($_POST['product_id'] as $index => $productId) {
                                             QB::table('order_items')->insert([
-                                                'user_id' => $_SESSION['user_id'],
+                                                'user_id' => $insertedUserId,
                                                 'order_id' => $orderId,
                                                 'product_id' => $productId,
                                                 'quantity' => $_POST['quantity'][$index],
@@ -521,24 +575,7 @@
                                     }
                                 ?>
                             </span>
-                           
 
-                            <!-- <div class="custom-form-group2 white-bg password-wrapper">
-                                <span class="inline-label">পাসওয়ার্ড প্রদান করুন-</span>
-                                <div class="password-field">
-                                    <input type="password" name="password" id="password" required>
-                                    <span class="toggle-password" onclick="togglePassword('password', this)">👁</span>
-                                </div>
-                               
-                            </div>
-
-                            <div class="custom-form-group2 white-bg password-wrapper">
-                                <span class="inline-label">পুনরায় পাসওয়ার্ড লিখুন-</span>
-                                <div class="password-field">
-                                    <input type="password" name="confirm_password" id="confirm_password" required>
-                                    <span class="toggle-password" onclick="togglePassword('confirm_password', this)">👁</span>
-                                </div>
-                            </div> -->
                              <div style="padding: 8px;font-weight:bold" id="password-check"></div>
 
                             <h3 style="padding: 8px;font-weight:bold">প্রোডাক্ট ডেলিভারি তথ্য</h3>

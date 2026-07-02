@@ -146,6 +146,7 @@
                                     <th class="ash" style="border: 1px solid #0B2234;">নং</th>
                                     <th class="ash" style="border: 1px solid #0B2234;">তারিখ</th>
                                     <th class="ash" style="border: 1px solid #0B2234;">নাম</th>
+                                    <th class="ash" style="border: 1px solid #0B2234;">ইউজার আইডি</th>
                                     <th class="ash" style="border: 1px solid #0B2234;">মোবাইল নম্বর</th>
                                     <th class="ash" style="border: 1px solid #0B2234;">তথ্য</th>
                                 </tr>
@@ -157,6 +158,7 @@
                                             <td style="color: #0B2234;border: 1px solid #12D584;"><?php echo $sl++; ?></td>
                                             <td style="color: #0B2234;border: 1px solid #12D584;"><?php echo date('d-m-Y', $row['joining_time']) ?></td>
                                             <td style="color: #0B2234;border: 1px solid #12D584;"><?php echo htmlspecialchars($row['name']); ?></td>
+                                            <td style="color: #0B2234;border: 1px solid #12D584;"><?= htmlspecialchars($row['username'] ?? '') ?></td>
                                             <td style="color: #0B2234;border: 1px solid #12D584;"><?php echo htmlspecialchars($row['phone']); ?></td>
                                             <td style="color: #0B2234;border: 1px solid #12D584;"><?php if($row['is_premium']==1){ echo 'OK'; } ?> দেখুন</td>
                                         </tr>
